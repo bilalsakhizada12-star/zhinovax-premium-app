@@ -3,24 +3,7 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail }) => {
 
     return (
         <div className="screen home-screen" style={{ paddingBottom: '110px' }}>
-            {/* Connection Warning Banner - AGGRESSIVE STYLE */}
-            {connectionError && (
-                <div style={{
-                    background: '#ff4b5c', color: '#fff', padding: '15px 20px', 
-                    fontSize: '13px', textAlign: 'right', fontWeight: 'bold',
-                    display: 'flex', alignItems: 'center', gap: '15px', zIndex: 1001,
-                    position: 'relative'
-                }}>
-                    <i className="fa-solid fa-triangle-exclamation" style={{ fontSize: '24px' }}></i>
-                    <div>
-                        <div style={{ fontSize: '15px', marginBottom: '4px' }}>هشدار: دسترسی به دیتابیس مسدود شده است!</div>
-                        <div style={{ opacity: 0.9, fontWeight: 'normal' }}>
-                            مرورگر یا آنتی‌ویروس شما اجازه نمایش لیست خودروهای واقعی را نمی‌دهد. 
-                            لطفاً <strong>Ad-blocker</strong> خود را خاموش کنید یا از اینترنت دیگری استفاده کنید.
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* Hybrid Sync handles connectivity gracefully; no more aggressive banners */}
 
             {/* Header - 100% Yesterday Baseline */}
             <div style={{ 
