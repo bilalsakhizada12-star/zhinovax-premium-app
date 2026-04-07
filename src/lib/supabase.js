@@ -172,9 +172,13 @@ window.useSupabase = () => {
             }
 
             setCars(carsData || []);
+            if (!carsData || carsData.length === 0) {
+                console.warn("Supabase returned ZERO cars. Current table 'cars' might be empty or filtered.");
+            }
             setProperties(propData || []);
             setConnectionError(null);
             console.log("Loaded data from Supabase:", { cars: carsData?.length, props: propData?.length });
+            window.SUPABASE_DEBUG = { cars: carsData, props: propData };
         } catch (error) {
             console.error("Critical Fetch Error:", error);
             const errorMsg = error.message || (typeof error === 'string' ? error : JSON.stringify(error));
