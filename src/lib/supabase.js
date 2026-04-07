@@ -179,18 +179,6 @@ window.useSupabase = () => {
     const [connectionError, setConnectionError] = React.useState(null);
 
     const fetchData = async () => {
-        // Direct Heartbeat Test
-        try {
-            // Target the actual API endpoint for the heartbeat
-            await fetch(`${SUPABASE_URL}/rest/v1/`, { mode: 'no-cors' });
-        } catch (e) {
-            console.error("Supabase domain is BLOCKED by browser/network!");
-            setCars(HYBRID_CARS); // <--- FIX: Ensure we show Bugatti/Supra even if blocked
-            setProperties(MOCK_PROPS);
-            setLoading(false);
-            return;
-        }
-
         if (!window.supabaseClient) {
             console.error("Supabase client is not ready. Retrying in 1s...");
             setTimeout(fetchData, 1000);
@@ -201,24 +189,19 @@ window.useSupabase = () => {
             setLoading(true);
             const { data: carsData, error: carsError } = await window.supabaseClient.from('cars').select('*');
             const { data: propData, error: propError } = await window.supabaseClient.from('properties').select('*');
-            
-            if (carsError) throw carsError;
-            if (propError) throw propError;
 
-            // Merge Hybrid and Supabase (deduplicating by title to be safe)
+            // Merge DB cars with HYBRID_CARS (DB cars take priority, no duplicates)
             const allCars = [...HYBRID_CARS];
-            if (carsData) {
+            if (carsData && carsData.length > 0) {
                 carsData.forEach(dbCar => {
                     if (!allCars.find(c => c.title === dbCar.title)) {
                         allCars.push(dbCar);
                     }
                 });
+                console.log("Supabase Sync OK - Cars loaded:", carsData.length);
             }
 
             setCars(allCars);
-            setProperties(propData || MOCK_PROPS);
-            setConnectionError(null); 
-            console.log("Hybrid Sync Success:", { cars: allCars.length });
         } catch (error) {
             console.warn("Using Hybrid Fallback Data:", error);
             // If DB fails, we ALWAYS show Hybrid Cars so the user isn't stuck with empty screen
