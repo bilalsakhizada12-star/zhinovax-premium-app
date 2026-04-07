@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Zhinovax Premium VIP</title>
+    
+    <!-- Dependencies -->
+    <link rel="stylesheet" href="src/styles/global.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D4AF37">
+    <link rel="icon" type="image/png" href="https://www.directfiles.link/YGDVHGGRG">
+    
+    <!-- FontAwesome 6 (Solid + Brands + Regular) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Vazirmatn Persian Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- React & Babel Standalone -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- GSAP for WOW factor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- Application Scripts (Loaded as Babel to support JSX) -->
+    <script type="text/babel" src="src/lib/supabase.js?v=build_102"></script>
+    <script type="text/babel" src="src/components/ui/SplashScreen.jsx?v=build_102"></script>
+    <script type="text/babel" src="./src/components/ui/AssetCard.jsx?v=build_102"></script>
+    <script type="text/babel" src="./src/components/ui/AddAssetModal.jsx?v=build_102"></script>
+    <script type="text/babel" src="./src/components/ui/CheckoutModal.jsx?v=build_102"></script>
+    <script type="text/babel" src="src/components/layout/Navbar.jsx?v=build_102"></script>
+    <script type="text/babel" src="src/pages/Auth.jsx?v=build_102"></script>
+    <script type="text/babel" src="src/pages/Home.jsx?v=build_102"></script>
+    <script type="text/babel" src="src/pages/Detail.jsx?v=build_102"></script>
+    <script type="text/babel" src="src/pages/Settings.jsx?v=build_102"></script>
+    <script type="text/babel" src="src/pages/Challenges.jsx?v=build_102"></script>
+    <script type="text/babel" src="src/pages/Favorites.jsx?v=build_102"></script>
+    <script type="text/babel" src="src/pages/Portfolio.jsx?v=build_102"></script>
+    <script type="text/babel" src="src/App.jsx?v=build_102"></script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('Service Worker Registered'))
+            .catch(err => console.log('SW Registration Failed', err));
+        });
+      }
+    </script>
+</body>
+</html>

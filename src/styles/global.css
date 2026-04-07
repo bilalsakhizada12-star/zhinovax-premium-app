@@ -1,0 +1,61 @@
+:root {
+    --gold-primary: #d4af37;
+    --brand-teal: #008e9b;
+    --bg-dark: #051014; /* Correct Brand Dark Teal/Navy */
+    --surface-glass: rgba(255,255,255,0.03);
+    --text-main: #ffffff;
+    --text-muted: rgba(255,255,255,0.5);
+    --border-glass: rgba(255,255,255,0.08);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+body, html {
+    margin: 0; padding: 0;
+    background-color: var(--bg-dark); /* Applied Brand Color */
+    color: var(--text-main);
+    overflow-x: hidden;
+    direction: rtl;
+}
+
+#root {
+    width: 100%; 
+    max-width: 420px; 
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    margin: 0 auto;
+    position: relative;
+    display: flex; 
+    flex-direction: column;
+}
+
+.glass {
+    background: var(--surface-glass);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    border: 1px solid var(--border-glass);
+}
+
+.screen {
+    flex: 1;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.scroller {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px 20px;
+    scrollbar-width: none;
+}
+.scroller::-webkit-scrollbar { display: none; }
+
+.hover-lift {
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.hover-lift:active { transform: scale(0.96); }
