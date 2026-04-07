@@ -177,7 +177,8 @@ window.useSupabase = () => {
             console.log("Loaded data from Supabase:", { cars: carsData?.length, props: propData?.length });
         } catch (error) {
             console.error("Critical Fetch Error:", error);
-            setConnectionError(error.message || "Unknown Connection Error");
+            const errorMsg = error.message || (typeof error === 'string' ? error : JSON.stringify(error));
+            setConnectionError(errorMsg);
             // Still show mock data as final fallback to avoid empty screen
             setCars(MOCK_CARS);
             setProperties(MOCK_PROPS);
