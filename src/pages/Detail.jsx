@@ -2,15 +2,29 @@ const Detail = ({ asset, onBack }) => {
     const CheckoutModal = window.CheckoutModal;
     const [showCheckout, setShowCheckout] = React.useState(false);
     const [isFav, setIsFav] = React.useState(false);
+    const [views, setViews] = React.useState(0);
     
     if (!asset) return null;
     const isCar = asset.type === 'car';
 
-    // Check if already in favorites on load
+    // Check favorites and handle view count on load
     React.useEffect(() => {
+        // Favorites
         const favs = JSON.parse(localStorage.getItem('zhinovax_favorites') || '[]');
         setIsFav(favs.some(f => f.id === asset.id));
-    }, [asset.id]);
+
+        // View Counter Logic (1 per person locally)
+        const viewed = JSON.parse(localStorage.getItem('zhinovax_viewed') || '[]');
+        let currentViews = typeof asset.views === 'number' ? asset.views : parseInt((asset.views || '0').toString().replace(/,/g, '')) || 0;
+        
+        if (!viewed.includes(asset.id)) {
+            currentViews += 1;
+            viewed.push(asset.id);
+            localStorage.setItem('zhinovax_viewed', JSON.stringify(viewed));
+            asset.views = currentViews; // mutate reference so Home updates
+        }
+        setViews(currentViews);
+    }, [asset.id, asset]);
 
     const handleFavorite = () => {
         const favs = JSON.parse(localStorage.getItem('zhinovax_favorites') || '[]');
@@ -48,7 +62,7 @@ const Detail = ({ asset, onBack }) => {
                 background: 'var(--bg-dark)', zIndex: 100, borderBottom: '1px solid rgba(255,255,255,0.04)'
             }}>
                 <div onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '16px', fontWeight: '900', color: '#fff' }}>
-                     <i className="fa-solid fa-chevron-left"></i> جزئیات {isCar ? 'موتر' : 'آپارتمان'}
+                     <i className="fa-solid fa-chevron-left"></i> بازگشت
                 </div>
                 <div style={{ display: 'flex', gap: '20px', fontSize: '18px', color: '#fff' }}>
                     <i className="fa-solid fa-circle-info" style={{ cursor: 'pointer', opacity: 0.7 }}></i>
@@ -67,7 +81,7 @@ const Detail = ({ asset, onBack }) => {
                     }}></div>
                     <div style={{ position: 'absolute', bottom: '15px', right: '15px', background: 'rgba(0,0,0,0.7)', color: '#fff', padding: '4px 15px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>۱/۱</div>
                     <div style={{ position: 'absolute', bottom: '15px', left: '15px', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', color: '#fff', padding: '4px 12px', borderRadius: '15px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <span>{asset.views || '---'}</span>
+                        <span>{views > 0 ? views.toLocaleString() : '---'}</span>
                         <i className="fa-solid fa-eye"></i>
                     </div>
                 </div>
