@@ -97,7 +97,16 @@ const Auth = ({ onLogin }) => {
             }}>
                 {/* Logo */}
                 <div style={{ marginBottom: '30px' }}>
-                    <img src="https://www.directfiles.link/YGDVHGGRG" alt="Zhinovax" style={{ height: '50px', marginBottom: '15px' }} />
+                    <svg viewBox="0 0 220 65" style={{ width: '180px', height: 'auto', marginBottom: '15px' }}>
+                        <defs>
+                            <linearGradient id="g1-auth" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stopColor="#D4AF37" />
+                                <stop offset="50%" stopColor="#F9D976" />
+                                <stop offset="100%" stopColor="#D4AF37" />
+                            </linearGradient>
+                        </defs>
+                        <text x="50%" y="48" textAnchor="middle" fill="url(#g1-auth)" fontSize="34" fontWeight="900" fontFamily="Arial, sans-serif" letterSpacing="3">ZHINOVAX</text>
+                    </svg>
                     <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#fff', margin: '0 0 8px' }}>
                         {step === 1 ? 'خوش آمدید' : 'کد تأیید'}
                     </h2>

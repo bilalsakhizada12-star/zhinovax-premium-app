@@ -51,28 +51,17 @@ const SplashScreen = ({ onComplete }) => {
                 transform: 'translate(-50%, -50%)'
             }} />
 
-            {/* Logo image + content */}
+            {/* SVG Logo */}
             <div className="splash-logo" style={{ textAlign: 'center', opacity: 0 }}>
-                <img
-                    src="https://www.directfiles.link/YGDVHGGRG"
-                    alt="Zhinovax Logo"
-                    style={{ height: '90px', width: 'auto', marginBottom: '18px', objectFit: 'contain' }}
-                    onError={(e) => {
-                        // fallback SVG if image fails
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'block';
-                    }}
-                />
-                {/* SVG fallback (hidden by default) */}
-                <svg viewBox="0 0 220 65" style={{ width: '200px', height: 'auto', display: 'none', marginBottom: '18px' }}>
+                <svg viewBox="0 0 220 65" style={{ width: '200px', height: 'auto', marginBottom: '18px' }}>
                     <defs>
-                        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <linearGradient id="g1-splash" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stopColor="#D4AF37" />
                             <stop offset="50%" stopColor="#F9D976" />
                             <stop offset="100%" stopColor="#D4AF37" />
                         </linearGradient>
                     </defs>
-                    <text x="50%" y="48" textAnchor="middle" fill="url(#g1)" fontSize="34" fontWeight="900" fontFamily="Arial, sans-serif" letterSpacing="3">ZHINOVAX</text>
+                    <text x="50%" y="48" textAnchor="middle" fill="url(#g1-splash)" fontSize="34" fontWeight="900" fontFamily="Arial, sans-serif" letterSpacing="3">ZHINOVAX</text>
                 </svg>
 
                 <div className="splash-tagline" style={{
