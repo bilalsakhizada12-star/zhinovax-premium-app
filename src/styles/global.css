@@ -1,11 +1,23 @@
 :root {
     --gold-primary: #d4af37;
+    --gold-gradient: linear-gradient(135deg, #F9D976, #D4AF37, #b8860b);
     --brand-teal: #008e9b;
-    --bg-dark: #051014; /* Correct Brand Dark Teal/Navy */
+    --bg-dark: #051014;
     --surface-glass: rgba(255,255,255,0.03);
+    --card-glass: rgba(255,255,255,0.04);
     --text-main: #ffffff;
     --text-muted: rgba(255,255,255,0.5);
     --border-glass: rgba(255,255,255,0.08);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 * {

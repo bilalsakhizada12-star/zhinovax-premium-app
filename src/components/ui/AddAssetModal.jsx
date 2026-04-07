@@ -50,7 +50,7 @@ const AddAssetModal = ({ onClose, onSave }) => {
             fontFamily: "'Vazirmatn', sans-serif"
         }}>
             <div className="gsap-slide-up" style={{
-                background: 'var(--blue_dark)', width: '100%', maxWidth: '420px', 
+                background: 'var(--bg-dark)', width: '100%', maxWidth: '420px', 
                 margin: '0 auto', borderTopLeftRadius: '30px', borderTopRightRadius: '30px',
                 border: '1px solid var(--border-glass)', padding: '30px 20px', color: 'white',
                 maxHeight: '90vh', overflowY: 'auto'
@@ -132,9 +132,9 @@ const AddAssetModal = ({ onClose, onSave }) => {
                 ) : (
                     <div style={{ textAlign: 'center', padding: '30px 0' }}>
                         <div style={{ 
-                            width: '80px', height: '80px', background: 'rgba(46, 213, 115, 0.1)', 
+                            width: '80px', height: '80px', background: 'rgba(212,175,55,0.1)', 
                             borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center',
-                            margin: '0 auto 20px', color: '#2ed573'
+                            margin: '0 auto 20px', color: 'var(--gold-primary)'
                         }}>
                              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                         </div>

@@ -52,7 +52,7 @@ const Detail = ({ asset, onBack }) => {
                 </div>
                 <div style={{ display: 'flex', gap: '20px', fontSize: '18px', color: '#fff' }}>
                     <i className="fa-solid fa-circle-info" style={{ cursor: 'pointer', opacity: 0.7 }}></i>
-                    <i onClick={handleShare} className="fa-solid fa-share-nodes" style={{ cursor: 'pointer', color: '#0084ad' }}></i>
+                    <i onClick={handleShare} className="fa-solid fa-share-nodes" style={{ cursor: 'pointer', color: 'var(--gold-primary)' }}></i>
                     <i onClick={handleFavorite} className={isFav ? 'fa-solid fa-heart' : 'fa-regular fa-heart'} style={{ cursor: 'pointer', color: isFav ? '#ff4b5c' : '#fff', transition: 'color 0.2s' }}></i>
                 </div>
             </div>
@@ -86,11 +86,11 @@ const Detail = ({ asset, onBack }) => {
 
                 <div style={{ padding: '20px' }}>
                     <div style={{ textAlign: 'right', marginBottom: '25px' }}>
-                        <div style={{ display: 'inline-block', background: 'rgba(0,132,173,0.1)', color: '#0084ad', padding: '4px 15px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold', marginBottom: '10px' }}>
+                        <div style={{ display: 'inline-block', background: 'rgba(212,175,55,0.1)', color: 'var(--gold-primary)', padding: '4px 15px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold', marginBottom: '10px' }}>
                             رجستر: {asset.reg_no || '---'}
                         </div>
                         <h1 style={{ fontSize: '22px', fontWeight: '900', margin: '0 0 5px', color: '#fff' }}>{asset.title}</h1>
-                        <div style={{ fontSize: '28px', fontWeight: '900', color: '#0084ad' }}>{asset.price}</div>
+                        <div style={{ fontSize: '28px', fontWeight: '900', color: 'var(--gold-primary)' }}>{asset.price}</div>
                     </div>
 
                     {/* Specification Grid */}
@@ -148,7 +148,7 @@ const Detail = ({ asset, onBack }) => {
                                 {features.map((f, i) => (
                                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', fontSize: '13px' }}>
                                         <span style={{ color: '#fff' }}>{f}</span>
-                                        <i className="fa-solid fa-check" style={{ color: '#0084ad', fontSize: '14px' }}></i>
+                                        <i className="fa-solid fa-check" style={{ color: 'var(--gold-primary)', fontSize: '14px' }}></i>
                                     </div>
                                 ))}
                             </div>
@@ -161,7 +161,7 @@ const Detail = ({ asset, onBack }) => {
                                 {Object.entries(amenities).map(([k, v], i) => (
                                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', fontSize: '13px' }}>
                                         <span style={{ color: '#fff' }}>{v}</span>
-                                        <i className="fa-solid fa-check" style={{ color: '#0084ad', fontSize: '14px' }}></i>
+                                        <i className="fa-solid fa-check" style={{ color: 'var(--gold-primary)', fontSize: '14px' }}></i>
                                     </div>
                                 ))}
                             </div>
@@ -183,9 +183,9 @@ const Detail = ({ asset, onBack }) => {
                     </div>
                 </a>
                 <div onClick={() => setShowCheckout(true)} style={{ 
-                    flex: 1, height: '60px', background: '#0084ad', borderRadius: '15px',
+                    flex: 1, height: '60px', background: 'var(--gold-primary)', borderRadius: '15px',
                     display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    color: '#fff', fontSize: '17px', fontWeight: '900', gap: '12px', cursor: 'pointer'
+                    color: '#000', fontSize: '17px', fontWeight: '900', gap: '12px', cursor: 'pointer'
                 }}>
                     <span>تماس با فروشنده</span>
                     <i className="fa-solid fa-phone-flip"></i>

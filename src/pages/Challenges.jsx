@@ -68,7 +68,7 @@ const Challenges = ({ onBack }) => {
                             }}>
                                 <div style={{ 
                                     width: '50px', height: '50px', borderRadius: '50%', 
-                                    background: '#4caf50', display: 'flex', justifyContent: 'center', 
+                                    background: 'var(--gold-primary)', display: 'flex', justifyContent: 'center', 
                                     alignItems: 'center', fontSize: '24px', marginBottom: '10px'
                                 }}>
                                     <i className="fa-solid fa-check"></i>

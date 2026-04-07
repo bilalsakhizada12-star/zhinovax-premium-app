@@ -187,8 +187,8 @@ window.useSupabase = () => {
 
         try {
             setLoading(true);
-            const { data: carsData, error: carsError } = await window.supabaseClient.from('cars').select('*');
-            const { data: propData, error: propError } = await window.supabaseClient.from('properties').select('*');
+            const { data: carsData } = await window.supabaseClient.from('cars').select('*');
+            const { data: propData } = await window.supabaseClient.from('properties').select('*');
 
             // Merge DB cars with HYBRID_CARS (DB cars take priority, no duplicates)
             const allCars = [...HYBRID_CARS];
@@ -198,18 +198,27 @@ window.useSupabase = () => {
                         allCars.push(dbCar);
                     }
                 });
-                console.log("Supabase Sync OK - Cars loaded:", carsData.length);
+                console.log("Supabase Sync OK - Cars:", carsData.length);
+            }
+
+            // Always merge MOCK_PROPS with any live DB properties
+            const allProps = [...MOCK_PROPS];
+            if (propData && propData.length > 0) {
+                propData.forEach(dbProp => {
+                    if (!allProps.find(p => p.title === dbProp.title)) {
+                        allProps.push(dbProp);
+                    }
+                });
+                console.log("Supabase Sync OK - Props:", propData.length);
             }
 
             setCars(allCars);
+            setProperties(allProps);
         } catch (error) {
-            console.warn("Using Hybrid Fallback Data:", error);
-            // If DB fails, we ALWAYS show Hybrid Cars so the user isn't stuck with empty screen
+            console.warn("Using Fallback Data:", error);
             setCars(HYBRID_CARS);
             setProperties(MOCK_PROPS);
-            // We only set connectionError if we want the red banner. 
-            // Let's keep it null for Hybrid mode so the UI stays clean.
-            setConnectionError(null); 
+            setConnectionError(null);
         } finally {
             setLoading(false);
         }

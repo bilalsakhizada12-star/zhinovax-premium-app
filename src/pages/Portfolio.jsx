@@ -24,15 +24,15 @@ const Portfolio = ({ onTabChange, assets, user, onLogin }) => {
                         <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '5px' }}>موتر موجود</div>
                     </div>
                     <div className="glass" style={{ padding: '20px', textAlign: 'right', border: '1px solid rgba(255,255,255,0.06)' }}>
-                        <div style={{ fontSize: '28px', fontWeight: '900', color: '#0084ad' }}>۴۵+</div>
+                        <div style={{ fontSize: '28px', fontWeight: '900', color: 'var(--gold-primary)' }}>۴۵+</div>
                         <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '5px' }}>ملک موجود</div>
                     </div>
                     <div className="glass" style={{ padding: '20px', textAlign: 'right', border: '1px solid rgba(255,255,255,0.06)' }}>
-                        <div style={{ fontSize: '28px', fontWeight: '900', color: '#25d366' }}>۹۸٪</div>
+                        <div style={{ fontSize: '28px', fontWeight: '900', color: 'var(--gold-primary)' }}>۹۸٪</div>
                         <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '5px' }}>رضایت مشتریان</div>
                     </div>
                     <div className="glass" style={{ padding: '20px', textAlign: 'right', border: '1px solid rgba(255,255,255,0.06)' }}>
-                        <div style={{ fontSize: '28px', fontWeight: '900', color: '#e91e63' }}>۵+</div>
+                        <div style={{ fontSize: '28px', fontWeight: '900', color: 'var(--gold-primary)' }}>۵+</div>
                         <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '5px' }}>سال تجربه</div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ const Portfolio = ({ onTabChange, assets, user, onLogin }) => {
                                         <p style={{ fontSize: '13px', color: 'var(--gold-primary)', fontWeight: '900', margin: '0 0 5px' }}>{asset.price}</p>
                                         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '6px' }}>
                                             <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>تأیید شده</span>
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#25d366" strokeWidth="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold-primary)" strokeWidth="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                                         </div>
                                     </div>
                                 </div>

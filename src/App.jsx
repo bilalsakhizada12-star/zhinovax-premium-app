@@ -85,7 +85,7 @@ const App = () => {
             )}
 
             {view === 'home' && activeTab === 'home' && (
-                <Home cars={cars} properties={properties} loading={loading} connectionError={connectionError} onOpenDetail={handleOpenDetail} />
+                <Home cars={cars} properties={properties} loading={loading} connectionError={connectionError} onOpenDetail={handleOpenDetail} onLogin={() => setView('auth')} />
             )}
             
             {view === 'home' && activeTab === 'settings' && (
@@ -94,6 +94,10 @@ const App = () => {
                     else if (tab === 'add_asset') setView('add_asset');
                     else setActiveTab(tab);
                 }} />
+            )}
+            
+            {view === 'challenges' && (
+                <Challenges onBack={() => { setView('home'); setActiveTab('settings'); }} />
             )}
             
             {view === 'home' && activeTab === 'favorites' && (

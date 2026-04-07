@@ -14,7 +14,7 @@ const AssetCard = ({ data, type, onClick }) => {
             {/* Price Tag - TOP RIGHT (Corrected from Screenshot) */}
             <div style={{
                 position: 'absolute', top: '18px', right: '18px',
-                background: '#0084ad', color: '#fff',
+                background: 'var(--gold-primary)', color: '#000',
                 padding: '4px 12px', borderRadius: '14px', fontSize: '11px',
                 fontWeight: '900', zIndex: 10
             }}>
@@ -39,7 +39,7 @@ const AssetCard = ({ data, type, onClick }) => {
                 padding: '2px 8px', borderRadius: '8px', fontSize: '9px',
                 display: 'flex', alignItems: 'center', gap: '4px', zIndex: 10
             }}>
-                <span>۵,۰۴۶</span>
+                <span>{data.views ? data.views.toLocaleString() : '—'}</span>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </div>
 

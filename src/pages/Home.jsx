@@ -1,4 +1,4 @@
-const Home = ({ cars, properties, loading, connectionError, onOpenDetail }) => {
+const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogin }) => {
     const AssetCard = window.AssetCard;
 
     return (
@@ -15,7 +15,7 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail }) => {
                 </svg>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     {loading && <span style={{ fontSize: '10px', color: 'var(--gold-primary)', animation: 'pulse 1s infinite' }}>درحال بروزرسانی...</span>}
-                    <button style={{ 
+                    <button onClick={onLogin} style={{ 
                         background: 'var(--gold-primary)', color: '#000', border: 'none', 
                         padding: '8px 25px', borderRadius: '15px', fontWeight: 'bold', fontSize: '13px' 
                     }}>ورود</button>

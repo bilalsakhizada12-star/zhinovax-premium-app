@@ -19,17 +19,17 @@ const Settings = ({ onTabChange, user, onLogin }) => {
 
     // Public menu - visible to ALL visitors
     const publicMenuItems = [
-        { iconName: 'bell', title: 'اعلانات', color: 'transparent', stroke: '#34a853', badge: '4' },
-        { id: 'btn-add-car', iconName: 'gear', title: 'افزودن موتر جدید', color: 'transparent', stroke: '#D4AF37', action: () => onTabChange('add_asset') },
-        { iconName: 'trophy', title: 'چالش‌ها', color: 'transparent', stroke: '#ab8720', action: () => onTabChange('challenges') },
-        { iconName: 'gamepad', title: 'مسابقه و بازی‌ها', color: 'transparent', stroke: '#f9ab00' },
-        { iconName: 'info', title: 'درباره زینوواکس', color: 'transparent', stroke: '#e91e63' },
+        { iconName: 'bell', title: 'اعلانات', color: 'transparent', stroke: 'var(--gold-primary)', badge: '4' },
+        { id: 'btn-add-car', iconName: 'gear', title: 'افزودن موتر جدید', color: 'transparent', stroke: 'var(--gold-primary)', action: () => onTabChange('add_asset') },
+        { iconName: 'trophy', title: 'چالش‌ها', color: 'transparent', stroke: 'var(--gold-primary)', action: () => onTabChange('challenges') },
+        { iconName: 'gamepad', title: 'مسابقه و بازی‌ها', color: 'transparent', stroke: 'rgba(212,175,55,0.7)' },
+        { iconName: 'info', title: 'درباره زینوواکس', color: 'transparent', stroke: 'rgba(212,175,55,0.6)' },
     ];
 
     // Private menu - visible ONLY to logged-in users
     const privateMenuItems = [
-        { iconName: 'wallet', title: 'بیلانس و پرداخت‌ها', color: 'transparent', stroke: '#1a73e8' },
-        { iconName: 'gear', title: 'تنظیمات حساب', color: 'transparent', stroke: '#17a2b8' },
+        { iconName: 'wallet', title: 'بیلانس و پرداخت‌ها', color: 'transparent', stroke: 'var(--gold-primary)' },
+        { iconName: 'gear', title: 'تنظیمات حساب', color: 'transparent', stroke: 'rgba(212,175,55,0.7)' },
         { iconName: 'logout', title: 'خروج از حساب', color: 'transparent', stroke: '#ff5722' }
     ];
 
