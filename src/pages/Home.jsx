@@ -10,14 +10,13 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
                 padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 position: 'sticky', top: 0, zIndex: 100, background: 'var(--bg-dark)'
             }}>
-                <svg viewBox="0 0 200 60" style={{ height: '24px', width: 'auto' }}>
-                    <text x="0" y="45" fill="#D4AF37" fontSize="32" fontWeight="bold" fontFamily="Arial, sans-serif">ZHINOVAX</text>
-                </svg>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    {loading && <span style={{ fontSize: '10px', color: 'var(--gold-primary)', animation: 'pulse 1s infinite' }}>درحال بروزرسانی...</span>}
-                    <button onClick={onLogin} style={{ 
-                        background: 'var(--gold-primary)', color: '#000', border: 'none', 
-                        padding: '8px 25px', borderRadius: '15px', fontWeight: 'bold', fontSize: '13px' 
+                <img src="https://i.postimg.cc/W3MnzMzh/jjj.png" alt="Zhinovax Logo" style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    {loading && <span style={{ fontSize: '10px', color: 'var(--gold-primary)', animation: 'pulse 1.5s infinite' }}>درحال اتصال...</span>}
+                    <button className="hover-lift" onClick={onLogin} style={{ 
+                        background: 'var(--gold-gradient)', color: '#000', border: 'none', 
+                        padding: '10px 28px', borderRadius: '15px', fontWeight: '900', fontSize: '13px', 
+                        boxShadow: '0 4px 15px rgba(212, 175, 55, 0.3)'
                     }}>ورود</button>
                 </div>
             </div>
