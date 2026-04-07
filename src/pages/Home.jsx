@@ -5,12 +5,14 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail }) => {
         <div className="screen home-screen" style={{ paddingBottom: '110px' }}>
             {/* Hybrid Sync handles connectivity gracefully; no more aggressive banners */}
 
-            {/* Header - 100% Yesterday Baseline */}
+            {/* Header - 100% Reliable SVG Logo */}
             <div style={{ 
                 padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 position: 'sticky', top: 0, zIndex: 100, background: 'var(--bg-dark)'
             }}>
-                <img src="https://www.directfiles.link/YGDVHGGRG" style={{ height: '32px' }} alt="Zhinovax" />
+                <svg viewBox="0 0 200 60" style={{ height: '24px', width: 'auto' }}>
+                    <text x="0" y="45" fill="#D4AF37" fontSize="32" fontWeight="bold" fontFamily="Arial, sans-serif">ZHINOVAX</text>
+                </svg>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     {loading && <span style={{ fontSize: '10px', color: 'var(--gold-primary)', animation: 'pulse 1s infinite' }}>درحال بروزرسانی...</span>}
                     <button style={{ 
