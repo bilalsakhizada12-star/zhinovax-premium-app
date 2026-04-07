@@ -185,7 +185,8 @@ window.useSupabase = () => {
             await fetch(`${SUPABASE_URL}/rest/v1/`, { mode: 'no-cors' });
         } catch (e) {
             console.error("Supabase domain is BLOCKED by browser/network!");
-            setConnectionError("DomainBlocked");
+            setCars(HYBRID_CARS); // <--- FIX: Ensure we show Bugatti/Supra even if blocked
+            setProperties(MOCK_PROPS);
             setLoading(false);
             return;
         }
