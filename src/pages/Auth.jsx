@@ -49,8 +49,8 @@ const Auth = ({ onLogin }) => {
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
-            // ✅ Any 4-digit code works (demo mode)
-            onLogin({ phone, name: 'کاربر VIP', isVip: true });
+            // ✅ Any code works (demo mode)
+            onLogin({ phone: `+93${phone}`, name: 'کاربر VIP', isVip: true });
         }, 1200);
     };
 
@@ -108,26 +108,34 @@ const Auth = ({ onLogin }) => {
 
                 {step === 1 ? (
                     <form onSubmit={handlePhoneSubmit}>
-                        <input
-                            type="tel"
-                            placeholder="مثال: 0700 123 4567"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            autoFocus
-                            style={{
-                                width: '100%', background: 'rgba(255,255,255,0.05)',
-                                border: `1px solid ${isPhoneValid ? 'var(--gold-primary)' : 'rgba(255,255,255,0.1)'}`,
-                                padding: '16px', borderRadius: '15px', color: '#fff',
-                                fontSize: '17px', textAlign: 'center', letterSpacing: '2px',
-                                direction: 'ltr', marginBottom: '20px',
-                                outline: 'none', boxSizing: 'border-box',
-                                fontFamily: 'monospace'
-                            }}
-                        />
+                        <div style={{
+                            display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.05)',
+                            border: `1px solid ${isPhoneValid ? 'var(--gold-primary)' : 'rgba(255,255,255,0.1)'}`,
+                            borderRadius: '15px', marginBottom: '20px', overflow: 'hidden', direction: 'ltr'
+                        }}>
+                            <div style={{
+                                padding: '16px 20px', background: 'rgba(212,175,55,0.1)', color: 'var(--gold-primary)',
+                                fontWeight: '900', fontSize: '17px', borderRight: '1px solid rgba(255,255,255,0.1)'
+                            }}>
+                                +93
+                            </div>
+                            <input
+                                type="tel"
+                                placeholder="700 123 456"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                                autoFocus
+                                style={{
+                                    flex: 1, background: 'transparent', border: 'none',
+                                    padding: '16px', color: '#fff', fontSize: '17px',
+                                    letterSpacing: '2px', outline: 'none', fontFamily: 'monospace'
+                                }}
+                            />
+                        </div>
 
                         {/* Helper text */}
                         <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginBottom: '20px' }}>
-                            حداقل ۷ رقم وارد کنید
+                            شماره تماس خود را بدون 0 وارد کنید (مثال: 700123456)
                         </p>
 
                         <button type="submit" style={btnStyle(isPhoneValid && !loading)} disabled={!isPhoneValid || loading}>
