@@ -1,5 +1,5 @@
 // Supabase Client Configuration
-const SUPABASE_URL = 'https://cjxyfwuqakbmcgpjsub.supabase.co';
+const SUPABASE_URL = 'https://cjtxyfwuqakbmcgpjsub.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_DxFGUXuiKq_qmyEmvvKA5g_iQhQ-6m9N';
 
 window.supabaseClient = null;
