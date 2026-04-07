@@ -51,18 +51,13 @@ const SplashScreen = ({ onComplete }) => {
                 transform: 'translate(-50%, -50%)'
             }} />
 
-            {/* SVG Logo */}
+            {/* Logo Image */}
             <div className="splash-logo" style={{ textAlign: 'center', opacity: 0 }}>
-                <svg viewBox="0 0 220 65" style={{ width: '200px', height: 'auto', marginBottom: '18px' }}>
-                    <defs>
-                        <linearGradient id="g1-splash" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stopColor="#D4AF37" />
-                            <stop offset="50%" stopColor="#F9D976" />
-                            <stop offset="100%" stopColor="#D4AF37" />
-                        </linearGradient>
-                    </defs>
-                    <text x="50%" y="48" textAnchor="middle" fill="url(#g1-splash)" fontSize="34" fontWeight="900" fontFamily="Arial, sans-serif" letterSpacing="3">ZHINOVAX</text>
-                </svg>
+                <img 
+                    src="https://i.postimg.cc/W3MnzMzh/jjj.png" 
+                    alt="Zhinovax Logo" 
+                    style={{ height: '90px', width: 'auto', marginBottom: '18px', objectFit: 'contain' }} 
+                />
 
                 <div className="splash-tagline" style={{
                     color: 'rgba(212,175,55,0.7)', letterSpacing: '4px',
