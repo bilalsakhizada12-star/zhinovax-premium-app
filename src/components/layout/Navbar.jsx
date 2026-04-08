@@ -1,4 +1,4 @@
-const Navbar = ({ activeTab, onTabChange }) => {
+const Navbar = ({ activeTab, onTabChange, hasNewNotif }) => {
     return (
         <div style={{
             position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%)', 
