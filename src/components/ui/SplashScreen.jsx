@@ -1,29 +1,20 @@
 const SplashScreen = ({ onComplete }) => {
     React.useEffect(() => {
-        // Dramatic floating entrance with elasticity for the logo
+        // Fix: Only one clean entrance animation, no repeat or pulse
         gsap.fromTo('.splash-logo-container', 
-            { scale: 0.5, opacity: 0, y: 30 }, 
-            { scale: 1.1, opacity: 1, y: 0, duration: 1.8, ease: 'elastic.out(1, 0.5)' }
+            { scale: 0.8, opacity: 0 }, 
+            { scale: 1, opacity: 1, duration: 1.2, ease: 'power2.out' }
         );
         
-        // Continuous subtle floating pulse
-        gsap.to('.splash-logo-container', { 
-            y: -15, 
-            duration: 2, 
-            repeat: -1, 
-            yoyo: true, 
-            ease: 'sine.inOut',
-            delay: 1.8
-        });
-        
+        // Shorten the wait time so it doesn't feel like it's "coming again"
         const timer = setTimeout(() => {
             gsap.to('.splash-screen', { 
                 opacity: 0, 
-                duration: 0.8, 
+                duration: 0.5, 
                 ease: 'power2.inOut',
                 onComplete: onComplete 
             });
-        }, 3500);
+        }, 2200); // Faster transition to the app
 
         return () => clearTimeout(timer);
     }, [onComplete]);
@@ -41,7 +32,7 @@ const SplashScreen = ({ onComplete }) => {
                     style={{ 
                         height: '110px', 
                         width: 'auto',
-                        filter: 'drop-shadow(0 0 30px rgba(212, 175, 55, 0.4))' 
+                        filter: 'drop-shadow(0 0 30px rgba(212, 175, 55, 0.3))' 
                     }} 
                     alt="Zhinovax Logo"
                 />
