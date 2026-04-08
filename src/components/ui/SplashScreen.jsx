@@ -1,81 +1,49 @@
 const SplashScreen = ({ onComplete }) => {
     React.useEffect(() => {
-        // Step 1: Logo drops in
-        gsap.fromTo('.splash-logo',
-            { opacity: 0, y: -40, scale: 0.85 },
-            { opacity: 1, y: 0, scale: 1, duration: 1.1, ease: 'back.out(1.7)' }
+        // Dramatic floating entrance with elasticity for the logo
+        gsap.fromTo('.splash-logo-container', 
+            { scale: 0.5, opacity: 0, y: 30 }, 
+            { scale: 1.1, opacity: 1, y: 0, duration: 1.8, ease: 'elastic.out(1, 0.5)' }
         );
-
-        // Step 2: Tagline fades in after logo
-        gsap.fromTo('.splash-tagline',
-            { opacity: 0, y: 10 },
-            { opacity: 1, y: 0, duration: 0.8, delay: 0.9, ease: 'power2.out' }
-        );
-
-        // Step 3: Gold bar sweeps in
-        gsap.fromTo('.splash-bar',
-            { width: 0, opacity: 0 },
-            { width: '120px', opacity: 1, duration: 1.2, delay: 1.2, ease: 'power3.out' }
-        );
-
-        // Auto exit after 3.2s
+        
+        // Continuous subtle floating pulse
+        gsap.to('.splash-logo-container', { 
+            y: -15, 
+            duration: 2, 
+            repeat: -1, 
+            yoyo: true, 
+            ease: 'sine.inOut',
+            delay: 1.8
+        });
+        
         const timer = setTimeout(() => {
-            gsap.to('.splash-screen', {
-                opacity: 0,
-                duration: 0.7,
-                ease: 'power2.in',
-                onComplete: onComplete
+            gsap.to('.splash-screen', { 
+                opacity: 0, 
+                duration: 0.8, 
+                ease: 'power2.inOut',
+                onComplete: onComplete 
             });
-        }, 3200);
+        }, 3500);
 
         return () => clearTimeout(timer);
     }, [onComplete]);
 
     return (
         <div className="splash-screen" style={{
-            position: 'fixed', inset: 0, display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center', alignItems: 'center',
-            background: 'radial-gradient(ellipse at center, #0a1f26 0%, #051014 70%)',
+            position: 'fixed', inset: 0, 
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            background: 'radial-gradient(circle at center, #0a1f26 0%, #051014 100%)',
             zIndex: 9999
         }}>
-            {/* Decorative rings */}
-            <div style={{
-                position: 'absolute', width: '300px', height: '300px', borderRadius: '50%',
-                border: '1px solid rgba(212,175,55,0.08)', top: '50%', left: '50%',
-                transform: 'translate(-50%, -50%)'
-            }} />
-            <div style={{
-                position: 'absolute', width: '220px', height: '220px', borderRadius: '50%',
-                border: '1px solid rgba(212,175,55,0.12)', top: '50%', left: '50%',
-                transform: 'translate(-50%, -50%)'
-            }} />
-
-            {/* Logo Image */}
-            <div className="splash-logo" style={{ textAlign: 'center', opacity: 0 }}>
+            <div className="splash-logo-container" style={{ textAlign: 'center' }}>
                 <img 
-                    src="https://i.postimg.cc/W3MnzMzh/jjj.png" 
-                    alt="Zhinovax Logo" 
-                    style={{ height: '90px', width: 'auto', marginBottom: '18px', objectFit: 'contain' }} 
+                    src="https://www.directfiles.link/YGDVHGGRG" 
+                    style={{ 
+                        width: '240px', 
+                        filter: 'drop-shadow(0 0 30px rgba(212, 175, 55, 0.4))' 
+                    }} 
+                    alt="Zhinovax Logo"
                 />
-
-                <div className="splash-tagline" style={{
-                    color: 'rgba(212,175,55,0.7)', letterSpacing: '4px',
-                    fontSize: '9px', fontWeight: '700',
-                    textTransform: 'uppercase', opacity: 0
-                }}>
-                    Elysian Technical Excellence
-                </div>
-
-                {/* Animated gold bar */}
-                <div className="splash-bar" style={{
-                    height: '2px',
-                    background: 'linear-gradient(90deg, transparent, #D4AF37, #F9D976, #D4AF37, transparent)',
-                    margin: '22px auto 0',
-                    width: 0,
-                    opacity: 0,
-                    borderRadius: '2px'
-                }} />
             </div>
         </div>
     );

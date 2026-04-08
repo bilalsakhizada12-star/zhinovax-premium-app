@@ -10,7 +10,7 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
                 padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 position: 'sticky', top: 0, zIndex: 100, background: 'var(--bg-dark)'
             }}>
-                <img src="https://i.postimg.cc/W3MnzMzh/jjj.png" alt="Zhinovax Logo" style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
+                <img src="https://www.directfiles.link/YGDVHGGRG" alt="Zhinovax Logo" style={{ height: '48px', width: 'auto', objectFit: 'contain' }} />
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     {loading && <span style={{ fontSize: '10px', color: 'var(--gold-primary)', animation: 'pulse 1.5s infinite' }}>درحال اتصال...</span>}
                     <button className="hover-lift" onClick={onLogin} style={{ 
