@@ -19,10 +19,12 @@ const Navbar = ({ activeTab, onTabChange }) => {
                     display: 'flex', flexDirection: 'column', alignItems: 'center', 
                     gap: '4px', width: '50px', cursor: 'pointer', 
                     color: activeTab === 'dashboard' ? 'var(--gold-primary)' : 'var(--text-muted)',
-                    textShadow: activeTab === 'dashboard' ? '0 0 15px rgba(212,175,55,0.4)' : 'none'
+                    textShadow: activeTab === 'dashboard' ? '0 0 15px rgba(212,175,55,0.4)' : 'none',
+                    position: 'relative'
                 }}>
                     <i className="fa-solid fa-chart-line" style={{ fontSize: '18px' }}></i>
                     <span style={{ fontSize: '9px', fontWeight: 'bold' }}>داشبورد</span>
+                    {hasNewNotif && activeTab !== 'dashboard' && <span style={{ position: 'absolute', top: '-5px', right: '5px', width: '10px', height: '10px', background: '#ff4b5c', borderRadius: '50%', border: '2px solid var(--bg-dark)' }}></span>}
                 </div>
                 
                 {/* HOME */}

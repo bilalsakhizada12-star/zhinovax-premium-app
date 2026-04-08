@@ -17,20 +17,35 @@ const Settings = ({ onTabChange, user, onLogin }) => {
         }
     }
 
+    const handleComingSoon = () => alert('بزودی در نسخه‌های بعدی... (Coming Soon)');
+
+    const handleAbout = () => {
+        alert(`زینوواکس (Zhinovax)
+یک شرکت پیشرو در مشاوره دیجیتال و تکنولوژی‌های هوش مصنوعی (AI) مستقر در کابل، افغانستان.
+
+مأموریت ما: استفاده از راهکارهای هوشمند برای رشد کسب‌وکارها و ارائه خدمات لوکس در خرید و فروش خودرو و املاک.
+
+مدیریت: تحت رهبری عبدالصبور غیاثی.
+آدرس: کابل، شهر نو، ساعت‌فروشی، منزل دوم.
+Info@zhinovax.com`);
+    };
+
     // Public menu - visible to ALL visitors
     const publicMenuItems = [
-        { iconName: 'bell', title: 'اعلانات', color: 'transparent', stroke: 'var(--gold-primary)', badge: '4' },
-        { id: 'btn-add-car', iconName: 'gear', title: 'افزودن موتر جدید', color: 'transparent', stroke: 'var(--gold-primary)', action: () => onTabChange('add_asset') },
-        { iconName: 'trophy', title: 'چالش‌ها', color: 'transparent', stroke: 'var(--gold-primary)', action: () => onTabChange('challenges') },
-        { iconName: 'gamepad', title: 'مسابقه و بازی‌ها', color: 'transparent', stroke: 'rgba(212,175,55,0.7)' },
-        { iconName: 'info', title: 'درباره زینوواکس', color: 'transparent', stroke: 'rgba(212,175,55,0.6)' },
+        { iconName: 'bell', title: 'اعلانات', color: 'transparent', stroke: '#34a853', badge: '4', action: () => alert('بخش اعلانات فعال است') },
+        { iconName: 'trophy', title: 'چالش‌ها', color: 'transparent', stroke: '#ab8720', action: handleComingSoon },
+        { iconName: 'gamepad', title: 'مسابقه و بازی‌ها', color: 'transparent', stroke: '#f9ab00', action: handleComingSoon },
+        { iconName: 'info', title: 'درباره زینوواکس', color: 'transparent', stroke: '#e91e63', action: handleAbout },
     ];
 
     // Private menu - visible ONLY to logged-in users
     const privateMenuItems = [
-        { iconName: 'wallet', title: 'بیلانس و پرداخت‌ها', color: 'transparent', stroke: 'var(--gold-primary)' },
-        { iconName: 'gear', title: 'تنظیمات حساب', color: 'transparent', stroke: 'rgba(212,175,55,0.7)' },
-        { iconName: 'logout', title: 'خروج از حساب', color: 'transparent', stroke: '#ff5722' }
+        { iconName: 'wallet', title: 'بیلانس و پرداخت‌ها', color: 'transparent', stroke: '#1a73e8', action: handleComingSoon },
+        { iconName: 'gear', title: 'تنظیمات حساب', color: 'transparent', stroke: '#17a2b8', action: handleComingSoon },
+        { iconName: 'logout', title: 'خروج از حساب', color: 'transparent', stroke: '#ff5722', action: () => {
+            alert('خروج با موفقیت انجام شد');
+            window.location.reload();
+        }}
     ];
 
     const socials = [

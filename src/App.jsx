@@ -7,6 +7,18 @@ const App = () => {
     const [showSplash, setShowSplash] = React.useState(true);
     const [user, setUser] = React.useState(null); // Auth State
     const [pendingAction, setPendingAction] = React.useState(null);
+    const [lastCarCount, setLastCarCount] = React.useState(parseInt(localStorage.getItem('zhinovax_car_count') || '0'));
+    const [hasNewNotif, setHasNewNotif] = React.useState(false);
+
+    React.useEffect(() => {
+        if (!loading && cars.length > 0) {
+            if (cars.length > lastCarCount && lastCarCount !== 0) {
+                setHasNewNotif(true);
+            }
+            localStorage.setItem('zhinovax_car_count', cars.length.toString());
+            setLastCarCount(cars.length);
+        }
+    }, [cars, loading]);
 
     React.useEffect(() => {
         if (!showSplash) {
@@ -117,7 +129,7 @@ const App = () => {
             )}
 
             {/* Navbar is only shown in main views, not splash, auth, or detail */}
-            {view === 'home' && <Navbar activeTab={activeTab} onTabChange={handleTabChange} />}
+            {view === 'home' && <Navbar activeTab={activeTab} onTabChange={handleTabChange} hasNewNotif={hasNewNotif} />}
         </div>
     );
 };
