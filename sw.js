@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zhinovax-v3';
+const CACHE_NAME = 'zhinovax-v4';
 const ASSETS = [
   './index.html',
   './src/styles/global.css',
@@ -8,6 +8,7 @@ const ASSETS = [
   './src/pages/Detail.jsx',
   './src/pages/Settings.jsx',
   './src/pages/Challenges.jsx',
+  './src/pages/About.jsx',
   './src/pages/Auth.jsx',
   './src/pages/Favorites.jsx',
   './src/pages/Portfolio.jsx',
