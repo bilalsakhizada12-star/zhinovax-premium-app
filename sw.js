@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zhinovax-v4';
+const CACHE_NAME = 'zhinovax-v5';
 const ASSETS = [
   './index.html',
   './src/styles/global.css',
@@ -9,10 +9,12 @@ const ASSETS = [
   './src/pages/Settings.jsx',
   './src/pages/Challenges.jsx',
   './src/pages/About.jsx',
+  './src/pages/ComingSoon.jsx',
   './src/pages/Auth.jsx',
   './src/pages/Favorites.jsx',
   './src/pages/Portfolio.jsx',
   './src/components/ui/CheckoutModal.jsx',
+  './src/components/ui/AddAssetModal.jsx',
   './src/components/layout/Navbar.jsx',
   './src/components/ui/AssetCard.jsx',
   './src/components/ui/SplashScreen.jsx'

@@ -104,6 +104,7 @@ const App = () => {
                 <Settings user={user} onLogin={() => setView('auth')} onTabChange={(tab) => {
                     if (tab === 'challenges') setView('challenges');
                     else if (tab === 'about') setView('about');
+                    else if (tab === 'coming_soon') setView('coming_soon');
                     else if (tab === 'add_asset') setView('add_asset');
                     else setActiveTab(tab);
                 }} />
@@ -115,6 +116,10 @@ const App = () => {
 
             {view === 'about' && (
                 <About onBack={() => { setView('home'); setActiveTab('settings'); }} />
+            )}
+
+            {view === 'coming_soon' && (
+                <ComingSoon onBack={() => { setView('home'); setActiveTab('settings'); }} />
             )}
             
             {view === 'home' && activeTab === 'favorites' && (
