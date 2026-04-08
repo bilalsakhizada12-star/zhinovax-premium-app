@@ -97,86 +97,86 @@ const Auth = ({ onLogin }) => {
             }}>
                 {/* Logo */}
                 <div style={{ marginBottom: '30px' }}>
-                    <img src="https://i.postimg.cc/W3MnzMzh/jjj.png" alt="Zhinovax" style={{ height: '50px', marginBottom: '15px', objectFit: 'contain' }} />
-                    <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#fff', margin: '0 0 8px' }}>
-                        {step === 1 ? 'خوش آمدید' : 'کد تأیید'}
-                    </h2>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '13px', margin: 0 }}>
-                        {step === 1 ? 'شماره موبایل خود را وارد کنید' : `کد پیامک شده به ${phone} را وارد کنید`}
-                    </p>
-                </div>
-
-                {step === 1 ? (
-                    <form onSubmit={handlePhoneSubmit}>
-                        <div style={{
-                            display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.05)',
-                            border: `1px solid ${isPhoneValid ? 'var(--gold-primary)' : 'rgba(255,255,255,0.1)'}`,
-                            borderRadius: '15px', marginBottom: '20px', overflow: 'hidden', direction: 'ltr'
-                        }}>
-                            <div style={{
-                                padding: '16px 20px', background: 'rgba(212,175,55,0.1)', color: 'var(--gold-primary)',
-                                fontWeight: '900', fontSize: '17px', borderRight: '1px solid rgba(255,255,255,0.1)'
-                            }}>
-                                +93
-                            </div>
-                            <input
-                                type="tel"
-                                placeholder="700 123 456"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                                autoFocus
-                                style={{
-                                    flex: 1, background: 'transparent', border: 'none',
-                                    padding: '16px', color: '#fff', fontSize: '17px',
-                                    letterSpacing: '2px', outline: 'none', fontFamily: 'monospace'
-                                }}
-                            />
-                        </div>
-
-                        {/* Helper text */}
-                        <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginBottom: '20px' }}>
-                            شماره تماس خود را بدون 0 وارد کنید (مثال: 700123456)
+                        <img src="https://i.postimg.cc/W3MnzMzh/jjj.png" alt="Zhinovax" style={{ height: '50px', marginBottom: '15px', objectFit: 'contain' }} />
+                        <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#fff', margin: '0 0 8px' }}>
+                            {step === 1 ? 'خوش آمدید' : 'کد تأیید'}
+                        </h2>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '13px', margin: 0 }}>
+                            {step === 1 ? 'شماره موبایل خود را وارد کنید' : `کد پیامک شده به ${phone} را وارد کنید`}
                         </p>
+                    </div>
 
-                        <button type="submit" style={btnStyle(isPhoneValid && !loading)} disabled={!isPhoneValid || loading}>
-                            {loading ? <Spinner /> : <><i className="fa-solid fa-paper-plane"></i> دریافت کد ورود</>}
-                        </button>
-                    </form>
-                ) : (
-                    <form onSubmit={handleVerify}>
-                        {/* OTP boxes */}
-                        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', marginBottom: '20px', direction: 'ltr' }}>
-                            {otp.map((digit, index) => (
+                    {step === 1 ? (
+                        <form onSubmit={handlePhoneSubmit}>
+                            <div style={{
+                                display: 'flex', alignItems: 'center', background: 'rgba(255,255,255,0.05)',
+                                border: `1px solid ${isPhoneValid ? 'var(--gold-primary)' : 'rgba(255,255,255,0.1)'}`,
+                                borderRadius: '15px', marginBottom: '20px', overflow: 'hidden', direction: 'ltr'
+                            }}>
+                                <div style={{
+                                    padding: '16px 20px', background: 'rgba(212,175,55,0.1)', color: 'var(--gold-primary)',
+                                    fontWeight: '900', fontSize: '17px', borderRight: '1px solid rgba(255,255,255,0.1)'
+                                }}>
+                                    +93
+                                </div>
                                 <input
-                                    key={index}
-                                    ref={otpRefs[index]}
-                                    type="text"
-                                    inputMode="numeric"
-                                    maxLength="1"
-                                    value={digit}
-                                    onChange={(e) => handleOtpChange(index, e.target.value)}
-                                    onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                                    type="tel"
+                                    placeholder="700 123 456"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                                    autoFocus
                                     style={{
-                                        width: '55px', height: '65px',
-                                        background: 'rgba(255,255,255,0.05)',
-                                        border: `2px solid ${digit ? 'var(--gold-primary)' : 'rgba(255,255,255,0.1)'}`,
-                                        borderRadius: '15px', color: '#fff',
-                                        fontSize: '26px', textAlign: 'center',
-                                        outline: 'none'
+                                        flex: 1, background: 'transparent', border: 'none',
+                                        padding: '16px', color: '#fff', fontSize: '17px',
+                                        letterSpacing: '2px', outline: 'none', fontFamily: 'monospace'
                                     }}
                                 />
-                            ))}
-                        </div>
+                            </div>
 
-                        {/* Test hint - prominent */}
-                        <div style={{
-                            background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.3)',
-                            borderRadius: '12px', padding: '10px', marginBottom: '20px'
-                        }}>
-                            <p style={{ color: 'var(--gold-primary)', fontSize: '12px', margin: 0, fontWeight: 'bold' }}>
-                                ✦ برای تست: کد <strong>1234</strong> را وارد کنید
+                            {/* Helper text */}
+                            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', marginBottom: '20px' }}>
+                                شماره تماس خود را بدون 0 وارد کنید (مثال: 700123456)
                             </p>
-                        </div>
+
+                            <button type="submit" style={btnStyle(isPhoneValid && !loading)} disabled={!isPhoneValid || loading}>
+                                {loading ? <Spinner /> : <><i className="fa-solid fa-paper-plane"></i> دریافت کد ورود</>}
+                            </button>
+                        </form>
+                    ) : (
+                        <form onSubmit={handleVerify}>
+                            {/* OTP boxes */}
+                            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', marginBottom: '20px', direction: 'ltr' }}>
+                                {otp.map((digit, index) => (
+                                    <input
+                                        key={index}
+                                        ref={otpRefs[index]}
+                                        type="text"
+                                        inputMode="numeric"
+                                        maxLength="1"
+                                        value={digit}
+                                        onChange={(e) => handleOtpChange(index, e.target.value)}
+                                        onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                                        style={{
+                                            width: '55px', height: '65px',
+                                            background: 'rgba(255,255,255,0.05)',
+                                            border: `2px solid ${digit ? 'var(--gold-primary)' : 'rgba(255,255,255,0.1)'}`,
+                                            borderRadius: '15px', color: '#fff',
+                                            fontSize: '26px', textAlign: 'center',
+                                            outline: 'none'
+                                        }}
+                                    />
+                                ))}
+                            </div>
+
+                            {/* Test hint - prominent */}
+                            <div style={{
+                                background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.3)',
+                                borderRadius: '12px', padding: '10px', marginBottom: '20px'
+                            }}>
+                                <p style={{ color: 'var(--gold-primary)', fontSize: '12px', margin: 0, fontWeight: 'bold' }}>
+                                    ✦ جهت تست: هر کدی (مثلاً ۱۲۳۴) کار می‌کند
+                                </p>
+                            </div>
 
                         <button type="submit" style={btnStyle(isOtpComplete && !loading)} disabled={!isOtpComplete || loading}>
                             {loading ? <Spinner /> : <><i className="fa-solid fa-circle-check"></i> تأیید و ورود</>}

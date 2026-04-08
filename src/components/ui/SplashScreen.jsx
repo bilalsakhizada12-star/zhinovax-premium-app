@@ -37,9 +37,10 @@ const SplashScreen = ({ onComplete }) => {
         }}>
             <div className="splash-logo-container" style={{ textAlign: 'center' }}>
                 <img 
-                    src="https://www.directfiles.link/YGDVHGGRG" 
+                    src="https://i.postimg.cc/W3MnzMzh/jjj.png" 
                     style={{ 
-                        width: '240px', 
+                        height: '110px', 
+                        width: 'auto',
                         filter: 'drop-shadow(0 0 30px rgba(212, 175, 55, 0.4))' 
                     }} 
                     alt="Zhinovax Logo"
