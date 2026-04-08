@@ -38,8 +38,7 @@ const Settings = ({ onTabChange, user, onLogin }) => {
     const socials = [
         { icon: 'fa-brands fa-facebook-f', url: 'https://www.facebook.com/profile.php?id=61587145516031', color: '#1877F2', bg: 'rgba(24,119,242,0.15)' },
         { icon: 'fa-brands fa-tiktok', url: 'https://www.tiktok.com/@zhinovax_carproperty', color: '#fff', bg: 'rgba(0,0,0,0.5)' },
-        { icon: 'fa-brands fa-instagram', url: 'https://www.instagram.com/zhinovax_carproperty', color: '#E1306C', bg: 'rgba(225,48,108,0.12)' },
-        { icon: 'fa-brands fa-youtube', url: '#', color: '#FF0000', bg: 'rgba(255,0,0,0.12)' }
+        { icon: 'fa-brands fa-instagram', url: 'https://www.instagram.com/zhinovax_carproperty', color: '#E1306C', bg: 'rgba(225,48,108,0.12)' }
     ];
 
     const MenuItem = ({ item }) => (
