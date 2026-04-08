@@ -35,7 +35,7 @@ Info@zhinovax.com`);
         { iconName: 'bell', title: 'اعلانات', color: 'transparent', stroke: '#34a853', badge: '4', action: () => alert('بخش اعلانات فعال است') },
         { iconName: 'trophy', title: 'چالش‌ها', color: 'transparent', stroke: '#ab8720', action: handleComingSoon },
         { iconName: 'gamepad', title: 'مسابقه و بازی‌ها', color: 'transparent', stroke: '#f9ab00', action: handleComingSoon },
-        { iconName: 'info', title: 'درباره زینوواکس', color: 'transparent', stroke: '#e91e63', action: handleAbout },
+        { iconName: 'info', title: 'درباره زینوواکس', color: 'transparent', stroke: '#e91e63', action: () => onTabChange('about') },
     ];
 
     // Private menu - visible ONLY to logged-in users
