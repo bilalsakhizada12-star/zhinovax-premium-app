@@ -1,77 +1,77 @@
 const Navbar = ({ activeTab, onTabChange, hasNewNotif }) => {
+    React.useEffect(() => {
+        gsap.fromTo('.navbar-inner', 
+            { y: 50, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.5 }
+        );
+    }, []);
+
+    const navItemStyle = (tab) => ({
+        display: 'flex', flexDirection: 'column', alignItems: 'center', 
+        gap: '6px', width: '60px', cursor: 'pointer', transition: '0.3s',
+        color: activeTab === tab ? 'var(--gold-primary)' : 'rgba(255,255,255,0.3)',
+        textShadow: activeTab === tab ? '0 0 15px rgba(212,175,55,0.4)' : 'none',
+        position: 'relative', zIndex: 2
+    });
+
     return (
-        <div style={{
-            position: 'fixed', bottom: '20px', left: '50%', transform: 'translateX(-50%)', 
-            width: '90%', maxWidth: '380px', height: '70px', zIndex: '1000'
+        <div className="navbar-container" style={{
+            position: 'fixed', bottom: '0', left: '50%', transform: 'translateX(-50%)', 
+            width: '100%', maxWidth: '420px', height: '100px', zIndex: '2000',
+            pointerEvents: 'none', padding: '0 15px 15px'
         }}>
-            {/* Background - 100% Yesterday Baseline Glass */}
-            <div className="glass" style={{
-                position: 'absolute', bottom: '0', width: '100%', height: '100%', 
-                borderRadius: '25px', boxShadow: '0 10px 40px rgba(0,0,0,0.5)'
-            }}></div>
-            
-            <div style={{
-                position: 'relative', width: '100%', height: '100%', 
-                display: 'flex', justifyContent: 'space-around', alignItems: 'center'
+            <div className="navbar-inner glass" style={{
+                position: 'relative', width: '100%', height: '70px', 
+                borderRadius: '24px', display: 'flex', justifyContent: 'space-around', 
+                alignItems: 'center', pointerEvents: 'auto',
+                border: '1px solid rgba(255,255,255,0.1)',
+                background: 'rgba(5, 16, 20, 0.85)',
+                backdropFilter: 'blur(20px)'
             }}>
-                {/* DASHBOARD */}
-                <div id="nav-dashboard" onClick={() => onTabChange('dashboard')} className="hover-lift" style={{
-                    display: 'flex', flexDirection: 'column', alignItems: 'center', 
-                    gap: '4px', width: '50px', cursor: 'pointer', 
-                    color: activeTab === 'dashboard' ? 'var(--gold-primary)' : 'var(--text-muted)',
-                    textShadow: activeTab === 'dashboard' ? '0 0 15px rgba(212,175,55,0.4)' : 'none',
-                    position: 'relative'
-                }}>
-                    <i className="fa-solid fa-chart-line" style={{ fontSize: '18px' }}></i>
-                    <span style={{ fontSize: '9px', fontWeight: 'bold' }}>داشبورد</span>
-                    {hasNewNotif && activeTab !== 'dashboard' && <span style={{ position: 'absolute', top: '-5px', right: '5px', width: '10px', height: '10px', background: '#ff4b5c', borderRadius: '50%', border: '2px solid var(--bg-dark)' }}></span>}
-                </div>
-                
-                {/* HOME */}
-                <div id="nav-home" onClick={() => onTabChange('home')} className="hover-lift" style={{
-                    display: 'flex', flexDirection: 'column', alignItems: 'center', 
-                    gap: '4px', width: '50px', cursor: 'pointer', 
-                    color: activeTab === 'home' ? 'var(--gold-primary)' : 'var(--text-muted)',
-                    textShadow: activeTab === 'home' ? '0 0 15px rgba(212,175,55,0.4)' : 'none'
-                }}>
-                    <i className="fa-solid fa-house" style={{ fontSize: '18px' }}></i>
-                    <span style={{ fontSize: '9px', fontWeight: 'bold' }}>خانه</span>
-                </div>
-                
-                {/* CENTRAL CUBE FAB - 100% Yesterday Baseline */}
-                <div id="nav-cube" onClick={() => onTabChange('home')} className="hover-lift" style={{
-                    background: 'var(--gold-gradient)', width: '55px', height: '55px', 
-                    borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    marginTop: '-35px', boxShadow: '0 8px 30px rgba(212, 175, 55, 0.4)',
-                    cursor: 'pointer', border: '4px solid var(--bg-dark)', transition: '0.2s'
-                }}>
-                    <i className="fa-solid fa-cube" style={{ color: '#000', fontSize: '24px' }}></i>
-                </div>
-                
-                {/* FAVORITES */}
-                <div id="nav-favorites" onClick={() => onTabChange('favorites')} className="hover-lift" style={{
-                    display: 'flex', flexDirection: 'column', alignItems: 'center', 
-                    gap: '4px', width: '50px', cursor: 'pointer', 
-                    color: activeTab === 'favorites' ? 'var(--gold-primary)' : 'var(--text-muted)',
-                    textShadow: activeTab === 'favorites' ? '0 0 15px rgba(212,175,55,0.4)' : 'none'
-                }}>
-                    <i className="fa-solid fa-heart" style={{ fontSize: '18px' }}></i>
-                    <span style={{ fontSize: '9px', fontWeight: 'bold' }}>مورد علاقه</span>
+                {/* SETTINGS */}
+                <div id="nav-settings" onClick={() => onTabChange('settings')} className="hover-lift" style={navItemStyle('settings')}>
+                    <i className="fa-solid fa-gear" style={{ fontSize: '20px' }}></i>
+                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>تنظیمات</span>
                 </div>
 
-                {/* SETTINGS */}
-                <div id="nav-settings" onClick={() => onTabChange('settings')} className="hover-lift" style={{
-                    display: 'flex', flexDirection: 'column', alignItems: 'center', 
-                    gap: '4px', width: '50px', cursor: 'pointer', 
-                    color: activeTab === 'settings' ? 'var(--gold-primary)' : 'var(--text-muted)',
-                    textShadow: activeTab === 'settings' ? '0 0 15px rgba(212,175,55,0.4)' : 'none'
+                {/* FAVORITES */}
+                <div id="nav-favorites" onClick={() => onTabChange('favorites')} className="hover-lift" style={navItemStyle('favorites')}>
+                    <i className="fa-solid fa-heart" style={{ fontSize: '20px' }}></i>
+                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>برگزیده</span>
+                </div>
+                
+                {/* MOCK GAP FOR FAB */}
+                <div style={{ width: '60px' }}></div>
+                
+                {/* ASSETS / HOME */}
+                <div id="nav-home" onClick={() => onTabChange('home')} className="hover-lift" style={navItemStyle('home')}>
+                    <i className="fa-solid fa-gem" style={{ fontSize: '20px' }}></i>
+                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>دارایی‌ها</span>
+                </div>
+                
+                {/* DASHBOARD / PORTFOLIO */}
+                <div id="nav-dashboard" onClick={() => onTabChange('dashboard')} className="hover-lift" style={navItemStyle('dashboard')}>
+                    <i className="fa-solid fa-layer-group" style={{ fontSize: '20px' }}></i>
+                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>داشبورد</span>
+                    {hasNewNotif && <span style={{ position: 'absolute', top: '-5px', right: '15px', width: '8px', height: '8px', background: '#ff4b5c', borderRadius: '50%', border: '2px solid #051014' }}></span>}
+                </div>
+
+                {/* CENTRAL FAB (Floating Action Button) */}
+                <div onClick={() => onTabChange('home')} className="hover-lift pulse-gold" style={{
+                    position: 'absolute', top: '-25px', left: '50%', transform: 'translateX(-50%)',
+                    background: 'var(--gold-gradient)', width: '65px', height: '65px', 
+                    borderRadius: '22px', display: 'flex', justifyContent: 'center', alignItems: 'center', 
+                    boxShadow: '0 10px 25px rgba(212, 175, 55, 0.5)',
+                    cursor: 'pointer', border: '5px solid #051014', transition: '0.3s',
+                    zIndex: 10
                 }}>
-                    <i className="fa-solid fa-gear" style={{ fontSize: '18px' }}></i>
-                    <span style={{ fontSize: '9px', fontWeight: 'bold' }}>تنظیمات</span>
+                    <i className="fa-solid fa-house" style={{ color: '#000', fontSize: '26px' }}></i>
                 </div>
             </div>
         </div>
     );
 };
+
+window.Navbar = Navbar;
 
 window.Navbar = Navbar;

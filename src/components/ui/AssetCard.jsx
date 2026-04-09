@@ -4,80 +4,91 @@ const AssetCard = ({ data, type, onClick }) => {
     return (
         <div 
             onClick={() => onClick(type, data.id)}
-            className="glass hover-lift"
+            className="glass hover-lift gsap-reveal"
             style={{
-                width: '185px', borderRadius: '24px', padding: '10px',
-                marginRight: '15px', cursor: 'pointer', flexShrink: 0,
-                position: 'relative', border: '1px solid rgba(255,255,255,0.06)'
+                width: '100%', borderRadius: '28px', padding: '12px',
+                marginBottom: '5px', cursor: 'pointer',
+                position: 'relative', border: '1px solid rgba(255,255,255,0.08)',
+                background: 'rgba(255,255,255,0.02)',
+                overflow: 'hidden'
             }}
         >
-            {/* Price Tag - TOP RIGHT (Corrected from Screenshot) */}
+            {/* Price Tag - TOP RIGHT */}
             <div style={{
-                position: 'absolute', top: '18px', right: '18px',
-                background: 'var(--gold-primary)', color: '#000',
-                padding: '4px 12px', borderRadius: '14px', fontSize: '11px',
-                fontWeight: '900', zIndex: 10
+                position: 'absolute', top: '22px', right: '22px',
+                background: 'var(--gold-gradient)', color: '#000',
+                padding: '6px 16px', borderRadius: '16px', fontSize: '13px',
+                fontWeight: '900', zIndex: 10, boxShadow: '0 4px 15px rgba(212, 175, 55, 0.3)'
             }}>
                 {data.price}
             </div>
 
-            {/* Heart Icon - TOP LEFT (Corrected from Screenshot) */}
+            {/* Heart Icon - TOP LEFT */}
             <div style={{
-                position: 'absolute', top: '18px', left: '18px',
-                background: 'rgba(255,255,255,0.1)', color: '#fff',
-                width: '32px', height: '32px', borderRadius: '50%',
+                position: 'absolute', top: '22px', left: '22px',
+                background: 'rgba(0,0,0,0.4)', color: '#fff',
+                width: '38px', height: '38px', borderRadius: '50%',
                 display: 'flex', justifyContent: 'center', alignItems: 'center',
-                zIndex: 10, backdropFilter: 'blur(5px)'
+                zIndex: 10, backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)'
             }}>
-                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                 <i className="fa-regular fa-heart" style={{ fontSize: '18px' }}></i>
             </div>
 
-            {/* View Count Badge - BOTTOM LEFT of Image */}
+            {/* Main Image */}
             <div style={{
-                position: 'absolute', top: '115px', left: '18px',
-                background: 'rgba(0,0,0,0.5)', color: '#fff',
-                padding: '2px 8px', borderRadius: '8px', fontSize: '9px',
-                display: 'flex', alignItems: 'center', gap: '4px', zIndex: 10
-            }}>
-                <span>{data.views ? data.views.toLocaleString() : '—'}</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            </div>
-
-            <div style={{
-                width: '100%', height: '140px', borderRadius: '18px',
+                width: '100%', height: '220px', borderRadius: '22px',
                 backgroundImage: `url(${data.image_url})`,
                 backgroundSize: 'cover', backgroundPosition: 'center',
-                marginBottom: '12px', border: '1px solid rgba(255,255,255,0.08)'
-            }}></div>
+                marginBottom: '15px', border: '1px solid rgba(255,255,255,0.05)',
+                position: 'relative'
+            }}>
+                {/* View Count Badge */}
+                <div style={{
+                    position: 'absolute', bottom: '12px', right: '12px',
+                    background: 'rgba(0,0,0,0.6)', color: '#fff',
+                    padding: '4px 10px', borderRadius: '10px', fontSize: '10px',
+                    display: 'flex', alignItems: 'center', gap: '6px', backdropFilter: 'blur(5px)'
+                }}>
+                    <i className="fa-solid fa-eye" style={{ fontSize: '10px', color: 'var(--gold-primary)' }}></i>
+                    <span>{data.views ? data.views.toLocaleString() : '۱,۲۴۰'}</span>
+                </div>
+            </div>
 
-            <div style={{ padding: '0 4px', textAlign: 'right' }}>
-                <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.5)', fontWeight: 'bold' }}>
-                    رجستر: {data.reg_no || '---'}
+            <div style={{ padding: '0 8px 8px', textAlign: 'right' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                     <div style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: '900', background: 'rgba(212,175,55,0.1)', padding: '2px 8px', borderRadius: '6px' }}>
+                        {isCar ? 'Automotive' : 'Real Estate'}
+                    </div>
+                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>
+                        رجستر: {data.reg_no || '---'}
+                    </div>
                 </div>
                 
-                <h4 style={{ margin: '2px 0 12px', fontSize: '13px', fontWeight: '900', color: '#fff' }}>{data.title}</h4>
+                <h4 style={{ margin: '5px 0 15px', fontSize: '18px', fontWeight: '900', color: '#fff' }}>{data.title}</h4>
                 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end', fontSize: '9px', color: 'rgba(255,255,255,0.4)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
                         <span>{isCar ? (data.fuel || 'پترول') : (data.rooms ? data.rooms + ' اتاق' : '---')}</span>
-                        <i className="fa-solid fa-gas-pump"></i>
+                        <i className="fa-solid fa-gas-pump" style={{ color: 'var(--gold-primary)' }}></i>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end', fontSize: '9px', color: 'rgba(255,255,255,0.4)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
                         <span>{isCar ? (data.transmission || 'اوتومات') : (data.area || '---')}</span>
-                        <i className="fa-solid fa-gear"></i>
+                        <i className="fa-solid fa-gear" style={{ color: 'var(--gold-primary)' }}></i>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end', fontSize: '9px', color: 'rgba(255,255,255,0.4)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)', direction: 'ltr' }}>
                         <span>{isCar ? (data.mileage || 'Km 0') : (data.floor ? data.floor + ' منزل' : '---')}</span>
-                        <i className="fa-solid fa-gauge-high"></i>
+                        <i className="fa-solid fa-gauge-high" style={{ color: 'var(--gold-primary)' }}></i>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end', fontSize: '9px', color: 'rgba(255,255,255,0.4)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
                         <span>{data.location || 'کابل'}</span>
-                        <i className="fa-solid fa-location-dot"></i>
+                        <i className="fa-solid fa-location-dot" style={{ color: 'var(--gold-primary)' }}></i>
                     </div>
                 </div>
             </div>
         </div>
     );
 };
+
+window.AssetCard = AssetCard;
 
 window.AssetCard = AssetCard;

@@ -1,6 +1,7 @@
 :root {
     --gold-primary: #d4af37;
     --gold-gradient: linear-gradient(135deg, #F9D976, #D4AF37, #b8860b);
+    --gold-glow: 0 0 20px rgba(212, 175, 55, 0.4);
     --brand-teal: #008e9b;
     --bg-dark: #051014;
     --surface-glass: rgba(255,255,255,0.03);
@@ -8,6 +9,7 @@
     --text-main: #ffffff;
     --text-muted: rgba(255,255,255,0.5);
     --border-glass: rgba(255,255,255,0.08);
+    --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
 
 @keyframes pulse {
@@ -20,6 +22,17 @@
     100% { transform: rotate(360deg); }
 }
 
+@keyframes pulse-gold {
+    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+@keyframes slide-up {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -28,10 +41,11 @@
 
 body, html {
     margin: 0; padding: 0;
-    background-color: var(--bg-dark); /* Applied Brand Color */
+    background-color: var(--bg-dark);
     color: var(--text-main);
     overflow-x: hidden;
     direction: rtl;
+    user-select: none;
 }
 
 #root {
@@ -47,15 +61,25 @@ body, html {
 
 .glass {
     background: var(--surface-glass);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     border-radius: 20px;
     border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-premium);
 }
 
 .screen {
     flex: 1;
     overflow-y: auto;
     width: 100%;
+}
+
+/* Grid Layout for Parity with Karwwan */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 20px 20px;
 }
 
 .scroller {
@@ -68,14 +92,20 @@ body, html {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
 }
-.scroller > div {
-    scroll-snap-align: center;
-}
 .scroller::-webkit-scrollbar { display: none; }
 
 .hover-lift {
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .hover-lift:active, button:active:not(:disabled) { 
-    transform: scale(0.95) !important; 
+    transform: scale(0.96) !important; 
+}
+
+.pulse-gold {
+    animation: pulse-gold 2s infinite;
+}
+
+.gsap-reveal {
+    opacity: 0;
+    transform: translateY(20px);
 }

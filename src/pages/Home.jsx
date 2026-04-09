@@ -1,77 +1,128 @@
 const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogin }) => {
     const AssetCard = window.AssetCard;
 
-    return (
-        <div className="screen home-screen" style={{ paddingBottom: '110px' }}>
-            {/* Hybrid Sync handles connectivity gracefully; no more aggressive banners */}
+    React.useEffect(() => {
+        if (!loading) {
+            gsap.fromTo('.gsap-reveal', 
+                { opacity: 0, y: 30 }, 
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 0.8, 
+                    stagger: 0.1, 
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: '.grid-layout',
+                        start: 'top 80%'
+                    }
+                }
+            );
+        }
+    }, [loading, cars, properties]);
 
-            {/* Header - 100% Reliable SVG Logo */}
+    return (
+        <div className="screen home-screen" style={{ paddingBottom: '120px' }}>
+            {/* Premium Header - Parity with Karwwan */}
             <div style={{ 
-                padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                position: 'sticky', top: 0, zIndex: 100, background: 'var(--bg-dark)'
+                padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                position: 'sticky', top: 0, zIndex: 100, background: 'rgba(5, 16, 20, 0.9)',
+                backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.05)'
             }}>
-                <img 
-                    src="https://i.postimg.cc/W3MnzMzh/jjj.png" 
-                    className="splash-logo"
-                    style={{ height: '48px', width: 'auto', objectFit: 'contain' }} 
-                    alt="Zhinovax Logo"
-                />
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div className="hover-lift" style={{ 
+                        background: 'rgba(255,255,255,0.05)', padding: '10px', borderRadius: '12px',
+                        color: 'var(--gold-primary)', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.1)'
+                    }}>
+                        <i className="fa-solid fa-bars-staggered" style={{ fontSize: '18px' }}></i>
+                    </div>
                     {loading && <span style={{ fontSize: '10px', color: 'var(--gold-primary)', animation: 'pulse 1.5s infinite' }}>درحال اتصال...</span>}
-                    <button className="hover-lift" onClick={onLogin} style={{ 
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                     <button className="hover-lift" onClick={onLogin} style={{ 
                         background: 'var(--gold-gradient)', color: '#000', border: 'none', 
-                        padding: '10px 28px', borderRadius: '15px', fontWeight: '900', fontSize: '13px', 
+                        padding: '10px 24px', borderRadius: '30px', fontWeight: '900', fontSize: '13px', 
                         boxShadow: '0 4px 15px rgba(212, 175, 55, 0.3)'
                     }}>ورود</button>
+                    <img 
+                        src="https://i.postimg.cc/W3MnzMzh/jjj.png" 
+                        style={{ height: '32px', width: 'auto', objectFit: 'contain' }} 
+                        alt="Zhinovax Logo"
+                    />
                 </div>
             </div>
 
-            {/* Banner - Minimalist Yesterday Baseline */}
-            <div style={{ padding: '0 20px', marginBottom: '30px' }}>
+            {/* Hero Search Section - Parity with Karwwan */}
+            <div style={{ padding: '20px' }}>
                 <div className="glass" style={{ 
-                    padding: '25px', borderRadius: '24px', display: 'flex', 
-                    alignItems: 'center', justifyContent: 'space-between'
+                    padding: '20px', borderRadius: '24px', display: 'flex', 
+                    alignItems: 'center', justifyContent: 'space-between',
+                    background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)'
                 }}>
-                    <div style={{ textAlign: 'right' }}>
-                        <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 5px', color: '#fff' }}>دارایی خاص خود را پیدا کنید</h2>
-                        <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0 }}>مجموعه ممتاز خودرو و املاک زینوواکس</p>
-                    </div>
-                    <div style={{ 
-                        width: '45px', height: '45px', background: 'var(--gold-primary)', 
-                        borderRadius: '15px', display: 'flex', justifyContent: 'center', alignItems: 'center'
+                    <div className="hover-lift" style={{ 
+                        background: 'rgba(5, 16, 20, 0.4)', padding: '12px', borderRadius: '14px', 
+                        color: 'var(--gold-primary)', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer'
                     }}>
-                        <i className="fa-solid fa-gem" style={{ color: '#000' }}></i>
+                        <i className="fa-solid fa-sliders" style={{ fontSize: '18px' }}></i>
+                    </div>
+                    
+                    <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '15px' }}>
+                        <div>
+                            <h3 style={{ margin: 0, fontSize: '15px', fontWeight: '900', color: '#fff' }}>دارایی رویایی خود را پیدا کنید</h3>
+                            <p style={{ margin: '4px 0 0', fontSize: '11px', color: 'var(--text-muted)' }}>مجموعه ممتاز زینوواکس را مرور کنید</p>
+                        </div>
+                        <div style={{ 
+                            width: '45px', height: '45px', background: 'var(--gold-primary)', 
+                            borderRadius: '14px', display: 'flex', justifyContent: 'center', alignItems: 'center',
+                            boxShadow: '0 5px 15px rgba(212, 175, 55, 0.2)'
+                        }}>
+                            <i className="fa-solid fa-magnifying-glass" style={{ color: '#000', fontSize: '18px' }}></i>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Content Sections - Horizontal Scrolling only */}
-            <div style={{ padding: '0 20px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px', color: '#fff', textAlign: 'right', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '10px' }}>
-                    خودروهای پیشنهاد شده
-                    {cars.length > 0 && cars[0].id === 1 && <span style={{ fontSize: '9px', background: 'rgba(255,0,0,0.2)', color: '#ff4b5c', padding: '2px 8px', borderRadius: '10px' }}>حالت دمو</span>}
-                </h3>
-                <div className="scroller" style={{ margin: '0 -20px', paddingBottom: '10px' }}>
-                    {loading && cars.length === 0 ? (
-                        <div style={{ padding: '0 40px', color: 'var(--text-muted)', fontSize: '12px' }}>درحال اتصال به پایگاه داده...</div>
-                    ) : cars.length === 0 ? (
-                        <div style={{ padding: '0 40px', color: 'var(--text-muted)', fontSize: '12px' }}>هیچ خودرویی یافت نشد.</div>
-                    ) : cars.map(car => (
-                        <AssetCard key={car.id} data={car} type="car" onClick={onOpenDetail} />
-                    ))}
-                </div>
+            {/* Section Heading */}
+            <div style={{ padding: '10px 25px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ fontSize: '12px', color: 'var(--gold-primary)', cursor: 'pointer' }}>مشاهده همه</div>
+                <h3 style={{ fontSize: '18px', fontWeight: '900', color: '#fff', margin: 0 }}>آخرین خودروها</h3>
+            </div>
 
-                <h3 style={{ fontSize: '18px', fontWeight: 'bold', margin: '40px 0 20px', color: '#fff', textAlign: 'right' }}>املاک پیشنهاد شده</h3>
-                <div className="scroller" style={{ margin: '0 -20px', paddingBottom: '10px' }}>
-                    {loading ? (
-                        <div style={{ padding: '0 20px', color: 'var(--text-muted)' }}>...</div>
-                    ) : properties.map(prop => (
+            {/* Vertical Grid - Main Content */}
+            <div className="grid-layout">
+                {loading && (cars.length === 0) ? (
+                    <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
+                        <i className="fa-solid fa-circle-notch fa-spin" style={{ fontSize: '24px', marginBottom: '10px', display: 'block' }}></i>
+                        <span>درحال بارگذاری خودروها...</span>
+                    </div>
+                ) : cars.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>چیزی یافت نشد.</div>
+                ) : (
+                    cars.map(car => (
+                        <AssetCard key={car.id} data={car} type="car" onClick={onOpenDetail} />
+                    ))
+                )}
+            </div>
+
+            {/* Real Estate Section Heading */}
+            <div style={{ padding: '20px 25px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ fontSize: '12px', color: 'var(--gold-primary)', cursor: 'pointer' }}>مشاهده همه</div>
+                <h3 style={{ fontSize: '18px', fontWeight: '900', color: '#fff', margin: 0 }}>املاک ویژه</h3>
+            </div>
+
+            <div className="grid-layout">
+                {loading && (properties.length === 0) ? (
+                    <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>...</div>
+                ) : (
+                    properties.map(prop => (
                         <AssetCard key={prop.id} data={prop} type="property" onClick={onOpenDetail} />
-                    ))}
-                </div>
+                    ))
+                )}
             </div>
         </div>
     );
 };
+
+window.Home = Home;
 
 window.Home = Home;

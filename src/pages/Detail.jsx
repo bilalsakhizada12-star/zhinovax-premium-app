@@ -7,24 +7,28 @@ const Detail = ({ asset, onBack }) => {
     if (!asset) return null;
     const isCar = asset.type === 'car';
 
-    // Check favorites and handle view count on load
     React.useEffect(() => {
+        gsap.fromTo('.detail-content', 
+            { opacity: 0, y: 30 }, 
+            { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
+        );
+        
         // Favorites
         const favs = JSON.parse(localStorage.getItem('zhinovax_favorites') || '[]');
         setIsFav(favs.some(f => f.id === asset.id));
 
-        // View Counter Logic (1 per person locally)
+        // View Counter Logic
         const viewed = JSON.parse(localStorage.getItem('zhinovax_viewed') || '[]');
-        let currentViews = typeof asset.views === 'number' ? asset.views : parseInt((asset.views || '0').toString().replace(/,/g, '')) || 0;
+        let currentViews = typeof asset.views === 'number' ? asset.views : parseInt((asset.views || '0').toString().replace(/,/g, '')) || 1240;
         
         if (!viewed.includes(asset.id)) {
             currentViews += 1;
             viewed.push(asset.id);
             localStorage.setItem('zhinovax_viewed', JSON.stringify(viewed));
-            asset.views = currentViews; // mutate reference so Home updates
+            asset.views = currentViews;
         }
         setViews(currentViews);
-    }, [asset.id, asset]);
+    }, [asset.id]);
 
     const handleFavorite = () => {
         const favs = JSON.parse(localStorage.getItem('zhinovax_favorites') || '[]');
@@ -49,160 +53,138 @@ const Detail = ({ asset, onBack }) => {
         }
     };
 
-    // Safe accessors for fields that may be missing in Supabase-added cars
     const features = Array.isArray(asset.features) ? asset.features : [];
-    const amenities = asset.amenities && typeof asset.amenities === 'object' ? asset.amenities : {};
 
     return (
-        <div className="screen" style={{ overflowY: 'auto', paddingBottom: '140px', background: 'var(--bg-dark)' }}>
-            {/* Header */}
+        <div className="screen detail-screen" style={{ overflowY: 'auto', paddingBottom: '140px', background: 'var(--bg-dark)' }}>
+            {/* Transparent Header */}
             <div style={{ 
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
-                padding: '15px 20px', position: 'sticky', top: 0, 
-                background: 'var(--bg-dark)', zIndex: 100, borderBottom: '1px solid rgba(255,255,255,0.04)'
+                padding: '20px', position: 'absolute', top: 0, left: 0, right: 0,
+                zIndex: 100
             }}>
-                <div onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '16px', fontWeight: '900', color: '#fff' }}>
-                     <i className="fa-solid fa-chevron-left"></i> بازگشت
+                <div onClick={onBack} className="hover-lift" style={{ 
+                    background: 'rgba(5, 16, 20, 0.4)', padding: '12px', borderRadius: '14px', 
+                    color: '#fff', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.1)',
+                    backdropFilter: 'blur(10px)'
+                }}>
+                     <i className="fa-solid fa-chevron-right"></i>
                 </div>
-                <div style={{ display: 'flex', gap: '20px', fontSize: '18px', color: '#fff' }}>
-                    <i className="fa-solid fa-circle-info" style={{ cursor: 'pointer', opacity: 0.7 }}></i>
-                    <i onClick={handleShare} className="fa-solid fa-share-nodes" style={{ cursor: 'pointer', color: 'var(--gold-primary)' }}></i>
-                    <i onClick={handleFavorite} className={isFav ? 'fa-solid fa-heart' : 'fa-regular fa-heart'} style={{ cursor: 'pointer', color: isFav ? '#ff4b5c' : '#fff', transition: 'color 0.2s' }}></i>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                    <div onClick={handleShare} className="hover-lift" style={{ 
+                        background: 'rgba(5, 16, 20, 0.4)', padding: '12px', borderRadius: '14px', 
+                        color: 'var(--gold-primary)', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.1)',
+                        backdropFilter: 'blur(10px)'
+                    }}>
+                        <i className="fa-solid fa-share-nodes"></i>
+                    </div>
+                    <div onClick={handleFavorite} className="hover-lift" style={{ 
+                        background: 'rgba(5, 16, 20, 0.4)', padding: '12px', borderRadius: '14px', 
+                        color: isFav ? '#ff4b5c' : '#fff', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.1)',
+                        backdropFilter: 'blur(10px)'
+                    }}>
+                        <i className={isFav ? 'fa-solid fa-heart' : 'fa-regular fa-heart'}></i>
+                    </div>
                 </div>
             </div>
 
-            <div style={{ padding: '0' }}>
-                {/* Main Image */}
-                <div style={{ position: 'relative', width: '100%', height: '260px' }}>
-                    <div style={{ 
-                        width: '100%', height: '100%', backgroundSize: 'cover', backgroundPosition: 'center',
-                        backgroundImage: asset.image_url ? `url('${asset.image_url}')` : `url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800')`,
-                        backgroundColor: '#0a1f26'
-                    }}></div>
-                    <div style={{ position: 'absolute', bottom: '15px', right: '15px', background: 'rgba(0,0,0,0.7)', color: '#fff', padding: '4px 15px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold' }}>۱/۱</div>
-                    <div style={{ position: 'absolute', bottom: '15px', left: '15px', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', color: '#fff', padding: '4px 12px', borderRadius: '15px', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                        <span>{views > 0 ? views.toLocaleString() : '---'}</span>
-                        <i className="fa-solid fa-eye"></i>
+            {/* Main Image Banner */}
+            <div style={{ position: 'relative', width: '100%', height: '400px', overflow: 'hidden' }}>
+                <div style={{ 
+                    width: '100%', height: '100%', backgroundSize: 'cover', backgroundPosition: 'center',
+                    backgroundImage: asset.image_url ? `url('${asset.image_url}')` : `url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80')`,
+                }}></div>
+                <div style={{ 
+                    position: 'absolute', inset: 0, 
+                    background: 'linear-gradient(to bottom, rgba(5,16,20,0.4) 0%, transparent 40%, transparent 70%, var(--bg-dark) 100%)' 
+                }}></div>
+                
+                <div style={{ position: 'absolute', bottom: '20px', left: '25px', display: 'flex', gap: '10px' }}>
+                    <div style={{ background: 'rgba(0,0,0,0.6)', color: '#fff', padding: '6px 15px', borderRadius: '12px', fontSize: '11px', backdropFilter: 'blur(5px)' }}>
+                        <i className="fa-solid fa-eye" style={{ color: 'var(--gold-primary)', marginLeft: '6px' }}></i>
+                        {views.toLocaleString()} بازدید
+                    </div>
+                </div>
+            </div>
+
+            <div className="detail-content" style={{ padding: '0 25px' }}>
+                {/* Title & Price */}
+                <div style={{ textAlign: 'right', marginBottom: '30px' }}>
+                    <div style={{ display: 'inline-block', background: 'rgba(212,175,55,0.1)', color: 'var(--gold-primary)', padding: '5px 16px', borderRadius: '10px', fontSize: '11px', fontWeight: '900', marginBottom: '12px' }}>
+                        رجستر: {asset.reg_no || '---'}
+                    </div>
+                    <h1 style={{ fontSize: '26px', fontWeight: '900', color: '#fff', margin: '0 0 8px' }}>{asset.title}</h1>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'baseline', gap: '8px' }}>
+                         <span style={{ fontSize: '32px', fontWeight: '900', color: 'var(--gold-primary)' }}>{asset.price}</span>
                     </div>
                 </div>
 
-                {/* Thumbnails */}
-                <div className="scroller" style={{ padding: '15px 20px', borderBottom: '1px solid var(--border-glass)' }}>
-                    {[1,2,3,4].map(i => (
-                        <div key={i} style={{ 
-                            width: '85px', height: '65px', borderRadius: '15px', flexShrink: 0,
-                            backgroundImage: asset.image_url ? `url(${asset.image_url})` : `url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400')`,
-                            backgroundSize: 'cover', backgroundPosition: 'center',
-                            border: '1px solid rgba(255,255,255,0.1)'
-                        }}></div>
-                    ))}
-                </div>
-
-                <div style={{ padding: '20px' }}>
-                    <div style={{ textAlign: 'right', marginBottom: '25px' }}>
-                        <div style={{ display: 'inline-block', background: 'rgba(212,175,55,0.1)', color: 'var(--gold-primary)', padding: '4px 15px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold', marginBottom: '10px' }}>
-                            رجستر: {asset.reg_no || '---'}
+                {/* Primary Specs Grid */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '30px' }}>
+                    <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
+                        <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px'}}>موقعیت فعلی</div>
+                        <div style={{fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px'}}>
+                            {asset.location || 'کابل'} <i className="fa-solid fa-location-dot" style={{color: 'var(--gold-primary)'}}></i>
                         </div>
-                        <h1 style={{ fontSize: '22px', fontWeight: '900', margin: '0 0 5px', color: '#fff' }}>{asset.title}</h1>
-                        <div style={{ fontSize: '28px', fontWeight: '900', color: 'var(--gold-primary)' }}>{asset.price}</div>
                     </div>
+                    <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
+                        <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px'}}>{isCar ? 'گیربکس' : 'مساحت'}</div>
+                        <div style={{fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px', direction: 'ltr'}}>
+                            {isCar ? (asset.transmission || 'اوتومات') : (asset.area || '---')} <i className={isCar ? "fa-solid fa-gear" : "fa-solid fa-ruler-combined"} style={{color: 'var(--gold-primary)'}}></i>
+                        </div>
+                    </div>
+                    <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
+                        <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px'}}>{isCar ? 'کارکرد' : 'اتاق‌ها'}</div>
+                        <div style={{fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px', direction: 'ltr'}}>
+                            {isCar ? (asset.mileage || '---') : (asset.rooms || '---')} <i className={isCar ? "fa-solid fa-gauge-high" : "fa-solid fa-door-open"} style={{color: 'var(--gold-primary)'}}></i>
+                        </div>
+                    </div>
+                    <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
+                        <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px'}}>{isCar ? 'نوع سوخت' : 'منزل'}</div>
+                        <div style={{fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px'}}>
+                             {isCar ? (asset.fuel || 'پترول') : (asset.floor || '---')} <i className={isCar ? "fa-solid fa-gas-pump" : "fa-solid fa-layer-group"} style={{color: 'var(--gold-primary)'}}></i>
+                        </div>
+                    </div>
+                </div>
 
-                    {/* Specification Grid */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '30px' }}>
-                        {isCar ? (
-                            <>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px'}}>سابقه تصادف</div>
-                                    <div style={{fontWeight: '900', color: asset.accident_history ? '#ff4444' : 'var(--text-muted)'}}>{asset.accident_history || '---'}</div>
-                                </div>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px'}}>گیربکس</div>
-                                    <div style={{fontWeight: '900'}}>{asset.transmission || '---'}</div>
-                                </div>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px'}}>موتر</div>
-                                    <div style={{fontWeight: '900'}}>{asset.engine || '---'}</div>
-                                </div>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px'}}>موقعیت</div>
-                                    <div style={{fontWeight: '900'}}>{asset.location || '---'}</div>
-                                </div>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px'}}>کارکرد</div>
-                                    <div style={{fontWeight: '900'}}>{asset.mileage || '---'}</div>
-                                </div>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px'}}>سوخت</div>
-                                    <div style={{fontWeight: '900'}}>{asset.fuel || '---'}</div>
-                                </div>
-                            </>
-                        ) : (
-                            <>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)'}}>منزل</div><div style={{fontWeight: '900'}}>{asset.floor || '---'}</div>
-                                </div>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)'}}>مساحت</div><div style={{fontWeight: '900'}}>{asset.area || '---'}</div>
-                                </div>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)'}}>اتاق‌ها</div><div style={{fontWeight: '900'}}>{asset.rooms || '---'}</div>
-                                </div>
-                                <div className="glass" style={{ padding: '15px', textAlign: 'right' }}>
-                                    <div style={{fontSize: '11px', color: 'var(--text-muted)'}}>موقعیت</div><div style={{fontWeight: '900'}}>{asset.location || '---'}</div>
-                                </div>
-                            </>
+                {/* Features List */}
+                <div className="glass" style={{ padding: '25px', marginBottom: '30px', background: 'rgba(255,255,255,0.02)' }}>
+                    <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '20px', textAlign: 'right', color: '#fff' }}>توضیحات و امکانات</h3>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '15px' }}>
+                        {features.length > 0 ? features.map((f, i) => (
+                            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', justifyContent: 'flex-end', fontSize: '13px', color: 'rgba(255,255,255,0.7)' }}>
+                                <span>{f}</span>
+                                <i className="fa-solid fa-circle-check" style={{ color: 'var(--gold-primary)' }}></i>
+                            </div>
+                        )) : (
+                            <p style={{ textAlign: 'right', fontSize: '13px', color: 'rgba(255,255,255,0.4)', margin: 0 }}>
+                                این دارایی شامل تمامی استانداردهای لوکس زینوواکس و گارانتی اصالت می‌باشد. جهت کسب اطلاعات بیشتر با کارشناسان ما تماس بگیرید.
+                            </p>
                         )}
                     </div>
-                    
-                    {/* Features if available */}
-                    {features.length > 0 && (
-                        <div className="glass" style={{ padding: '20px', marginBottom: '30px' }}>
-                            <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '20px', textAlign: 'right', color: '#fff' }}>ویژگی‌ها و امکانات</h3>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', textAlign: 'right' }}>
-                                {features.map((f, i) => (
-                                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', fontSize: '13px' }}>
-                                        <span style={{ color: '#fff' }}>{f}</span>
-                                        <i className="fa-solid fa-check" style={{ color: 'var(--gold-primary)', fontSize: '14px' }}></i>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                    {Object.keys(amenities).length > 0 && (
-                        <div className="glass" style={{ padding: '20px', marginBottom: '30px' }}>
-                            <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '20px', textAlign: 'right', color: '#fff' }}>امکانات</h3>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', textAlign: 'right' }}>
-                                {Object.entries(amenities).map(([k, v], i) => (
-                                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', fontSize: '13px' }}>
-                                        <span style={{ color: '#fff' }}>{v}</span>
-                                        <i className="fa-solid fa-check" style={{ color: 'var(--gold-primary)', fontSize: '14px' }}></i>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
                 </div>
             </div>
 
-            {/* Floating Action Bar */}
+            {/* Bottom Actions Bar */}
             <div style={{ 
                 position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', 
-                width: '100%', maxWidth: '420px', padding: '15px 20px', 
-                background: 'var(--bg-dark)', borderTop: '1px solid rgba(255,255,255,0.05)', 
-                display: 'flex', gap: '15px', alignItems: 'center', zIndex: 1000 
+                width: '100%', maxWidth: '420px', padding: '20px 25px 35px', 
+                background: 'rgba(5, 16, 20, 0.95)', borderTop: '1px solid rgba(255,255,255,0.05)', 
+                display: 'flex', gap: '15px', backdropFilter: 'blur(20px)', zIndex: 1000 
             }}>
-                <a href="https://wa.me/93700000000" target="_blank" style={{ textDecoration: 'none' }}>
-                    <div style={{ width: '60px', height: '60px', background: '#25d366', borderRadius: '18px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff', cursor: 'pointer' }}>
+                <a href="https://wa.me/93700000000" target="_blank" className="hover-lift" style={{ textDecoration: 'none' }}>
+                    <div style={{ width: '60px', height: '60px', background: '#25d366', borderRadius: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff', boxShadow: '0 5px 15px rgba(37, 211, 102, 0.3)' }}>
                         <i className="fa-brands fa-whatsapp" style={{ fontSize: '32px' }}></i>
                     </div>
                 </a>
-                <div onClick={() => setShowCheckout(true)} style={{ 
-                    flex: 1, height: '60px', background: 'var(--gold-primary)', borderRadius: '15px',
+                <div onClick={() => setShowCheckout(true)} className="hover-lift pulse-gold" style={{ 
+                    flex: 1, height: '60px', background: 'var(--gold-primary)', borderRadius: '20px',
                     display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    color: '#000', fontSize: '17px', fontWeight: '900', gap: '12px', cursor: 'pointer'
+                    color: '#000', fontSize: '17px', fontWeight: '900', gap: '12px', cursor: 'pointer',
+                    boxShadow: '0 8px 25px rgba(212, 175, 55, 0.4)'
                 }}>
-                    <span>تماس با فروشنده</span>
-                    <i className="fa-solid fa-phone-flip"></i>
+                    <span>رزرو و تماس مستقیم</span>
+                    <i className="fa-solid fa-phone-volume"></i>
                 </div>
             </div>
 
