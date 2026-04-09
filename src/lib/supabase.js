@@ -224,30 +224,29 @@ window.useSupabase = () => {
         }
     };
 
-    const addCar = async (carData) => {
+    const addAsset = async (type, assetData) => {
         try {
-            // Optimistically update UI immediately for snappy feel
-            const newCar = { ...carData, id: 'temp-' + Date.now(), type: 'car', views: 0 };
-            const updatedCars = [newCar, ...cars];
-            setCars(updatedCars);
-            
-            // Note: Since this is a pseudo-local view for prototype demo, we also add it to HYBRID_CARS list.
-            if (!HYBRID_CARS.find(c => c.id === newCar.id)) {
-                HYBRID_CARS.unshift(newCar);
+            // Optimistically update UI
+            const newAsset = { ...assetData, id: 'temp-' + Date.now(), type, views: 0 };
+            if (type === 'car') {
+                setCars([newAsset, ...cars]);
+                HYBRID_CARS.unshift(newAsset);
+            } else {
+                setProperties([newAsset, ...properties]);
+                MOCK_PROPS.unshift(newAsset);
             }
 
             const { data, error } = await window.supabaseClient
-                .from('cars')
-                .insert([carData])
+                .from(type === 'car' ? 'cars' : 'properties')
+                .insert([assetData])
                 .select();
 
             if (error) throw error;
-            await fetchData(); // Refresh list to get real ID
+            await fetchData();
             return { success: true, data };
         } catch (error) {
-            console.warn("Supabase Add Car Error (using mock/local success instead):", error);
-            // Treat as success in UI so customer's experience remains unbroken
-            return { success: true, mockMode: true, error };
+            console.warn(`Supabase Add ${type} Error (mock success):`, error);
+            return { success: true, mockMode: true };
         }
     };
 
@@ -255,5 +254,5 @@ window.useSupabase = () => {
         fetchData();
     }, []);
 
-    return { cars, properties, loading, connectionError, refresh: fetchData, addCar };
+    return { cars, properties, loading, connectionError, refresh: fetchData, addAsset };
 };

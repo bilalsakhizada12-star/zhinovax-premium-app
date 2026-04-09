@@ -131,7 +131,7 @@ const App = () => {
             )}
 
             {view === 'add_asset' && (
-                <AddAssetModal onClose={() => setView('home')} onSave={addCar} />
+                <AddAssetModal onClose={() => setView('home')} onSave={addAsset} />
             )}
 
             {view === 'detail' && (
