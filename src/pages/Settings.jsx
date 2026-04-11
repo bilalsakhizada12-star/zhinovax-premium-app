@@ -158,7 +158,7 @@ const Settings = ({ onTabChange, user, onLogin }) => {
 
             {/* Footer Text */}
             <div style={{ textAlign: 'center', padding: '50px 25px', fontSize: '12px', color: 'rgba(255,255,255,0.2)', fontWeight: 'bold' }}>
-                ZHINOVAX PREMIUM MARKETPLACE<br/>
+                ZHINOVAX CAR & PROPERTY MARKETPLACE<br/>
                 <span style={{ fontSize: '10px', fontWeight: 'normal', marginTop: '8px', display: 'block' }}>VERSION 1.4.0 (KARWWAN PARITY)</span>
             </div>
         </div>

@@ -1,6 +1,6 @@
 {
-  "short_name": "Zhinovax VIP",
-  "name": "Zhinovax Premium Marketplace",
+  "short_name": "Zhinovax App",
+  "name": "Zhinovax Car & Property",
   "icons": [
     {
       "src": "https://www.directfiles.link/YGDVHGGRG",
@@ -13,10 +13,10 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/zhinovax-premium-app/index.html",
+  "start_url": "./index.html",
   "background_color": "#081215",
   "display": "standalone",
-  "scope": "/zhinovax-premium-app/",
+  "scope": "./",
   "theme_color": "#D4AF37",
   "description": "Zhinovax Premium VIP Marketplace for Cars and Properties"
 }
