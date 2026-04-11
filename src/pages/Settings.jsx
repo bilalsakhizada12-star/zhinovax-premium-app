@@ -1,12 +1,37 @@
-const Settings = ({ onTabChange, user, onLogin }) => {
+    const [installable, setInstallable] = React.useState(false);
+    const [showIosModal, setShowIosModal] = React.useState(false);
+
     React.useEffect(() => {
         gsap.fromTo('.settings-item', 
             { opacity: 0, x: 20 }, 
             { opacity: 1, x: 0, duration: 0.6, stagger: 0.05, ease: 'power2.out' }
         );
+
+        // Listen for install availability
+        if (window.deferredPrompt) setInstallable(true);
+        window.addEventListener('pwa-installable', () => setInstallable(true));
     }, []);
 
+    const handleInstall = async () => {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        
+        if (isIOS) {
+            setShowIosModal(true);
+        } else if (window.deferredPrompt) {
+            window.deferredPrompt.prompt();
+            const { outcome } = await window.deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('User accepted install');
+                setInstallable(false);
+            }
+            window.deferredPrompt = null;
+        } else {
+            alert('اپلیکیشن در حال حاضر قابل نصب نیست. از گوگل کروم استفاده کنید.');
+        }
+    };
+
     const publicMenuItems = [
+        { icon: 'fa-solid fa-download', title: 'نصب اپلیکیشن (اندروید و آیفون)', color: 'var(--gold-primary)', action: handleInstall, visible: !window.isStandalone() },
         { icon: 'fa-solid fa-bell', title: 'اعلانات و پیام‌ها', color: 'var(--gold-primary)', badge: '4', action: () => alert('بخش اعلانات فعال است') },
         { icon: 'fa-solid fa-trophy', title: 'چالش‌های زینوواکس', color: '#ab8720', action: () => onTabChange('challenges') },
         { icon: 'fa-solid fa-gamepad', title: 'مسابقات و جوایز', color: '#f9ab00', action: () => onTabChange('coming_soon') },
@@ -125,7 +150,7 @@ const Settings = ({ onTabChange, user, onLogin }) => {
             <div style={{ padding: '0 25px' }}>
                 <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', textAlign: 'right', paddingRight: '10px', marginBottom: '15px', fontWeight: '900', letterSpacing: '1px' }}>عمومی</div>
                 <div className="settings-list">
-                    {publicMenuItems.map((item, i) => <MenuItem key={i} item={item} />)}
+                    {publicMenuItems.map((item, i) => (item.visible !== false) && <MenuItem key={i} item={item} />)}
                 </div>
 
                 {user && (
@@ -155,6 +180,33 @@ const Settings = ({ onTabChange, user, onLogin }) => {
                     ))}
                 </div>
             </div>
+
+            {/* iOS Install Instructions Modal */}
+            {showIosModal && (
+                <div style={{
+                    position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)',
+                    zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
+                }}>
+                    <div className="glass" style={{ 
+                        padding: '35px', borderRadius: '35px', border: '1px solid var(--gold-primary)', 
+                        textAlign: 'center', maxWidth: '350px' 
+                    }}>
+                        <div style={{ color: 'var(--gold-primary)', fontSize: '50px', marginBottom: '20px' }}>
+                            <i className="fa-solid fa-arrow-up-from-bracket"></i>
+                        </div>
+                        <h2 style={{ color: '#fff', fontSize: '20px', fontWeight: '900', marginBottom: '15px' }}>نصب در آیفون (iOS)</h2>
+                        <ol style={{ textAlign: 'right', color: 'rgba(255,255,255,0.7)', fontSize: '14px', lineHeight: '2', paddingRight: '20px' }}>
+                            <li>در براوزر Safari، دکمه <strong>Share</strong> (آیکون مربع با فلش بالا) را بزنید.</li>
+                            <li>لیست را پایین بکشید و گزینه <strong>Add to Home Screen</strong> را انتخاب کنید.</li>
+                            <li>در آخر روی <strong>Add</strong> کلیک کنید.</li>
+                        </ol>
+                        <button onClick={() => setShowIosModal(false)} className="hover-lift" style={{
+                            marginTop: '30px', background: 'var(--gold-gradient)', border: 'none', 
+                            padding: '12px 40px', borderRadius: '15px', fontWeight: '900'
+                        }}>فهمیدم</button>
+                    </div>
+                </div>
+            )}
 
             {/* Footer Text */}
             <div style={{ textAlign: 'center', padding: '50px 25px', fontSize: '12px', color: 'rgba(255,255,255,0.2)', fontWeight: 'bold' }}>

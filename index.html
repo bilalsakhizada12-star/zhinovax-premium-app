@@ -51,8 +51,27 @@
     <script type="text/babel" src="src/pages/Portfolio.jsx?v=build_142"></script>
     <script type="text/babel" src="src/App.jsx?v=build_142"></script>
 
-    <!-- PWA Service Worker Registration -->
+    <!-- PWA Service Worker & Install Logic -->
     <script>
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log('Capture Install Prompt');
+        // Notify UI that install is available
+        window.dispatchEvent(new CustomEvent('pwa-installable', { detail: true }));
+      });
+
+      window.addEventListener('appinstalled', () => {
+        deferredPrompt = null;
+        console.log('PWA installed');
+      });
+
+      // Utility to check if running in standalone mode
+      window.isStandalone = () => {
+        return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone) || document.referrer.includes('android-app://');
+      };
+
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('./sw.js')
