@@ -12,7 +12,7 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
-      - name: 🚀 Deployment (Clean & Sync)
+      - name: 📂 Step 1: Sync to staging folder
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -20,8 +20,19 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
           source: "*"
-          target: "domains/zhinovax.com/public_html/app"
-          rm: true # This will delete old files before copying new ones!
+          target: "public_html/app"
+
+      - name: 🚀 Step 2: Push to Live
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 65002
+          script: |
+            cp -r public_html/app/* domains/zhinovax.com/public_html/app/
+            echo "Deployment to Live Directory Complete!"
+
 
 
 
