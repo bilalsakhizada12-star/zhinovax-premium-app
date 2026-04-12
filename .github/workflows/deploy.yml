@@ -12,25 +12,17 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
-      - name: "🚀 Ultimate One-Step Deployment (Direct Pull)"
-        uses: appleboy/ssh-action@v1.0.3
+      - name: "🚀 Robust SFTP Deployment (SamKirkland)"
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          host: ${{ secrets.FTP_SERVER }}
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
-          script: |
-            echo "Starting deployment..."
-            # 1. Ensure target directory exists
-            mkdir -p domains/zhinovax.com/public_html/app/
-            
-            # 2. Clean old files
-            rm -rf domains/zhinovax.com/public_html/app/*
-            
-            # 3. Pull latest code directly from GitHub archive and extract
-            curl -L https://github.com/bilalsakhizada12-star/zhinovax-premium-app/archive/refs/heads/main.tar.gz | tar xz --strip-components=1 -C domains/zhinovax.com/public_html/app/
-            
-            echo "Deployment Successful! app.zhinovax.com is now updated."
+          protocol: sftp
+          server-dir: domains/zhinovax.com/public_html/app/
+          local-dir: ./
+
 
 
 
