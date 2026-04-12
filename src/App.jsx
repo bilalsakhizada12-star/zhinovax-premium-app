@@ -1,5 +1,5 @@
 const App = () => {
-    const { SplashScreen, Auth, Home, Settings, Favorites, Portfolio, Challenges, Detail, Navbar, AddAssetModal } = window;
+    const { SplashScreen, Auth, Home, Settings, Favorites, Portfolio, Challenges, Detail, Navbar, AddAssetModal, About, ComingSoon } = window;
     const { cars, properties, loading, addCar, connectionError } = window.useSupabase();
     const [activeTab, setActiveTab] = React.useState('home');
     const [selectedAsset, setSelectedAsset] = React.useState(null);
@@ -39,11 +39,13 @@ const App = () => {
 
     const handleOpenDetail = (type, id) => {
         const asset = type === 'car' 
-            ? cars.find(c => c.id === id) 
-            : properties.find(p => p.id === id);
+            ? cars.find(c => String(c.id) === String(id)) 
+            : properties.find(p => String(p.id) === String(id));
         
-        setSelectedAsset({ ...asset, type });
-        setView('detail');
+        if (asset) {
+            setSelectedAsset({ ...asset, type });
+            setView('detail');
+        }
     };
 
     const handleBack = () => {
