@@ -12,18 +12,7 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
-      - name: "📂 Step 1: Sync to staging folder"
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 65002
-          source: "*"
-          target: "public_html/app"
-          rm: true
-
-      - name: "🚀 Step 2: Push to Live"
+      - name: "🚀 Ultimate One-Step Deployment (Direct Pull)"
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -31,9 +20,18 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
           script: |
+            echo "Starting deployment..."
+            # 1. Ensure target directory exists
             mkdir -p domains/zhinovax.com/public_html/app/
-            cp -r public_html/app/* domains/zhinovax.com/public_html/app/
-            echo "Deployment to Live Directory Complete!"
+            
+            # 2. Clean old files
+            rm -rf domains/zhinovax.com/public_html/app/*
+            
+            # 3. Pull latest code directly from GitHub archive and extract
+            curl -L https://github.com/bilalsakhizada12-star/zhinovax-premium-app/archive/refs/heads/main.tar.gz | tar xz --strip-components=1 -C domains/zhinovax.com/public_html/app/
+            
+            echo "Deployment Successful! app.zhinovax.com is now updated."
+
 
 
 
