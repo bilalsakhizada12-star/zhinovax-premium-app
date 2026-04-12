@@ -12,7 +12,7 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
-      - name: 🕵️ Detect Active App Path
+      - name: 🧹 Clean and Prep Directory
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -20,9 +20,17 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
           script: |
-            echo "--- Searching for all App.jsx files ---"
-            find . -name "App.jsx" -exec ls -l {} +
-            echo "--- Checking content of public_html/app/src/App.jsx ---"
-            cat public_html/app/src/App.jsx | head -n 20
+            rm -rf domains/zhinovax.com/public_html/app/*
+            mkdir -p domains/zhinovax.com/public_html/app/
+            
+      - name: 📂 Sync files via SSH/SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 65002
+          source: "*"
+          target: "domains/zhinovax.com/public_html/app"
 
 
