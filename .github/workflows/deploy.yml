@@ -12,16 +12,30 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
-      - name: "🚀 Robust SFTP Deployment (SamKirkland)"
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: "📂 Step 1: Sync to accessible folder"
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
-          protocol: sftp
-          server-dir: domains/zhinovax.com/public_html/app/
-          local-dir: ./
+          source: "*"
+          target: "public_html/app"
+          rm: true
+
+      - name: "🚀 Step 2: Live Deployment (Local Move)"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 65002
+          script: |
+            echo "Synchronizing with live directory..."
+            mkdir -p domains/zhinovax.com/public_html/app/
+            cp -rf public_html/app/* domains/zhinovax.com/public_html/app/
+            echo "Deployment SUCCESSFUL."
+
 
 
 
