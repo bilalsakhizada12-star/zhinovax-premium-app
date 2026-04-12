@@ -12,7 +12,7 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
-      - name: "📂 Step 1: Sync to accessible folder"
+      - name: "🚀 Step 1: Sync to Staging"
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -23,22 +23,7 @@ jobs:
           target: "public_html/app"
           rm: true
 
-      - name: "🚀 Step 2: Live Deployment (Local Move)"
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 65002
-          script: |
-            echo "Synchronizing with live directory..."
-            mkdir -p domains/zhinovax.com/public_html/app/
-            cp -rf public_html/app/* domains/zhinovax.com/public_html/app/
-            echo "Deployment SUCCESSFUL."
-
-
-
-
-
-
-
+      - name: "🔗 Step 2: Trigger Bridge to Live"
+        run: |
+          sleep 10
+          curl -L "https://zhinovax.com/app/deploy.php?key=zhinovax_secret_99"
