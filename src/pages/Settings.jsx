@@ -1,3 +1,4 @@
+const Settings = ({ user, onLogin, onTabChange }) => {
     const [installable, setInstallable] = React.useState(false);
     const [showIosModal, setShowIosModal] = React.useState(false);
 
