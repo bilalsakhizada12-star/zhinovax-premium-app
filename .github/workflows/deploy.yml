@@ -12,7 +12,7 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
-      - name: 📂 Step 1: Sync to staging folder
+      - name: "📂 Step 1: Sync to staging folder"
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -21,8 +21,9 @@ jobs:
           port: 65002
           source: "*"
           target: "public_html/app"
+          rm: true
 
-      - name: 🚀 Step 2: Push to Live
+      - name: "🚀 Step 2: Push to Live"
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -30,6 +31,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
           script: |
+            mkdir -p domains/zhinovax.com/public_html/app/
             cp -r public_html/app/* domains/zhinovax.com/public_html/app/
             echo "Deployment to Live Directory Complete!"
 
