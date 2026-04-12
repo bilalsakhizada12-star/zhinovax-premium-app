@@ -12,7 +12,7 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
-      - name: 🔍 Probe Directory Structure
+      - name: 🧹 Clean and Prep Directory
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -20,13 +20,16 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
           script: |
-            echo "--- Root listing ---"
-            ls -F
-            echo "--- domains/ listing ---"
-            ls -F domains/ || echo "No domains folder"
-            echo "--- public_html/ listing ---"
-            ls -F public_html/ || echo "No public_html folder"
-            echo "--- Finding app.zhinovax.com ---"
-            find . -maxdepth 4 -name "app" -type d
-            find . -maxdepth 4 -name "app.zhinovax.com" -type d
+            rm -rf public_html/app/*
+            mkdir -p public_html/app
+            
+      - name: 📂 Sync files via SSH/SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 65002
+          source: "*"
+          target: "public_html/app"
 
