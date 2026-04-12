@@ -12,14 +12,13 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
-      - name: 📂 Sync files via SSH/SCP
-        uses: appleboy/scp-action@v0.1.7
+      - name: 📂 Sync files to Hostinger FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          host: ${{ secrets.FTP_SERVER }}
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          port: 65002
-          source: "*"
-          target: "public_html/app"
+          server-dir: public_html/app/
+          local-dir: ./
           # The folder to upload if it's not root. Often Hostinger requires you to deploy into a subfolder depending on FTP user.
           # server-dir: /public_html/
