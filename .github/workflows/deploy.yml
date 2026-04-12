@@ -1,4 +1,4 @@
-name: Auto Deploy to Hostinger via SCP
+name: Auto Deploy to Hostinger via FTP
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: public_html/app/
+          server-dir: app/
           local-dir: ./
           # The folder to upload if it's not root. Often Hostinger requires you to deploy into a subfolder depending on FTP user.
           # server-dir: /public_html/
