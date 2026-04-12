@@ -1,9 +1,9 @@
-name: Auto Deploy to Hostinger via FTP
+name: Auto Deploy to Hostinger via SCP
 
 on:
   push:
     branches:
-      - main # This triggers the deploy every time you push to the 'main' branch
+      - main
 
 jobs:
   deploy:
@@ -11,12 +11,15 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
-
-      - name: 📂 Sync files to Hostinger FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        
+      - name: 📂 Sync files via SSH/SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          port: 65002
+          source: "*"
+          target: "domains/zhinovax.com/public_html/app"
           # The folder to upload if it's not root. Often Hostinger requires you to deploy into a subfolder depending on FTP user.
           # server-dir: /public_html/
