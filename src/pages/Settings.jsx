@@ -32,7 +32,7 @@ const Settings = ({ user, onLogin, onTabChange }) => {
     };
 
     const publicMenuItems = [
-        { icon: 'fa-solid fa-download', title: 'نصب اپلیکیشن (اندروید و آیفون)', color: 'var(--gold-primary)', action: handleInstall, visible: !window.isStandalone() },
+        { icon: 'fa-solid fa-download', title: 'نصب اپلیکیشن (اندروید و آیفون)', color: 'var(--gold-primary)', action: handleInstall, visible: (window.isStandalone && typeof window.isStandalone === 'function') ? !window.isStandalone() : true },
         { icon: 'fa-solid fa-bell', title: 'اعلانات و پیام‌ها', color: 'var(--gold-primary)', badge: '4', action: () => alert('بخش اعلانات فعال است') },
         { icon: 'fa-solid fa-trophy', title: 'چالش‌های زینوواکس', color: '#ab8720', action: () => onTabChange('challenges') },
         { icon: 'fa-solid fa-gamepad', title: 'مسابقات و جوایز', color: '#f9ab00', action: () => onTabChange('coming_soon') },
