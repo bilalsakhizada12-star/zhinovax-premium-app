@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zhinovax-v9';
+const CACHE_NAME = 'zhinovax-v10';
 const ASSETS = [
   './index.html',
   './src/styles/global.css',

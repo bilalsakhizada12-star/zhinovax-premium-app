@@ -21,10 +21,10 @@ jobs:
           port: 65002
           source: "."
           target: "public_html/app"
-          rm: true
           overwrite: true
+          rm: false
 
       - name: "🔗 Step 2: Trigger Bridge to Live"
         run: |
           sleep 10
-          curl -L "https://zhinovax.com/app/deploy.php?key=zhinovax_secret_99"
+          curl -L "https://app.zhinovax.com/deploy.php?key=zhinovax_secret_99"
