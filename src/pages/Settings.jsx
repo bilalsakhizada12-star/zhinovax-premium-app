@@ -31,11 +31,25 @@ const Settings = ({ user, onLogin, onTabChange }) => {
         }
     };
 
+    const handleShareApp = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Zhinovax VIP',
+                text: 'بهترین اپلیکیشن خرید و فروش موتر و املاک در افغانستان را تجربه کنید.',
+                url: 'https://app.zhinovax.com'
+            });
+        } else {
+            navigator.clipboard.writeText('https://app.zhinovax.com');
+            alert('لینک اپلیکیشن کپی شد. آن را برای دوستان تان بفرستید.');
+        }
+    };
+
     const publicMenuItems = [
         { icon: 'fa-solid fa-download', title: 'نصب اپلیکیشن (اندروید و آیفون)', color: 'var(--gold-primary)', action: handleInstall, visible: (window.isStandalone && typeof window.isStandalone === 'function') ? !window.isStandalone() : true },
+        { icon: 'fa-solid fa-share-nodes', title: 'دعوت از دوستان به زینوواکس', color: '#00c853', action: handleShareApp },
+        { icon: 'fa-solid fa-handshake', title: 'همکاری تجاری با ما', color: '#1a73e8', action: () => alert('لطفاً با شماره پشتیبانی زینوواکس در تماس شوید.') },
         { icon: 'fa-solid fa-bell', title: 'اعلانات و پیام‌ها', color: 'var(--gold-primary)', badge: '4', action: () => alert('بخش اعلانات فعال است') },
         { icon: 'fa-solid fa-trophy', title: 'چالش‌های زینوواکس', color: '#ab8720', action: () => onTabChange('challenges') },
-        { icon: 'fa-solid fa-gamepad', title: 'مسابقات و جوایز', color: '#f9ab00', action: () => onTabChange('coming_soon') },
         { icon: 'fa-solid fa-circle-info', title: 'درباره ما', color: '#e91e63', action: () => onTabChange('about') },
     ];
 

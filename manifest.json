@@ -1,22 +1,35 @@
 {
-  "short_name": "Zhinovax App",
-  "name": "Zhinovax Car & Property",
+  "short_name": "Zhinovax VIP",
+  "name": "Zhinovax Car & Property Marketplace",
+  "description": "Premium Afghan marketplace for luxury cars and high-end properties. Experience the elite standard of Zhinovax.",
+  "lang": "fa-AF",
+  "categories": ["shopping", "business", "lifestyle"],
   "icons": [
     {
       "src": "https://www.directfiles.link/YGDVHGGRG",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "https://www.directfiles.link/YGDVHGGRG",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": "./index.html",
   "background_color": "#081215",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "./",
   "theme_color": "#D4AF37",
-  "description": "Zhinovax Premium VIP Marketplace for Cars and Properties"
+  "screenshots": [
+    {
+      "src": "https://i.postimg.cc/W3MnzMzh/jjj.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "label": "Zhinovax Home Screen"
+    }
+  ]
 }

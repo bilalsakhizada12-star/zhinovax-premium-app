@@ -105,6 +105,32 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
                 </div>
             </div>
 
+            {/* Partner Services Section - NEW MONETIZATION */}
+            <div style={{ padding: '15px 0 5px' }}>
+                <div style={{ padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '10px', fontWeight: '900', color: 'rgba(255,255,255,0.4)', letterSpacing: '1px' }}>خدمات ویژه زینوواکس</span>
+                    <i className="fa-solid fa-gem" style={{ color: 'var(--gold-primary)', fontSize: '12px' }}></i>
+                </div>
+                <div className="no-scrollbar" style={{ display: 'flex', gap: '15px', overflowX: 'auto', padding: '5px 20px', scrollSnapType: 'x mandatory' }}>
+                    {[
+                        { icon: 'fa-solid fa-handshake-angle', label: 'تسهیلات بانکی', color: '#4caf50' },
+                        { icon: 'fa-solid fa-magnifying-glass-chart', label: 'کارشناسی موتر', color: '#2196f3' },
+                        { icon: 'fa-solid fa-building-shield', label: 'نمایشگاه همکار', color: '#ff9800' },
+                        { icon: 'fa-solid fa-file-signature', label: 'امور حقوقی', color: '#e91e63' }
+                    ].map((service, idx) => (
+                        <div key={idx} className="glass hover-lift" style={{ 
+                            minWidth: '100px', padding: '15px 10px', borderRadius: '20px', textAlign: 'center',
+                            border: '1px solid rgba(255,255,255,0.05)', flexShrink: 0, scrollSnapAlign: 'start'
+                        }}>
+                            <div style={{ width: '40px', height: '40px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', margin: '0 auto 10px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: service.color }}>
+                                <i className={service.icon} style={{ fontSize: '18px' }}></i>
+                            </div>
+                            <div style={{ fontSize: '10px', fontWeight: '900', color: '#fff' }}>{service.label}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
             {/* Category Tabs - Karwwan Parity */}
             <div style={{ padding: '15px 20px 25px', display: 'flex', gap: '12px' }}>
                 <div 
