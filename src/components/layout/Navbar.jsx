@@ -46,7 +46,7 @@ const Navbar = ({ activeTab, onTabChange, hasNewNotif }) => {
                 {/* ASSETS / HOME */}
                 <div id="nav-home" onClick={() => onTabChange('home')} className="hover-lift" style={navItemStyle('home')}>
                     <i className="fa-solid fa-gem" style={{ fontSize: '20px' }}></i>
-                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>دارایی‌ها</span>
+                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>موترها</span>
                 </div>
                 
                 {/* DASHBOARD / PORTFOLIO */}
@@ -71,7 +71,5 @@ const Navbar = ({ activeTab, onTabChange, hasNewNotif }) => {
         </div>
     );
 };
-
-window.Navbar = Navbar;
 
 window.Navbar = Navbar;

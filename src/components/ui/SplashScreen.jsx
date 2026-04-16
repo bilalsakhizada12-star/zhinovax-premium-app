@@ -2,8 +2,18 @@ const SplashScreen = ({ onComplete }) => {
     const [progress, setProgress] = React.useState(0);
 
     React.useEffect(() => {
+        // Safety timeout in case of script loading lags
+        const safetyTimer = setTimeout(() => {
+            onComplete();
+        }, 5000);
+
         // Entrance Choreography
-        const tl = gsap.timeline({ onComplete });
+        const tl = gsap.timeline({ 
+            onComplete: () => {
+                clearTimeout(safetyTimer);
+                onComplete();
+            } 
+        });
         
         tl.fromTo('.splash-bg', 
             { opacity: 0, scale: 1.1 }, 

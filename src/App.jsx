@@ -1,6 +1,6 @@
 const App = () => {
     const { SplashScreen, Auth, Home, Settings, Favorites, Portfolio, Challenges, Detail, Navbar, AddAssetModal, About, ComingSoon } = window;
-    const { cars, properties, loading, addCar, connectionError } = window.useSupabase();
+    const { cars, properties, loading, addAsset, connectionError } = window.useSupabase();
     const [activeTab, setActiveTab] = React.useState('home');
     const [selectedAsset, setSelectedAsset] = React.useState(null);
     const [view, setView] = React.useState('home'); // 'home', 'detail', 'settings', 'challenges', 'auth'
@@ -50,14 +50,11 @@ const App = () => {
 
     const handleBack = () => {
         setView('home');
-        setActiveTab('home');
     };
 
     const handleTabChange = (tab) => {
-        // All tabs are accessible to everyone
-        // Login state is tracked for showing extra features inside pages
         setActiveTab(tab);
-        setView('home'); // ensure main view
+        setView('home'); // ensures we clear detail view or other sub-pages
     };
 
     const handleLogin = (loggedInUser) => {
@@ -108,7 +105,10 @@ const App = () => {
                     else if (tab === 'about') setView('about');
                     else if (tab === 'coming_soon') setView('coming_soon');
                     else if (tab === 'add_asset') setView('add_asset');
-                    else setActiveTab(tab);
+                    else {
+                        setActiveTab(tab);
+                        setView('home');
+                    }
                 }} />
             )}
             
@@ -125,11 +125,11 @@ const App = () => {
             )}
             
             {view === 'home' && activeTab === 'favorites' && (
-                <Favorites onTabChange={handleTabChange} assets={[...cars, ...properties]} />
+                <Favorites onTabChange={handleTabChange} assets={[...cars, ...properties]} onOpenDetail={handleOpenDetail} />
             )}
             
             {view === 'home' && activeTab === 'dashboard' && (
-                <Portfolio user={user} onLogin={() => setView('auth')} onTabChange={handleTabChange} assets={[...cars, ...properties]} />
+                <Portfolio user={user} onLogin={() => setView('auth')} onTabChange={handleTabChange} assets={[...cars, ...properties]} onOpenDetail={handleOpenDetail} />
             )}
 
             {view === 'add_asset' && (
@@ -141,7 +141,7 @@ const App = () => {
             )}
 
             {/* Navbar is only shown in main views, not splash, auth, or detail */}
-            {view === 'home' && <Navbar activeTab={activeTab} onTabChange={handleTabChange} hasNewNotif={hasNewNotif} />}
+            {(view === 'home' || view === 'add_asset') && <Navbar activeTab={activeTab} onTabChange={handleTabChange} hasNewNotif={hasNewNotif} />}
         </div>
     );
 };

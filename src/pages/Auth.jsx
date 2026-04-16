@@ -116,7 +116,7 @@ const Auth = ({ onLogin }) => {
                 <div style={{ marginBottom: '35px' }}>
                     <img src="https://i.postimg.cc/W3MnzMzh/jjj.png" alt="Zhinovax" style={{ height: '55px', marginBottom: '20px', objectFit: 'contain' }} />
                     <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#fff', margin: '0 0 10px' }}>
-                        {step === 1 ? 'ورود به دنیای لوکس' : 'تأیید ایمیل'}
+                        {step === 1 ? 'داخل شدن به دنیای لوکس' : 'تأیید ایمیل'}
                     </h2>
                     <p style={{ color: 'var(--text-muted)', fontSize: '14px', margin: 0, lineHeight: '1.6' }}>
                         {step === 1 ? 'اطلاعات کاربری خود را برای دسترسی ویژه وارد کنید' : `کد ۴ رقمی ارسال شده به ${email} را وارد کنید`}
@@ -171,7 +171,7 @@ const Auth = ({ onLogin }) => {
                         </p>
 
                         <button type="submit" className="hover-lift" style={btnStyle(isEmailValid && isPasswordValid && !loading)} disabled={!isEmailValid || !isPasswordValid || loading}>
-                            {loading ? <Spinner /> : <><i className="fa-solid fa-paper-plane" style={{ fontSize: '18px' }}></i> دریافت کد تایید</>}
+                            {loading ? <Spinner /> : <><i className="fa-solid fa-paper-plane" style={{ fontSize: '18px' }}></i> درخواست کد تایید</>}
                         </button>
                     </form>
                 ) : (
@@ -210,7 +210,7 @@ const Auth = ({ onLogin }) => {
                         </div>
 
                         <button type="submit" className="hover-lift" style={btnStyle(isOtpComplete && !loading)} disabled={!isOtpComplete || loading}>
-                            {loading ? <Spinner /> : <><i className="fa-solid fa-unlock-keyhole" style={{ fontSize: '18px' }}></i> ورود نهایی</>}
+                            {loading ? <Spinner /> : <><i className="fa-solid fa-unlock-keyhole" style={{ fontSize: '18px' }}></i> داخل شدن نهایی</>}
                         </button>
 
                         <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px', marginTop: '25px', cursor: 'pointer', display: 'inline-block' }}
@@ -223,7 +223,5 @@ const Auth = ({ onLogin }) => {
         </div>
     );
 };
-
-window.Auth = Auth;
 
 window.Auth = Auth;

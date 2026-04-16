@@ -35,10 +35,10 @@
 
     <!-- PWA Service Worker & Install Logic -->
     <script>
-      let deferredPrompt;
+      window.deferredPrompt = null;
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
-        deferredPrompt = e;
+        window.deferredPrompt = e;
         console.log('Capture Install Prompt');
         window.dispatchEvent(new CustomEvent('pwa-installable', { detail: true }));
       });

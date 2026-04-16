@@ -108,7 +108,7 @@ const AddAssetModal = ({ onClose, onSave }) => {
                                     background: assetType === 'car' ? 'var(--gold-gradient)' : 'transparent',
                                     color: assetType === 'car' ? '#000' : 'var(--text-muted)', cursor: 'pointer', transition: '0.4s'
                                 }}
-                            >خودرو</div>
+                            >موتر</div>
                             <div 
                                 onClick={() => setAssetType('property')}
                                 style={{
@@ -198,7 +198,7 @@ const AddAssetModal = ({ onClose, onSave }) => {
                         </div>
                         <h2 style={{ fontSize: '24px', fontWeight: '900', marginBottom: '15px' }}>ثبت موفقیت‌آمیز!</h2>
                         <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '35px', lineHeight: '1.8' }}>
-                            {assetType === 'car' ? 'خودرو' : 'ملک'} شما با موفقیت در دیتابیس مرکزی زینوواکس ثبت شد و اکنون برای تمامی کاربران قابل مشاهده است.
+                            {assetType === 'car' ? 'موتر' : 'ملک'} شما با موفقیت در دیتابیس مرکزی زینوواکس ثبت شد و اکنون برای تمامی کاربران قابل مشاهده است.
                         </p>
                         <button 
                             onClick={onClose}

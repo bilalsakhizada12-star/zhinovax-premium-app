@@ -35,7 +35,7 @@ const Favorites = ({ onTabChange, assets, onOpenDetail }) => {
                     <div style={{ textAlign: 'center', padding: '100px 20px', color: 'var(--text-muted)' }}>
                         <i className="fa-regular fa-heart" style={{ fontSize: '60px', marginBottom: '20px', opacity: 0.1 }}></i>
                         <p style={{ fontSize: '15px' }}>لیست علاقه‌مندی‌های شما خالی است.</p>
-                        <button onClick={() => onTabChange('home')} className="hover-lift" style={{ borderRadius: '15px', padding: '12px 25px', background: 'var(--gold-primary)', color: '#000', border: 'none', marginTop: '25px', fontWeight: '900', cursor: 'pointer' }}>مشاهده دارایی‌ها</button>
+                        <button onClick={() => onTabChange('home')} className="hover-lift" style={{ borderRadius: '15px', padding: '12px 25px', background: 'var(--gold-primary)', color: '#000', border: 'none', marginTop: '25px', fontWeight: '900', cursor: 'pointer' }}>مشاهده موترها</button>
                     </div>
                 ) : (
                     <div className="grid-layout" style={{ marginTop: '20px' }}>
@@ -53,7 +53,5 @@ const Favorites = ({ onTabChange, assets, onOpenDetail }) => {
         </div>
     );
 };
-
-window.Favorites = Favorites;
 
 window.Favorites = Favorites;

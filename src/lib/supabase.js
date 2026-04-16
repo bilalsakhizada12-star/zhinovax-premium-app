@@ -1,6 +1,6 @@
 // Supabase Client Configuration
-const SUPABASE_URL = 'https://cjtxyfwuqakbmcgpjsub.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_DxFGUXuiKq_qmyEmvvKA5g_iQhQ-Kvs';
+const SUPABASE_URL = 'https://cjxyfwuqakbmcgpjsub.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_DxFGUXuiKq_qmyEmvvKA5g_6m9N';
 
 window.supabaseClient = null;
 if (typeof supabase !== 'undefined') {
@@ -229,12 +229,14 @@ window.useSupabase = () => {
             // Optimistically update UI
             const newAsset = { ...assetData, id: 'temp-' + Date.now(), type, views: 0 };
             if (type === 'car') {
-                setCars([newAsset, ...cars]);
+                setCars(prev => [newAsset, ...prev]);
                 HYBRID_CARS.unshift(newAsset);
             } else {
-                setProperties([newAsset, ...properties]);
+                setProperties(prev => [newAsset, ...prev]);
                 MOCK_PROPS.unshift(newAsset);
             }
+
+            if (!window.supabaseClient) throw new Error("Supabase client not initialized");
 
             const { data, error } = await window.supabaseClient
                 .from(type === 'car' ? 'cars' : 'properties')
@@ -242,10 +244,11 @@ window.useSupabase = () => {
                 .select();
 
             if (error) throw error;
+            console.log(`Successfully added ${type} to Supabase`);
             await fetchData();
             return { success: true, data };
         } catch (error) {
-            console.warn(`Supabase Add ${type} Error (mock success):`, error);
+            console.warn(`Supabase Add ${type} Error (Mock Mode Active):`, error.message);
             return { success: true, mockMode: true };
         }
     };
@@ -254,5 +257,12 @@ window.useSupabase = () => {
         fetchData();
     }, []);
 
-    return { cars, properties, loading, connectionError, refresh: fetchData, addAsset };
+    return { 
+        cars, 
+        properties, 
+        loading, 
+        connectionError, 
+        refresh: fetchData, 
+        addAsset 
+    };
 };

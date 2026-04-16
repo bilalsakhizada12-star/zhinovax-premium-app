@@ -1,4 +1,4 @@
-const Portfolio = ({ onTabChange, assets, user, onLogin }) => {
+const Portfolio = ({ onTabChange, assets, user, onLogin, onOpenDetail }) => {
     const [ownedAssets, setOwnedAssets] = React.useState([]);
 
     React.useEffect(() => {
@@ -24,7 +24,7 @@ const Portfolio = ({ onTabChange, assets, user, onLogin }) => {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '30px' }}>
                         <div className="glass hover-lift" style={{ padding: '20px', textAlign: 'right', border: '1px solid rgba(255,255,255,0.05)' }}>
                              <div style={{ fontSize: '24px', fontWeight: '900', color: 'var(--gold-primary)' }}>۱۲۰+</div>
-                             <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '5px' }}>خودروی لوکس</div>
+                             <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '5px' }}>موتر لوکس</div>
                         </div>
                         <div className="glass hover-lift" style={{ padding: '20px', textAlign: 'right', border: '1px solid rgba(255,255,255,0.05)' }}>
                              <div style={{ fontSize: '24px', fontWeight: '900', color: 'var(--gold-primary)' }}>۴۵+</div>
@@ -43,7 +43,7 @@ const Portfolio = ({ onTabChange, assets, user, onLogin }) => {
                             border: 'none', padding: '15px', borderRadius: '18px',
                             fontWeight: '900', fontSize: '15px', cursor: 'pointer'
                         }}>
-                            ورود به پنل کاربری
+                            داخل شدن به پنل کاربری
                         </button>
                     </div>
                 </div>
@@ -77,7 +77,11 @@ const Portfolio = ({ onTabChange, assets, user, onLogin }) => {
                 ) : (
                     <div style={{ display: 'grid', gap: '18px' }}>
                         {ownedAssets.map((asset, i) => (
-                            <div key={i} className="glass" style={{ borderRadius: '24px', padding: '15px', display: 'flex', gap: '15px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                            <div key={i} 
+                                onClick={() => onOpenDetail(asset.type || 'car', asset.id)}
+                                className="glass hover-lift" 
+                                style={{ borderRadius: '24px', padding: '15px', display: 'flex', gap: '15px', border: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer' }}
+                            >
                                 <div style={{ width: '80px', height: '80px', borderRadius: '18px', backgroundImage: `url(${asset.image_url})`, backgroundSize: 'cover', backgroundPosition: 'center', flexShrink: 0 }}></div>
                                 <div style={{ flex: 1, textAlign: 'right', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                     <h4 style={{ fontSize: '15px', margin: '0 0 5px', fontWeight: '900', color: '#fff' }}>{asset.title}</h4>

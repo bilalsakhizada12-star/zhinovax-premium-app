@@ -41,7 +41,7 @@ const Settings = ({ user, onLogin, onTabChange }) => {
 
     const privateMenuItems = [
         { icon: 'fa-solid fa-wallet', title: 'تراکنش‌های مالی', color: '#1a73e8', action: () => onTabChange('coming_soon') },
-        { icon: 'fa-solid fa-sliders', title: 'تنظیمات پروفایل', color: '#17a2b8', action: () => onTabChange('coming_soon') },
+        { icon: 'fa-solid fa-sliders', title: 'تنظیمات حساب کاربری', color: '#17a2b8', action: () => onTabChange('coming_soon') },
         { icon: 'fa-solid fa-right-from-bracket', title: 'خروج از حساب', color: '#ff4b5c', action: () => {
             alert('خروج با موفقیت انجام شد');
             window.location.reload();
@@ -55,7 +55,7 @@ const Settings = ({ user, onLogin, onTabChange }) => {
     ];
 
     const MenuItem = ({ item }) => (
-        <div onClick={item.action} className="settings-item glass hover-lift" style={{
+        <div onClick={item.action} className="settings-item glass hover-lift" style={{ 
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             padding: '18px 22px', borderRadius: '22px', border: '1px solid rgba(255,255,255,0.04)',
             cursor: 'pointer', marginBottom: '12px'
@@ -134,14 +134,14 @@ const Settings = ({ user, onLogin, onTabChange }) => {
                     }}>
                         <h3 style={{ fontSize: '18px', fontWeight: '900', color: '#fff', margin: '0 0 8px' }}>به زینوواکس بپیوندید</h3>
                         <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: '0 0 25px', lineHeight: '1.7' }}>
-                            برای تجربه کامل و دسترسی به پنل ویژه خرید و فروش، وارد حساب خود شوید.
+                            برای تجربه کامل و دسترسی به پنل ویژه خرید و فروش، به حساب خود داخل شوید.
                         </p>
                         <button onClick={onLogin} className="hover-lift pulse-gold" style={{ 
                             width: '100%', background: 'var(--gold-gradient)', color: '#000', 
                             border: 'none', padding: '16px', borderRadius: '18px', 
                             fontWeight: '900', fontSize: '15px', cursor: 'pointer' 
                         }}>
-                            ورود / ثبت نام زودهنگام
+                            داخل شدن / ثبت نام زودهنگام
                         </button>
                     </div>
                 )}
@@ -220,4 +220,3 @@ const Settings = ({ user, onLogin, onTabChange }) => {
 
 window.Settings = Settings;
 
-window.Settings = Settings;

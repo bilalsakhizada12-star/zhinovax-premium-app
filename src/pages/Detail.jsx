@@ -102,7 +102,7 @@ const Detail = ({ asset, onBack }) => {
                 <div style={{ position: 'absolute', bottom: '20px', left: '25px', display: 'flex', gap: '10px' }}>
                     <div style={{ background: 'rgba(0,0,0,0.6)', color: '#fff', padding: '6px 15px', borderRadius: '12px', fontSize: '11px', backdropFilter: 'blur(5px)' }}>
                         <i className="fa-solid fa-eye" style={{ color: 'var(--gold-primary)', marginLeft: '6px' }}></i>
-                        {views.toLocaleString()} بازدید
+                        {views.toLocaleString()} مشاهده
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@ const Detail = ({ asset, onBack }) => {
                     <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
                         <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px'}}>{isCar ? 'کارکرد' : 'اتاق‌ها'}</div>
                         <div style={{fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px', direction: 'ltr'}}>
-                            {isCar ? (asset.mileage || '---') : (asset.rooms || '---')} <i className={isCar ? "fa-solid fa-gauge-high" : "fa-solid fa-door-open"} style={{color: 'var(--gold-primary)'}}></i>
+                            {isCar ? (asset.mileage || '---') : (asset.bedrooms || '---')} <i className={isCar ? "fa-solid fa-gauge-high" : "fa-solid fa-door-open"} style={{color: 'var(--gold-primary)'}}></i>
                         </div>
                     </div>
                     <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
@@ -149,7 +149,7 @@ const Detail = ({ asset, onBack }) => {
 
                 {/* Features List */}
                 <div className="glass" style={{ padding: '25px', marginBottom: '30px', background: 'rgba(255,255,255,0.02)' }}>
-                    <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '20px', textAlign: 'right', color: '#fff' }}>توضیحات و امکانات</h3>
+                    <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '20px', textAlign: 'right', color: '#fff' }}>مشخصات و ویژگی‌ها</h3>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '15px' }}>
                         {features.length > 0 ? features.map((f, i) => (
                             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', justifyContent: 'flex-end', fontSize: '13px', color: 'rgba(255,255,255,0.7)' }}>

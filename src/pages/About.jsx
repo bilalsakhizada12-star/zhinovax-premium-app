@@ -56,7 +56,7 @@ const About = ({ onBack }) => {
                 <div className="glass" style={{ padding: '25px', marginBottom: '20px' }}>
                     <h2 style={{ color: 'var(--gold-primary)', fontSize: '18px', marginBottom: '15px' }}>خدمات ممتاز</h2>
                     <ul style={{ color: '#fff', padding: '0 15px', margin: 0, fontSize: '14px', lineHeight: '2' }}>
-                        <li>تجارت و معاملات خودروهای لوکس</li>
+                        <li>تجارت و معاملات موترهای لوکس</li>
                         <li>مشاوره تخصصی املاک و مستغلات</li>
                         <li>دیجیتال مارکتینگ و تبلیغات هوشمند</li>
                         <li>توسعه نرم‌افزار و اپلیکیشن‌های اختصاصی</li>

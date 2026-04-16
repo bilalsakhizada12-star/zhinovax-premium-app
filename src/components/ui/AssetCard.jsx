@@ -57,7 +57,7 @@ const AssetCard = ({ data, type, onClick }) => {
             <div style={{ padding: '0 8px 8px', textAlign: 'right' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                      <div style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: '900', background: 'rgba(212,175,55,0.1)', padding: '2px 8px', borderRadius: '6px' }}>
-                        {isCar ? 'Automotive' : 'Real Estate'}
+                        {isCar ? 'موتر' : 'املاک'}
                     </div>
                     <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>
                         رجستر: {data.reg_no || '---'}
@@ -68,16 +68,16 @@ const AssetCard = ({ data, type, onClick }) => {
                 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '16px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
-                        <span>{isCar ? (data.fuel || 'پترول') : (data.rooms ? data.rooms + ' اتاق' : '---')}</span>
-                        <i className="fa-solid fa-gas-pump" style={{ color: 'var(--gold-primary)' }}></i>
+                        <span>{isCar ? (data.fuel || 'پترول') : (data.bedrooms ? data.bedrooms + ' اتاق' : '---')}</span>
+                        <i className={isCar ? "fa-solid fa-gas-pump" : "fa-solid fa-door-open"} style={{ color: 'var(--gold-primary)' }}></i>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
                         <span>{isCar ? (data.transmission || 'اوتومات') : (data.area || '---')}</span>
-                        <i className="fa-solid fa-gear" style={{ color: 'var(--gold-primary)' }}></i>
+                        <i className={isCar ? "fa-solid fa-gear" : "fa-solid fa-ruler-combined"} style={{ color: 'var(--gold-primary)' }}></i>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)', direction: 'ltr' }}>
                         <span>{isCar ? (data.mileage || 'Km 0') : (data.floor ? data.floor + ' منزل' : '---')}</span>
-                        <i className="fa-solid fa-gauge-high" style={{ color: 'var(--gold-primary)' }}></i>
+                        <i className={isCar ? "fa-solid fa-gauge-high" : "fa-solid fa-layer-group"} style={{ color: 'var(--gold-primary)' }}></i>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
                         <span>{data.location || 'کابل'}</span>
@@ -88,7 +88,5 @@ const AssetCard = ({ data, type, onClick }) => {
         </div>
     );
 };
-
-window.AssetCard = AssetCard;
 
 window.AssetCard = AssetCard;
