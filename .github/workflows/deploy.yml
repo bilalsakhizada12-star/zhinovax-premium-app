@@ -19,9 +19,10 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
-          source: "*"
+          source: "."
           target: "public_html/app"
           rm: true
+          overwrite: true
 
       - name: "🔗 Step 2: Trigger Bridge to Live"
         run: |
