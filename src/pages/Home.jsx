@@ -3,22 +3,9 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
     const [viewType, setViewType] = React.useState('cars'); // 'cars' or 'properties'
     const [searchTerm, setSearchTerm] = React.useState('');
 
-    React.useEffect(() => {
-        if (!loading) {
-            // Optional gentle entrance - cards are already visible so this is just aesthetic
-            gsap.fromTo('.gsap-reveal', 
-                { opacity: 0.3, y: 10 }, 
-                { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }
-            );
-        }
-    }, [loading, viewType, searchTerm]);
-
     const handleTabChange = (type) => {
         if (viewType === type) return;
-        // Direct state update - avoid GSAP container animation that can leave opacity:0 stuck
         setViewType(type);
-        // Reset any stuck GSAP inline styles immediately
-        gsap.set('.grid-layout', { opacity: 1, scale: 1 });
     };
 
     const filteredCars = (cars || []).filter(car => 
@@ -173,8 +160,8 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
                         <i className="fa-solid fa-circle-notch fa-spin" style={{ fontSize: '24px', marginBottom: '10px', display: 'block' }}></i>
                          بارگذاری...
                     </div>
-                ) : activeAssets.map(asset => (
-                    <div key={asset.id} className="gsap-reveal">
+                ) : activeAssets.map((asset, index) => (
+                    <div key={asset.id} className="gsap-reveal" style={{ animationDelay: `${index * 0.05}s` }}>
                         <AssetCard data={asset} type={viewType === 'cars' ? 'car' : 'property'} onClick={onOpenDetail} />
                     </div>
                 ))}
