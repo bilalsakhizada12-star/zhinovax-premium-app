@@ -60,94 +60,65 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
                 </div>
             </div>
 
-            {/* Premium Search Hero */}
-            <div style={{ padding: '30px 24px 20px' }}>
-                <h2 style={{ fontSize: '32px', fontWeight: '900', margin: '0 0 10px', color: '#fff' }}>پـلی بـه سوی <span style={{ color: 'var(--gold-primary)' }}>اشـرافیت</span></h2>
-                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '14px', margin: '0 0 25px' }}>به پلتفرم لوکس خرید و فروش زینوواکس خوش آمدید.</p>
-                
-                <div className="glass" style={{ 
-                    padding: '6px 6px 6px 20px', borderRadius: '30px', display: 'flex', 
-                    alignItems: 'center', gap: '15px',
-                    background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
-                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-                }}>
-                    <div style={{ 
-                        width: '48px', height: '48px', background: 'var(--gold-gradient)', 
-                        borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center',
-                        boxShadow: '0 10px 20px rgba(212, 175, 55, 0.3)', flexShrink: 0
-                    }}>
-                        <i className="fa-solid fa-magnifying-glass" style={{ color: '#000', fontSize: '20px' }}></i>
-                    </div>
+            {/* VIP Button */}
+            <div style={{ padding: '10px 24px', textAlign: 'center' }}>
+                <button onClick={onLogin} className="hover-lift" style={{ 
+                    background: 'var(--gold-gradient)', color: '#000', border: 'none', 
+                    padding: '12px 50px', borderRadius: '30px', fontWeight: '900', 
+                    fontFamily: 'inherit', fontSize: '14px', cursor: 'pointer',
+                    boxShadow: '0 8px 15px rgba(212, 175, 55, 0.2)'
+                }}>داخل شدن VIP</button>
+            </div>
 
-                    <input 
-                        type="text"
-                        placeholder={viewType === 'cars' ? 'مدل ماشین مورد نظر شما...' : 'لوکیشن ملک گرانبها...'}
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        style={{
-                            flex: 1, background: 'transparent', border: 'none', color: '#fff',
-                            fontSize: '16px', fontWeight: '500', outline: 'none', padding: '12px 0',
-                            textAlign: 'right', fontFamily: 'inherit'
-                        }}
-                    />
+            {/* Services Label */}
+            <div style={{ padding: '15px 24px 10px', textAlign: 'right' }}>
+                <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)' }}>خدمات ویژه زینوواکس (همکاران ما)</span>
+            </div>
+
+            {/* Services Grid (3 cards) */}
+            <div style={{ padding: '0 24px 20px', display: 'flex', gap: '10px' }}>
+                <div onClick={() => window.open('https://t.me/yourid', '_blank')} className="glass hover-lift" style={{ background: '#111518', borderRadius: '15px', padding: '15px 5px', flex: 1, textAlign: 'center', border: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer' }}>
+                    <i className="fa-solid fa-building-shield" style={{ color: '#ff9800', fontSize: '20px', marginBottom: '8px' }}></i>
+                    <div style={{ fontSize: '10px', color: '#fff' }}>نمایشگاه همکار</div>
+                </div>
+                <div onClick={() => window.open('https://t.me/yourid', '_blank')} className="glass hover-lift" style={{ background: '#111518', borderRadius: '15px', padding: '15px 5px', flex: 1, textAlign: 'center', border: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer' }}>
+                     <i className="fa-solid fa-magnifying-glass-chart" style={{ color: '#2196f3', fontSize: '20px', marginBottom: '8px' }}></i>
+                    <div style={{ fontSize: '10px', color: '#fff' }}>کارشناسی موتر</div>
+                </div>
+                <div onClick={() => window.open('https://t.me/yourid', '_blank')} className="glass hover-lift" style={{ background: '#111518', borderRadius: '15px', padding: '15px 5px', flex: 1, textAlign: 'center', border: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer' }}>
+                     <i className="fa-solid fa-handshake-angle" style={{ color: '#4caf50', fontSize: '20px', marginBottom: '8px' }}></i>
+                    <div style={{ fontSize: '10px', color: '#fff' }}>تسهیلات بانکی</div>
                 </div>
             </div>
 
-            {/* Partner Services Section - NEW MONETIZATION */}
-            <div style={{ padding: '15px 0 5px' }}>
-                <div style={{ padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                    <span style={{ fontSize: '10px', fontWeight: '900', color: 'rgba(255,255,255,0.4)', letterSpacing: '1px' }}>خدمات ویژه زینوواکس</span>
-                    <i className="fa-solid fa-gem" style={{ color: 'var(--gold-primary)', fontSize: '12px' }}></i>
-                </div>
-                <div className="no-scrollbar" style={{ display: 'flex', gap: '15px', overflowX: 'auto', padding: '5px 20px', scrollSnapType: 'x mandatory' }}>
-                    {[
-                        { icon: 'fa-solid fa-handshake-angle', label: 'تسهیلات بانکی', color: '#4caf50' },
-                        { icon: 'fa-solid fa-magnifying-glass-chart', label: 'کارشناسی موتر', color: '#2196f3' },
-                        { icon: 'fa-solid fa-building-shield', label: 'نمایشگاه همکار', color: '#ff9800' },
-                        { icon: 'fa-solid fa-file-signature', label: 'امور حقوقی', color: '#e91e63' }
-                    ].map((service, idx) => (
-                        <div key={idx} className="glass hover-lift" style={{ 
-                            minWidth: '100px', padding: '15px 10px', borderRadius: '20px', textAlign: 'center',
-                            border: '1px solid rgba(255,255,255,0.05)', flexShrink: 0, scrollSnapAlign: 'start'
-                        }}>
-                            <div style={{ width: '40px', height: '40px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', margin: '0 auto 10px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: service.color }}>
-                                <i className={service.icon} style={{ fontSize: '18px' }}></i>
-                            </div>
-                            <div style={{ fontSize: '10px', fontWeight: '900', color: '#fff' }}>{service.label}</div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Category Filter Pills */}
-            <div style={{ padding: '5px 24px 25px', display: 'flex', gap: '10px' }}>
+            {/* Category Filter Pills (Restored Old Layout) */}
+            <div style={{ padding: '0 24px 25px', display: 'flex', gap: '10px' }}>
                 <div 
                     onClick={() => handleTabChange('cars')}
                     className="hover-lift"
                     style={{
-                        flex: 1, padding: '14px 0', borderRadius: '25px', textAlign: 'center',
-                        background: viewType === 'cars' ? 'var(--gold-gradient)' : 'rgba(255,255,255,0.02)',
+                        flex: 1, padding: '12px 0', borderRadius: '12px', textAlign: 'center',
+                        background: viewType === 'cars' ? 'var(--gold-gradient)' : '#111518',
                         color: viewType === 'cars' ? '#000' : 'rgba(255,255,255,0.4)',
-                        fontWeight: '900', fontSize: '13px', cursor: 'pointer',
-                        transition: '0.4s', border: '1px solid rgba(255,255,255,0.05)',
-                        boxShadow: viewType === 'cars' ? '0 10px 20px rgba(212, 175, 55, 0.2)' : 'none'
+                        fontWeight: 'bold', fontSize: '13px', cursor: 'pointer',
+                        transition: '0.4s', border: viewType === 'cars' ? 'none' : '1px solid rgba(255,255,255,0.05)',
+                        boxShadow: viewType === 'cars' ? '0 5px 15px rgba(212, 175, 55, 0.2)' : 'none'
                     }}
                 >
-                    مـوترهـای مـدرن
+                    موترها
                 </div>
                 <div 
                     onClick={() => handleTabChange('properties')}
                     className="hover-lift"
                     style={{
-                        flex: 1, padding: '14px 0', borderRadius: '25px', textAlign: 'center',
-                        background: viewType === 'properties' ? 'var(--gold-gradient)' : 'rgba(255,255,255,0.02)',
-                        color: viewType === 'properties' ? '#000' : 'rgba(255,255,255,0.4)',
-                        fontWeight: '900', fontSize: '13px', cursor: 'pointer',
-                        transition: '0.4s', border: '1px solid rgba(255,255,255,0.05)',
-                        boxShadow: viewType === 'properties' ? '0 10px 20px rgba(212, 175, 55, 0.2)' : 'none'
+                        flex: 1, padding: '12px 0', borderRadius: '12px', textAlign: 'center',
+                        background: viewType === 'properties' ? '#1c2226' : '#111518',
+                        color: viewType === 'properties' ? '#fff' : 'rgba(255,255,255,0.4)',
+                        fontWeight: 'bold', fontSize: '13px', cursor: 'pointer',
+                        transition: '0.4s', border: viewType === 'properties' ? 'none' : '1px solid rgba(255,255,255,0.05)',
                     }}
                 >
-                    امـلاک پـرمـیـوم
+                    املاک
                 </div>
             </div>
 
