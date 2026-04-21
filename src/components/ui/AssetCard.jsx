@@ -64,11 +64,11 @@ const AssetCard = ({ data, type, onClick }) => {
                     justifyContent: 'flex-end', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '12px' 
                 }}>
                     <div className="badge-item" style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <span>{isCar ? data.transmission : (data.bedrooms + ' اتاق')}</span>
+                        <span>{isCar ? (data.transmission || 'نامشخص') : (data.bedrooms ? data.bedrooms + ' اتاق' : 'تماس بگیرید')}</span>
                         <i className={isCar ? "fa-solid fa-bolt-lightning" : "fa-solid fa-bed"} style={{ fontSize: '9px', color: 'var(--gold-primary)' }}></i>
                     </div>
                     <div className="badge-item" style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <span>{isCar ? (data.mileage?.split(' ')[1] || '0') : data.location?.split('،')[0]}</span>
+                        <span>{isCar ? (data.mileage?.split(' ')[1] || data.mileage || '0') : (data.location ? data.location.split('،')[0] : 'نامشخص')}</span>
                         <i className={isCar ? "fa-solid fa-gauge" : "fa-solid fa-location-arrow"} style={{ fontSize: '9px', color: 'var(--gold-primary)' }}></i>
                     </div>
                 </div>

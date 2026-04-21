@@ -8,19 +8,17 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
         setViewType(type);
     };
 
-    const filteredCars = (cars || []).filter(car => 
-        car.type === 'car' && (
-            car.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-            (car.reg_no && car.reg_no.toLowerCase().includes(searchTerm.toLowerCase()))
-        )
-    );
+    const filteredCars = (cars || []).filter(car => {
+        const titleMatch = car.title ? car.title.toLowerCase().includes(searchTerm.toLowerCase()) : false;
+        const regMatch = car.reg_no ? car.reg_no.toLowerCase().includes(searchTerm.toLowerCase()) : false;
+        return car.type === 'car' && (titleMatch || regMatch);
+    });
 
-    const filteredProps = (properties || []).filter(prop => 
-        prop.type === 'property' && (
-            prop.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (prop.location && prop.location.toLowerCase().includes(searchTerm.toLowerCase()))
-        )
-    );
+    const filteredProps = (properties || []).filter(prop => {
+        const titleMatch = prop.title ? prop.title.toLowerCase().includes(searchTerm.toLowerCase()) : false;
+        const locMatch = prop.location ? prop.location.toLowerCase().includes(searchTerm.toLowerCase()) : false;
+        return prop.type === 'property' && (titleMatch || locMatch);
+    });
 
     const activeAssets = viewType === 'cars' ? filteredCars : filteredProps;
 
