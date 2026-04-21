@@ -64,11 +64,11 @@ const Detail = ({ asset, onBack }) => {
                 zIndex: 100
             }}>
                 <div onClick={onBack} className="hover-lift" style={{ 
-                    background: 'rgba(5, 16, 20, 0.4)', padding: '12px', borderRadius: '14px', 
-                    color: '#fff', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.1)',
-                    backdropFilter: 'blur(10px)'
+                    background: 'rgba(5, 16, 20, 0.6)', width: '45px', height: '45px', borderRadius: '14px', 
+                    color: '#fff', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.15)',
+                    backdropFilter: 'blur(20px)', display: 'flex', justifyContent: 'center', alignItems: 'center'
                 }}>
-                     <i className="fa-solid fa-chevron-right"></i>
+                     <i className="fa-solid fa-arrow-right"></i>
                 </div>
                 <div style={{ display: 'flex', gap: '12px' }}>
                     <div onClick={handleShare} className="hover-lift" style={{ 

@@ -1,5 +1,18 @@
 const App = () => {
-    const { SplashScreen, Auth, Home, Settings, Favorites, Portfolio, Challenges, Detail, Navbar, AddAssetModal, About, ComingSoon } = window;
+    const { 
+        SplashScreen, Auth, Home, Settings, Favorites, Portfolio, Challenges, Detail, Navbar, AddAssetModal, About, ComingSoon 
+    } = window;
+
+    // Safety: If core components are missing, show a simple recovery message instead of crashing
+    if (typeof Home !== 'function' || typeof SplashScreen !== 'function') {
+        return (
+            <div style={{ color: '#fff', padding: '20px', textAlign: 'center', background: '#051014', height: '100vh' }}>
+                <h2 style={{color: 'var(--gold-primary)'}}>در حال آماده سازی...</h2>
+                <p>لطفاً یک لحظه صبر کنید یا صفحه را رفرش کنید.</p>
+                <button onClick={() => window.location.reload()} style={{background: 'var(--gold-gradient)', padding: '10px 20px', borderRadius: '10px', border: 'none'}}>رفرش صفحه</button>
+            </div>
+        );
+    }
     const { cars, properties, loading, addAsset, connectionError } = window.useSupabase();
     const [activeTab, setActiveTab] = React.useState('home');
     const [selectedAsset, setSelectedAsset] = React.useState(null);
@@ -22,18 +35,7 @@ const App = () => {
 
     React.useEffect(() => {
         if (!showSplash) {
-            // Entrance animation for screen content
-            gsap.to('.screen', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
-            
-            // Staggered animation for any elements with 'gsap-reveal' class
-            gsap.to('.gsap-reveal', { 
-                opacity: 1, 
-                y: 0, 
-                duration: 0.8, 
-                stagger: 0.15, 
-                ease: 'power3.out',
-                delay: 0.2
-            });
+            gsap.set('.screen', { opacity: 1, y: 0 });
         }
     }, [activeTab, view, showSplash]);
 

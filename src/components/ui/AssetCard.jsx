@@ -6,82 +6,70 @@ const AssetCard = ({ data, type, onClick }) => {
             onClick={() => onClick(type, data.id)}
             className="glass hover-lift gsap-reveal"
             style={{
-                width: '100%', borderRadius: '28px', padding: '12px',
-                marginBottom: '5px', cursor: 'pointer',
-                position: 'relative', border: '1px solid rgba(255,255,255,0.08)',
-                background: 'rgba(255,255,255,0.02)',
-                overflow: 'hidden'
+                width: '100%', borderRadius: '32px', padding: '10px',
+                marginBottom: '10px', cursor: 'pointer',
+                position: 'relative', overflow: 'hidden',
+                background: 'rgba(255,255,255,0.01)',
+                transition: 'all 0.4s ease'
             }}
         >
-            {/* Price Tag - TOP RIGHT */}
+            {/* Price Chip - High Visibility */}
             <div style={{
-                position: 'absolute', top: '22px', right: '22px',
-                background: 'var(--gold-gradient)', color: '#000',
-                padding: '6px 16px', borderRadius: '16px', fontSize: '13px',
-                fontWeight: '900', zIndex: 10, boxShadow: '0 4px 15px rgba(212, 175, 55, 0.3)'
+                position: 'absolute', top: '20px', right: '20px',
+                background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(10px)',
+                color: 'var(--gold-primary)', padding: '6px 14px', borderRadius: '16px',
+                fontSize: '11px', fontWeight: '900', zIndex: 10,
+                border: '1px solid rgba(212, 175, 55, 0.3)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.4)'
             }}>
                 {data.price}
             </div>
 
-            {/* Heart Icon - TOP LEFT */}
+            {/* Media Container */}
             <div style={{
-                position: 'absolute', top: '22px', left: '22px',
-                background: 'rgba(0,0,0,0.4)', color: '#fff',
-                width: '38px', height: '38px', borderRadius: '50%',
-                display: 'flex', justifyContent: 'center', alignItems: 'center',
-                zIndex: 10, backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)'
-            }}>
-                 <i className="fa-regular fa-heart" style={{ fontSize: '18px' }}></i>
-            </div>
-
-            {/* Main Image */}
-            <div style={{
-                width: '100%', height: '220px', borderRadius: '22px',
+                width: '100%', height: '180px', borderRadius: '24px',
                 backgroundImage: `url(${data.image_url})`,
                 backgroundSize: 'cover', backgroundPosition: 'center',
-                marginBottom: '15px', border: '1px solid rgba(255,255,255,0.05)',
-                position: 'relative'
+                marginBottom: '12px', position: 'relative',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
             }}>
-                {/* View Count Badge */}
+                {/* Visual Glow behind image */}
                 <div style={{
-                    position: 'absolute', bottom: '12px', right: '12px',
-                    background: 'rgba(0,0,0,0.6)', color: '#fff',
-                    padding: '4px 10px', borderRadius: '10px', fontSize: '10px',
-                    display: 'flex', alignItems: 'center', gap: '6px', backdropFilter: 'blur(5px)'
-                }}>
-                    <i className="fa-solid fa-eye" style={{ fontSize: '10px', color: 'var(--gold-primary)' }}></i>
-                    <span>{data.views ? data.views.toLocaleString() : '۱,۲۴۰'}</span>
-                </div>
+                    position: 'absolute', inset: 0, 
+                    boxShadow: 'inset 0 0 40px rgba(0,0,0,0.4)',
+                    borderRadius: '24px'
+                }}></div>
             </div>
 
-            <div style={{ padding: '0 8px 8px', textAlign: 'right' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                     <div style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: '900', background: 'rgba(212,175,55,0.1)', padding: '2px 8px', borderRadius: '6px' }}>
-                        {isCar ? 'موتر' : 'املاک'}
+            {/* Content Section */}
+            <div style={{ padding: '0 10px 10px', textAlign: 'right' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                     <div style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '1px', color: 'rgba(255,255,255,0.4)' }}>
+                        {isCar ? 'Automotive' : 'Estate'}
                     </div>
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>
-                        رجستر: {data.reg_no || '---'}
-                    </div>
+                    {isCar && (
+                        <div style={{ fontSize: '9px', color: 'var(--gold-primary)', fontWeight: 'bold' }}>
+                            {data.fuel}
+                        </div>
+                    )}
                 </div>
                 
-                <h4 style={{ margin: '5px 0 15px', fontSize: '18px', fontWeight: '900', color: '#fff' }}>{data.title}</h4>
+                <h4 style={{ 
+                    margin: '0 0 15px', fontSize: '16px', fontWeight: '700', 
+                    color: '#fff', letterSpacing: '-0.5px', lineHeight: '1.2'
+                }}>{data.title}</h4>
                 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '16px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
-                        <span>{isCar ? (data.fuel || 'پترول') : (data.bedrooms ? data.bedrooms + ' اتاق' : '---')}</span>
-                        <i className={isCar ? "fa-solid fa-gas-pump" : "fa-solid fa-door-open"} style={{ color: 'var(--gold-primary)' }}></i>
+                <div style={{ 
+                    display: 'flex', gap: '8px', flexWrap: 'wrap', 
+                    justifyContent: 'flex-end', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '12px' 
+                }}>
+                    <div className="badge-item" style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <span>{isCar ? data.transmission : (data.bedrooms + ' اتاق')}</span>
+                        <i className={isCar ? "fa-solid fa-bolt-lightning" : "fa-solid fa-bed"} style={{ fontSize: '9px', color: 'var(--gold-primary)' }}></i>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
-                        <span>{isCar ? (data.transmission || 'اوتومات') : (data.area || '---')}</span>
-                        <i className={isCar ? "fa-solid fa-gear" : "fa-solid fa-ruler-combined"} style={{ color: 'var(--gold-primary)' }}></i>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)', direction: 'ltr' }}>
-                        <span>{isCar ? (data.mileage || 'Km 0') : (data.floor ? data.floor + ' منزل' : '---')}</span>
-                        <i className={isCar ? "fa-solid fa-gauge-high" : "fa-solid fa-layer-group"} style={{ color: 'var(--gold-primary)' }}></i>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'flex-end', fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
-                        <span>{data.location || 'کابل'}</span>
-                        <i className="fa-solid fa-location-dot" style={{ color: 'var(--gold-primary)' }}></i>
+                    <div className="badge-item" style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <span>{isCar ? (data.mileage?.split(' ')[1] || '0') : data.location?.split('،')[0]}</span>
+                        <i className={isCar ? "fa-solid fa-gauge" : "fa-solid fa-location-arrow"} style={{ fontSize: '9px', color: 'var(--gold-primary)' }}></i>
                     </div>
                 </div>
             </div>

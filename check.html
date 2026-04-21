@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="font-family: monospace; font-size: 16px;">
+    <h1>Syntax Check Results:</h1>
+    <div id="out">Loading...</div>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+        async function runCheck() {
+            const out = document.getElementById("out");
+            out.innerHTML = "Running checks...<br>";
+            const files = [
+                "src/lib/supabase.js",
+                "src/components/ui/SplashScreen.jsx",
+                "src/components/ui/AssetCard.jsx",
+                "src/components/ui/AddAssetModal.jsx",
+                "src/components/ui/CheckoutModal.jsx",
+                "src/components/layout/Navbar.jsx",
+                "src/pages/Auth.jsx",
+                "src/pages/Home.jsx",
+                "src/pages/Detail.jsx",
+                "src/pages/Settings.jsx",
+                "src/pages/Challenges.jsx",
+                "src/pages/About.jsx",
+                "src/pages/ComingSoon.jsx",
+                "src/pages/Favorites.jsx",
+                "src/pages/Portfolio.jsx",
+                "src/App.jsx"
+            ];
+            let html = "";
+            for (let f of files) {
+                try {
+                    let txt = await (await fetch(f)).text();
+                    Babel.transform(txt, { presets: ['react'] });
+                    html += `<div style="color:green">✔️ ${f} : OK</div>`;
+                } catch(e) {
+                    html += `<div style="color:red; font-weight:bold;">❌ ${f} : ERROR - ${e.message}</div>`;
+                }
+            }
+            out.innerHTML = html;
+        }
+        runCheck();
+    </script>
+</body>
+</html>

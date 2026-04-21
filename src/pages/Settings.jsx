@@ -224,9 +224,9 @@ const Settings = ({ user, onLogin, onTabChange }) => {
             )}
 
             {/* Footer Text */}
-            <div style={{ textAlign: 'center', padding: '50px 25px', fontSize: '12px', color: 'rgba(255,255,255,0.2)', fontWeight: 'bold' }}>
+            <div style={{ textAlign: 'center', padding: '50px 25px', fontSize: '11px', color: 'rgba(255,255,255,0.2)', fontWeight: 'bold', letterSpacing: '1px' }}>
                 ZHINOVAX CAR & PROPERTY MARKETPLACE<br/>
-                <span style={{ fontSize: '10px', fontWeight: 'normal', marginTop: '8px', display: 'block' }}>VERSION 1.4.0 (KARWWAN PARITY)</span>
+                <span style={{ fontSize: '9px', fontWeight: 'normal', color: 'var(--gold-primary)', marginTop: '8px', display: 'block' }}>PRESTIGE EDITION V1.1.0 (PRO)</span>
             </div>
         </div>
     );

@@ -147,5 +147,3 @@ const Challenges = ({ onBack }) => {
 };
 
 window.Challenges = Challenges;
-
-window.Challenges = Challenges;

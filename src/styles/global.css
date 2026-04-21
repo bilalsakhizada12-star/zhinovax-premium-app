@@ -1,42 +1,29 @@
 :root {
     --gold-primary: #d4af37;
     --gold-gradient: linear-gradient(135deg, #F9D976, #D4AF37, #b8860b);
-    --gold-glow: 0 0 20px rgba(212, 175, 55, 0.4);
+    --gold-glow: 0 0 25px rgba(212, 175, 55, 0.4);
     --brand-teal: #008e9b;
-    --bg-dark: #051014;
-    --surface-glass: rgba(255,255,255,0.03);
-    --card-glass: rgba(255,255,255,0.04);
+    --bg-dark: #020608;
+    --surface-glass: rgba(255, 255, 255, 0.02);
+    --card-glass: rgba(255, 255, 255, 0.03);
     --text-main: #ffffff;
-    --text-muted: rgba(255,255,255,0.5);
-    --border-glass: rgba(255,255,255,0.08);
-    --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --border-glass: rgba(255, 255, 255, 0.05); /* Ultra-thin light refracting border */
+    --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.9);
+    --font-luxury: 'Outfit', 'Vazirmatn', sans-serif;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes pulse-gold {
-    0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
-    70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-}
-
-@keyframes slide-up {
-    0% { transform: translateY(20px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+@keyframes mesh-move {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.2); }
+    66% { transform: translate(-20px, 20px) scale(0.8); }
+    100% { transform: translate(0, 0) scale(1); }
 }
 
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    font-family: 'Vazirmatn', sans-serif;
+    font-family: var(--font-luxury);
 }
 
 body, html {
@@ -48,11 +35,34 @@ body, html {
     user-select: none;
 }
 
+/* Immersive Mesh Background */
+body::before, body::after {
+    content: '';
+    position: fixed;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.15;
+    pointer-events: none;
+    animation: mesh-move 20s infinite alternate ease-in-out;
+}
+
+body::before {
+    background: radial-gradient(circle, var(--gold-primary), transparent);
+    top: -200px; left: -200px;
+}
+
+body::after {
+    background: radial-gradient(circle, var(--brand-teal), transparent);
+    bottom: -200px; right: -200px;
+    animation-delay: -5s;
+}
+
 #root {
     width: 100%; 
-    max-width: 420px; 
+    max-width: 480px; /* Slightly wider for better feel */
     min-height: 100vh;
-    background-color: var(--bg-dark);
     margin: 0 auto;
     position: relative;
     display: flex; 
@@ -61,10 +71,10 @@ body, html {
 
 .glass {
     background: var(--surface-glass);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border-radius: 20px;
-    border: 1px solid var(--border-glass);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border-radius: 28px;
+    border: 0.5px solid var(--border-glass);
     box-shadow: var(--shadow-premium);
 }
 
@@ -74,38 +84,29 @@ body, html {
     width: 100%;
 }
 
-/* Grid Layout for Parity with Karwwan */
 .grid-layout {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 12px;
     padding: 0 20px 20px;
 }
 
-.scroller {
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    padding: 10px 20px;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-}
-.scroller::-webkit-scrollbar { display: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 .hover-lift {
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.hover-lift:active, button:active:not(:disabled) { 
-    transform: scale(0.96) !important; 
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.pulse-gold {
-    animation: pulse-gold 2s infinite;
+.hover-lift:active { 
+    transform: scale(0.94) !important; 
+    filter: brightness(1.2);
 }
 
 .gsap-reveal {
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    transform: translateY(0);
 }
+
+/* Prestige Scroll Feel */
+html { scroll-behavior: smooth; }

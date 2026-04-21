@@ -1,72 +1,68 @@
 const Navbar = ({ activeTab, onTabChange, hasNewNotif }) => {
-    React.useEffect(() => {
-        gsap.fromTo('.navbar-inner', 
-            { y: 50, opacity: 0 }, 
-            { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.5 }
-        );
-    }, []);
-
-    const navItemStyle = (tab) => ({
-        display: 'flex', flexDirection: 'column', alignItems: 'center', 
-        gap: '6px', width: '60px', cursor: 'pointer', transition: '0.3s',
-        color: activeTab === tab ? 'var(--gold-primary)' : 'rgba(255,255,255,0.3)',
-        textShadow: activeTab === tab ? '0 0 15px rgba(212,175,55,0.4)' : 'none',
-        position: 'relative', zIndex: 2
-    });
+    const tabs = [
+        { id: 'settings', icon: 'fa-solid fa-circle-user', label: 'VIP' },
+        { id: 'dashboard', icon: 'fa-solid fa-chart-pie', label: 'پورتفولیو' },
+        { id: 'add_asset', icon: 'fa-solid fa-square-plus', label: 'ثبت', special: true },
+        { id: 'favorites', icon: 'fa-solid fa-heart', label: 'علاقه' },
+        { id: 'home', icon: 'fa-solid fa-house-chimney', label: 'خانه' }
+    ];
 
     return (
-        <div className="navbar-container" style={{
-            position: 'fixed', bottom: '0', left: '50%', transform: 'translateX(-50%)', 
-            width: '100%', maxWidth: '420px', height: '100px', zIndex: '2000',
-            pointerEvents: 'none', padding: '0 15px 15px'
+        <div style={{
+            position: 'fixed', bottom: '25px', left: '50%', transform: 'translateX(-50%)',
+            width: '90%', maxWidth: '400px', zIndex: 1000,
+            display: 'flex', justifyContent: 'center'
         }}>
-            <div className="navbar-inner glass" style={{
-                position: 'relative', width: '100%', height: '70px', 
-                borderRadius: '24px', display: 'flex', justifyContent: 'space-around', 
-                alignItems: 'center', pointerEvents: 'auto',
+            <div className="glass" style={{
+                width: '100%', height: '75px', borderRadius: '35px',
+                display: 'flex', justifyContent: 'space-around', alignItems: 'center',
+                padding: '0 10px', background: 'rgba(5, 16, 20, 0.4)',
                 border: '1px solid rgba(255,255,255,0.1)',
-                background: 'rgba(5, 16, 20, 0.85)',
-                backdropFilter: 'blur(20px)'
+                boxShadow: '0 15px 35px rgba(0,0,0,0.6)'
             }}>
-                {/* SETTINGS */}
-                <div id="nav-settings" onClick={() => onTabChange('settings')} className="hover-lift" style={navItemStyle('settings')}>
-                    <i className="fa-solid fa-gear" style={{ fontSize: '20px' }}></i>
-                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>تنظیمات</span>
-                </div>
+                {tabs.map(tab => {
+                    const isActive = activeTab === tab.id;
+                    return (
+                        <div 
+                            key={tab.id}
+                            onClick={() => onTabChange(tab.id)}
+                            className="hover-lift"
+                            style={{
+                                display: 'flex', flexDirection: 'column', alignItems: 'center',
+                                cursor: 'pointer', position: 'relative', flex: 1,
+                                transition: 'all 0.3s ease'
+                            }}
+                        >
+                            <div style={{
+                                width: '45px', height: '45px', borderRadius: '50%',
+                                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                                color: isActive ? '#000' : 'rgba(255,255,255,0.4)',
+                                background: isActive ? 'var(--gold-gradient)' : 'transparent',
+                                fontSize: '20px', transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
+                                boxShadow: isActive ? '0 8px 20px rgba(212, 175, 55, 0.4)' : 'none',
+                                transform: isActive ? 'scale(1.1) translateY(-5px)' : 'scale(1)'
+                            }}>
+                                <i className={tab.icon}></i>
+                            </div>
+                            
+                            {isActive && (
+                                <div style={{
+                                    position: 'absolute', bottom: '-12px', width: '4px', height: '4px',
+                                    borderRadius: '50%', background: 'var(--gold-primary)',
+                                    boxShadow: '0 0 10px var(--gold-primary)'
+                                }}></div>
+                            )}
 
-                {/* FAVORITES */}
-                <div id="nav-favorites" onClick={() => onTabChange('favorites')} className="hover-lift" style={navItemStyle('favorites')}>
-                    <i className="fa-solid fa-heart" style={{ fontSize: '20px' }}></i>
-                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>برگزیده</span>
-                </div>
-                
-                {/* MOCK GAP FOR FAB */}
-                <div style={{ width: '60px' }}></div>
-                
-                {/* ASSETS / HOME */}
-                <div id="nav-home" onClick={() => onTabChange('home')} className="hover-lift" style={navItemStyle('home')}>
-                    <i className="fa-solid fa-gem" style={{ fontSize: '20px' }}></i>
-                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>موترها</span>
-                </div>
-                
-                {/* DASHBOARD / PORTFOLIO */}
-                <div id="nav-dashboard" onClick={() => onTabChange('dashboard')} className="hover-lift" style={navItemStyle('dashboard')}>
-                    <i className="fa-solid fa-layer-group" style={{ fontSize: '20px' }}></i>
-                    <span style={{ fontSize: '10px', fontWeight: 'bold' }}>داشبورد</span>
-                    {hasNewNotif && <span style={{ position: 'absolute', top: '-5px', right: '15px', width: '8px', height: '8px', background: '#ff4b5c', borderRadius: '50%', border: '2px solid #051014' }}></span>}
-                </div>
-
-                {/* CENTRAL FAB (Floating Action Button) */}
-                <div onClick={() => onTabChange('home')} className="hover-lift pulse-gold" style={{
-                    position: 'absolute', top: '-25px', left: '50%', transform: 'translateX(-50%)',
-                    background: 'var(--gold-gradient)', width: '65px', height: '65px', 
-                    borderRadius: '22px', display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    boxShadow: '0 10px 25px rgba(212, 175, 55, 0.5)',
-                    cursor: 'pointer', border: '5px solid #051014', transition: '0.3s',
-                    zIndex: 10
-                }}>
-                    <i className="fa-solid fa-house" style={{ color: '#000', fontSize: '26px' }}></i>
-                </div>
+                            {tab.id === 'favorites' && hasNewNotif && !isActive && (
+                                <div style={{
+                                    position: 'absolute', top: '5px', right: '15px',
+                                    width: '8px', height: '8px', borderRadius: '50%',
+                                    background: '#ff4b2b', border: '2px solid #000'
+                                }}></div>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

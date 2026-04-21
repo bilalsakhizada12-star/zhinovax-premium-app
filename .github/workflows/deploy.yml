@@ -12,6 +12,9 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
         
+      - name: 🗑️ Remove .git folder (Security & Fix Permission Error)
+        run: rm -rf .git
+
       - name: "🚀 Step 1: Sync to Staging"
         uses: appleboy/scp-action@v0.1.7
         with:

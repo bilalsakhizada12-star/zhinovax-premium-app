@@ -99,7 +99,7 @@ const HYBRID_CARS = [
         id: "hybrid-supra", 
         title: 'تویوتا سوپرا ۲۰۲۴', 
         price: '155,000$', 
-        image_url: 'https://images.unsplash.com/photo-1626847037657-fd3622613ce3?q=80&w=800&auto=format&fit=crop', 
+        image_url: 'https://images.unsplash.com/photo-1619405234923-d30903901962?q=80&w=800&auto=format&fit=crop', 
         color: 'سیاه متالیک',
         plate: 'کابل - ۲۰۲۴',
         fuel: 'پترول توربو', 
@@ -110,6 +110,25 @@ const HYBRID_CARS = [
         documents: 'پاک',
         views: 8940,
         mileage: 'Km ۰',
+        location: 'کابل، افغانستان',
+        type: 'car'
+    },
+    { 
+        id: "hybrid-prius", 
+        title: 'تویوتا پریوس ۲۰۱۴', 
+        price: '12,500$', 
+        image_url: 'https://images.unsplash.com/photo-1594070319944-7c0c63146b77?q=80&w=800&auto=format&fit=crop', 
+        color: 'نقره‌‌یی',
+        plate: 'ندارد',
+        fuel: 'پترول و هایبرید', 
+        engine: '۴ سلندر',
+        transmission: 'اوتومات', 
+        accident_history: 'ندارد',
+        features: ['ایربک (فعال)', 'ABS (فعال)', 'کمره عقب (فعال)', 'گرم و سرد کن (فعال)', 'استارت تکمه (فعال)'],
+        documents: 'سر ترافیک / سه سال پاک',
+        views: 5046,
+        reg_no: '۲۰۱۸#',
+        mileage: 'Km ۱۵۱,۱۶۷',
         location: 'کابل، افغانستان',
         type: 'car'
     }
@@ -190,12 +209,16 @@ window.useSupabase = () => {
             const { data: carsData } = await window.supabaseClient.from('cars').select('*');
             const { data: propData } = await window.supabaseClient.from('properties').select('*');
 
-            // Merge DB cars with HYBRID_CARS (DB cars take priority, no duplicates)
-            const allCars = [...HYBRID_CARS];
+            // Merge DB cars with HYBRID_CARS + MOCK_CARS (DB cars take priority)
+            const allCars = [...HYBRID_CARS, ...MOCK_CARS.filter(mc => !HYBRID_CARS.find(hc => hc.title === mc.title))];
             if (carsData && carsData.length > 0) {
                 carsData.forEach(dbCar => {
-                    if (!allCars.find(c => c.title === dbCar.title)) {
-                        allCars.push(dbCar);
+                    const typedCar = { ...dbCar, type: 'car' };
+                    const existingIdx = allCars.findIndex(c => c.id === dbCar.id || c.title === dbCar.title);
+                    if (existingIdx !== -1) {
+                        allCars[existingIdx] = typedCar; // Update with DB data
+                    } else {
+                        allCars.push(typedCar);
                     }
                 });
                 console.log("Supabase Sync OK - Cars:", carsData.length);
@@ -205,19 +228,25 @@ window.useSupabase = () => {
             const allProps = [...MOCK_PROPS];
             if (propData && propData.length > 0) {
                 propData.forEach(dbProp => {
-                    if (!allProps.find(p => p.title === dbProp.title)) {
-                        allProps.push(dbProp);
+                    const typedProp = { ...dbProp, type: 'property' };
+                    const existingIdx = allProps.findIndex(p => p.id === dbProp.id || p.title === dbProp.title);
+                    if (existingIdx !== -1) {
+                        allProps[existingIdx] = typedProp; // Update with DB data
+                    } else {
+                        allProps.push(typedProp);
                     }
                 });
                 console.log("Supabase Sync OK - Props:", propData.length);
             }
 
-            setCars(allCars);
-            setProperties(allProps);
+            setCars([...allCars]);
+            setProperties([...allProps]);
         } catch (error) {
             console.warn("Using Fallback Data:", error);
-            setCars(HYBRID_CARS);
-            setProperties(MOCK_PROPS);
+            // Ensure fallback contains ALL data, not just a subset
+            const fallbackCars = [...HYBRID_CARS, ...MOCK_CARS.filter(mc => !HYBRID_CARS.find(hc => hc.title === mc.title))];
+            setCars(fallbackCars);
+            setProperties([...MOCK_PROPS]);
             setConnectionError(null);
         } finally {
             setLoading(false);
