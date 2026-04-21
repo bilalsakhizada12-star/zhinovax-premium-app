@@ -15,7 +15,7 @@ jobs:
       - name: 🗑️ Remove .git folder (Security & Fix Permission Error)
         run: rm -rf .git
 
-      - name: "🚀 Step 1: Sync to Staging"
+      - name: "🚀 Step 1: Deploy Directly to Live Hostinger Server"
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -23,11 +23,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
           source: "."
-          target: "public_html/app"
+          target: "domains/zhinovax.com/public_html/app"
           overwrite: true
           rm: false
-
-      - name: "🔗 Step 2: Trigger Bridge to Live"
-        run: |
-          sleep 10
-          curl -L "https://app.zhinovax.com/deploy.php?key=zhinovax_secret_99"
