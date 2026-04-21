@@ -152,7 +152,7 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
             </div>
 
             {/* Main Content Grid */}
-            <div className="grid-layout">
+            <div key={viewType} className="grid-layout">
                 {loading && activeAssets.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '50px 25px', fontSize: '11px', color: 'rgba(255,255,255,0.2)', fontWeight: 'bold', letterSpacing: '1px' }}>
                         <i className="fa-solid fa-circle-notch fa-spin" style={{ fontSize: '24px', marginBottom: '10px', display: 'block' }}></i>
