@@ -20,24 +20,43 @@ const App = () => {
     const [showSplash, setShowSplash] = React.useState(true);
     const [user, setUser] = React.useState(null); // Auth State
     const [pendingAction, setPendingAction] = React.useState(null);
-    const [lastCarCount, setLastCarCount] = React.useState(parseInt(localStorage.getItem('zhinovax_car_count') || '0'));
+    const [lastAssetCount, setLastAssetCount] = React.useState(parseInt(localStorage.getItem('zhinovax_asset_count') || '0'));
     const [hasNewNotif, setHasNewNotif] = React.useState(false);
 
     React.useEffect(() => {
-        if (!loading && cars.length > 0) {
-            if (cars.length > lastCarCount && lastCarCount !== 0) {
+        if (!loading && (cars.length > 0 || properties.length > 0)) {
+            const currentTotal = cars.length + properties.length;
+            if (currentTotal > lastAssetCount && lastAssetCount !== 0) {
                 setHasNewNotif(true);
             }
-            localStorage.setItem('zhinovax_car_count', cars.length.toString());
-            setLastCarCount(cars.length);
+            localStorage.setItem('zhinovax_asset_count', currentTotal.toString());
+            setLastAssetCount(currentTotal);
         }
-    }, [cars, loading]);
+    }, [cars, properties, loading]);
+
+    // Safety fix: if activeTab is invalid, reset to home
+    React.useEffect(() => {
+        if (view === 'home' && !['home', 'settings', 'favorites'].includes(activeTab)) {
+            setActiveTab('home');
+        }
+    }, [view, activeTab]);
 
     React.useEffect(() => {
         if (!showSplash) {
             gsap.set('.screen', { opacity: 1, y: 0 });
+            
+            // Deep Linking Engine: Check URL for specific asset on first load
+            const params = new URLSearchParams(window.location.search);
+            const type = params.get('type');
+            const id = params.get('id');
+            
+            if (type && id && !loading) {
+                handleOpenDetail(type, id);
+                // Clear URL params to prevent re-opening on every refresh if user navigates away
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
         }
-    }, [activeTab, view, showSplash]);
+    }, [activeTab, view, showSplash, loading]);
 
     const handleOpenDetail = (type, id) => {
         const asset = type === 'car' 
@@ -56,7 +75,7 @@ const App = () => {
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
-        setView('home'); // ensures we clear detail view or other sub-pages
+        setView('home'); 
     };
 
     const handleLogin = (loggedInUser) => {
@@ -129,17 +148,17 @@ const App = () => {
             {view === 'home' && activeTab === 'favorites' && (
                 <Favorites onTabChange={handleTabChange} assets={[...cars, ...properties]} onOpenDetail={handleOpenDetail} />
             )}
-            
-            {view === 'home' && activeTab === 'dashboard' && (
-                <Portfolio user={user} onLogin={() => setView('auth')} onTabChange={handleTabChange} assets={[...cars, ...properties]} onOpenDetail={handleOpenDetail} />
-            )}
-
-            {view === 'add_asset' && (
-                <AddAssetModal onClose={() => setView('home')} onSave={addAsset} />
-            )}
 
             {view === 'detail' && (
-                <Detail asset={selectedAsset} onBack={handleBack} />
+                <Detail asset={selectedAsset} onBack={handleBack} allAssets={[...cars, ...properties]} />
+            )}
+
+            {/* Safety Fallback: If no view is rendered, force Home */}
+            {(view === 'home' && !['home', 'settings', 'favorites'].includes(activeTab)) && (
+                <div style={{ textAlign: 'center', padding: '100px 20px', color: 'var(--gold-primary)' }}>
+                    <i className="fa-solid fa-spinner fa-spin" style={{ fontSize: '30px' }}></i>
+                    <p style={{ marginTop: '20px' }}>در حال بارگذاری مجدد...</p>
+                </div>
             )}
 
             {/* Navbar is only shown in main views, not splash, auth, or detail */}

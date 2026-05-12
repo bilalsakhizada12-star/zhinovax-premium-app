@@ -1,4 +1,4 @@
-const Detail = ({ asset, onBack }) => {
+const Detail = ({ asset, onBack, allAssets }) => {
     const CheckoutModal = window.CheckoutModal;
     const [showCheckout, setShowCheckout] = React.useState(false);
     const [isFav, setIsFav] = React.useState(false);
@@ -28,7 +28,19 @@ const Detail = ({ asset, onBack }) => {
             asset.views = currentViews;
         }
         setViews(currentViews);
+
+        // Animate spec icons
+        gsap.to('.spec-icon', {
+            rotate: 360,
+            duration: 1.5,
+            ease: 'elastic.out(1, 0.3)',
+            delay: 0.5
+        });
     }, [asset.id]);
+
+    const similarAssets = (allAssets || [])
+        .filter(a => a.type === asset.type && a.id !== asset.id)
+        .slice(0, 4);
 
     const handleFavorite = () => {
         const favs = JSON.parse(localStorage.getItem('zhinovax_favorites') || '[]');
@@ -64,11 +76,11 @@ const Detail = ({ asset, onBack }) => {
                 zIndex: 100
             }}>
                 <div onClick={onBack} className="hover-lift" style={{ 
-                    background: 'rgba(5, 16, 20, 0.6)', width: '45px', height: '45px', borderRadius: '14px', 
-                    color: '#fff', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.15)',
-                    backdropFilter: 'blur(20px)', display: 'flex', justifyContent: 'center', alignItems: 'center'
+                    background: 'rgba(5, 10, 13, 0.7)', width: '48px', height: '48px', borderRadius: '16px', 
+                    color: '#fff', cursor: 'pointer', border: '1px solid var(--border-glass)',
+                    backdropFilter: 'blur(30px)', display: 'flex', justifyContent: 'center', alignItems: 'center'
                 }}>
-                     <i className="fa-solid fa-arrow-right"></i>
+                     <i className="fa-solid fa-chevron-right" style={{ fontSize: '18px' }}></i>
                 </div>
                 <div style={{ display: 'flex', gap: '12px' }}>
                     <div onClick={handleShare} className="hover-lift" style={{ 
@@ -96,7 +108,7 @@ const Detail = ({ asset, onBack }) => {
                 }}></div>
                 <div style={{ 
                     position: 'absolute', inset: 0, 
-                    background: 'linear-gradient(to bottom, rgba(5,16,20,0.4) 0%, transparent 40%, transparent 70%, var(--bg-dark) 100%)' 
+                    background: 'linear-gradient(to bottom, rgba(5,10,13,0.3) 0%, transparent 40%, transparent 70%, var(--bg-dark) 100%)' 
                 }}></div>
                 
                 <div style={{ position: 'absolute', bottom: '20px', left: '25px', display: 'flex', gap: '10px' }}>
@@ -124,31 +136,31 @@ const Detail = ({ asset, onBack }) => {
                     <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
                         <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px'}}>موقعیت فعلی</div>
                         <div style={{fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px'}}>
-                            {asset.location || 'کابل'} <i className="fa-solid fa-location-dot" style={{color: 'var(--gold-primary)'}}></i>
+                            {asset.location || 'کابل'} <i className="fa-solid fa-location-dot spec-icon" style={{color: 'var(--gold-primary)'}}></i>
                         </div>
                     </div>
                     <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
                         <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px'}}>{isCar ? 'گیربکس' : 'مساحت'}</div>
                         <div style={{fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px', direction: 'ltr'}}>
-                            {isCar ? (asset.transmission || 'اوتومات') : (asset.area || '---')} <i className={isCar ? "fa-solid fa-gear" : "fa-solid fa-ruler-combined"} style={{color: 'var(--gold-primary)'}}></i>
+                            {isCar ? (asset.transmission || 'اوتومات') : (asset.area || '---')} <i className={isCar ? "fa-solid fa-gear spec-icon" : "fa-solid fa-ruler-combined spec-icon"} style={{color: 'var(--gold-primary)'}}></i>
                         </div>
                     </div>
                     <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
                         <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px'}}>{isCar ? 'کارکرد' : 'اتاق‌ها'}</div>
                         <div style={{fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px', direction: 'ltr'}}>
-                            {isCar ? (asset.mileage || '---') : (asset.bedrooms || '---')} <i className={isCar ? "fa-solid fa-gauge-high" : "fa-solid fa-door-open"} style={{color: 'var(--gold-primary)'}}></i>
+                            {isCar ? (asset.mileage || '---') : (asset.bedrooms || '---')} <i className={isCar ? "fa-solid fa-gauge-high spec-icon" : "fa-solid fa-door-open spec-icon"} style={{color: 'var(--gold-primary)'}}></i>
                         </div>
                     </div>
                     <div className="glass" style={{ padding: '18px', textAlign: 'right', background: 'rgba(255,255,255,0.02)' }}>
                         <div style={{fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px'}}>{isCar ? 'نوع سوخت' : 'منزل'}</div>
                         <div style={{fontWeight: '900', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px'}}>
-                             {isCar ? (asset.fuel || 'پترول') : (asset.floor || '---')} <i className={isCar ? "fa-solid fa-gas-pump" : "fa-solid fa-layer-group"} style={{color: 'var(--gold-primary)'}}></i>
+                             {isCar ? (asset.fuel || 'پترول') : (asset.floor || '---')} <i className={isCar ? "fa-solid fa-gas-pump spec-icon" : "fa-solid fa-layer-group spec-icon"} style={{color: 'var(--gold-primary)'}}></i>
                         </div>
                     </div>
                 </div>
 
                 {/* Features List */}
-                <div className="glass" style={{ padding: '25px', marginBottom: '30px', background: 'rgba(255,255,255,0.02)' }}>
+                <div className="glass" style={{ padding: '25px', marginBottom: '40px', background: 'rgba(255,255,255,0.02)' }}>
                     <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '20px', textAlign: 'right', color: '#fff' }}>مشخصات و ویژگی‌ها</h3>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '15px' }}>
                         {features.length > 0 ? features.map((f, i) => (
@@ -163,27 +175,49 @@ const Detail = ({ asset, onBack }) => {
                         )}
                     </div>
                 </div>
+
+                {/* Similar Assets */}
+                {similarAssets.length > 0 && (
+                    <div style={{ marginBottom: '50px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                            <span style={{ fontSize: '11px', fontWeight: '900', color: 'rgba(255,255,255,0.3)', letterSpacing: '1.5px' }}>موارد مشابه پیشنهادی</span>
+                            <i className="fa-solid fa-gem" style={{ color: 'var(--gold-primary)', fontSize: '10px' }}></i>
+                        </div>
+                        <div className="no-scrollbar" style={{ display: 'flex', gap: '15px', overflowX: 'auto', paddingBottom: '10px' }}>
+                            {similarAssets.map((item, idx) => (
+                                <div key={idx} onClick={() => { onBack(); setTimeout(() => window.dispatchEvent(new CustomEvent('open-asset', { detail: { type: asset.type, id: item.id } })), 100); }} style={{ 
+                                    minWidth: '200px', background: 'rgba(255,255,255,0.03)', borderRadius: '24px', 
+                                    padding: '12px', border: '1px solid var(--border-glass)', cursor: 'pointer'
+                                }}>
+                                    <div style={{ width: '100%', height: '110px', borderRadius: '18px', backgroundImage: `url(${item.image_url})`, backgroundSize: 'cover', backgroundPosition: 'center', marginBottom: '10px' }}></div>
+                                    <div style={{ fontWeight: '900', color: '#fff', fontSize: '12px', textAlign: 'right', marginBottom: '5px' }}>{item.title}</div>
+                                    <div style={{ color: 'var(--gold-primary)', fontSize: '13px', fontWeight: '900', textAlign: 'right' }}>{item.price}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Bottom Actions Bar */}
             <div style={{ 
                 position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', 
-                width: '100%', maxWidth: '420px', padding: '20px 25px 35px', 
-                background: 'rgba(5, 16, 20, 0.95)', borderTop: '1px solid rgba(255,255,255,0.05)', 
-                display: 'flex', gap: '15px', backdropFilter: 'blur(20px)', zIndex: 1000 
+                width: '100%', maxWidth: '420px', padding: '20px 25px 40px', 
+                background: 'rgba(5, 10, 13, 0.92)', borderTop: '1px solid var(--border-glass)', 
+                display: 'flex', gap: '15px', backdropFilter: 'blur(40px)', zIndex: 1000 
             }}>
                 <a href="https://wa.me/93700000000" target="_blank" className="hover-lift" style={{ textDecoration: 'none' }}>
-                    <div style={{ width: '60px', height: '60px', background: '#25d366', borderRadius: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff', boxShadow: '0 5px 15px rgba(37, 211, 102, 0.3)' }}>
-                        <i className="fa-brands fa-whatsapp" style={{ fontSize: '32px' }}></i>
+                    <div style={{ width: '64px', height: '64px', background: '#25d366', borderRadius: '22px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff', boxShadow: '0 10px 25px rgba(37, 211, 102, 0.3)' }}>
+                        <i className="fa-brands fa-whatsapp" style={{ fontSize: '34px' }}></i>
                     </div>
                 </a>
-                <div onClick={() => setShowCheckout(true)} className="hover-lift pulse-gold" style={{ 
-                    flex: 1, height: '60px', background: 'var(--gold-primary)', borderRadius: '20px',
+                <div onClick={() => setShowCheckout(true)} className="hover-lift" style={{ 
+                    flex: 1, height: '64px', background: 'var(--gold-gradient)', borderRadius: '22px',
                     display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    color: '#000', fontSize: '17px', fontWeight: '900', gap: '12px', cursor: 'pointer',
-                    boxShadow: '0 8px 25px rgba(212, 175, 55, 0.4)'
+                    color: '#000', fontSize: '18px', fontWeight: '900', gap: '12px', cursor: 'pointer',
+                    boxShadow: 'var(--gold-glow)'
                 }}>
-                    <span>رزرو و تماس مستقیم</span>
+                    <span>رزرو و تماس VIP</span>
                     <i className="fa-solid fa-phone-volume"></i>
                 </div>
             </div>

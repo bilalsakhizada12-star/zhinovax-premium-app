@@ -284,6 +284,9 @@ window.useSupabase = () => {
 
     React.useEffect(() => {
         fetchData();
+        // Live Sync: Auto-refresh data every 30 seconds
+        const pollInterval = setInterval(fetchData, 30000);
+        return () => clearInterval(pollInterval);
     }, []);
 
     return { 

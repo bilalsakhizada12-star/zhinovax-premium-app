@@ -1,47 +1,46 @@
-const CACHE_NAME = 'zhinovax-v21';
-const ASSETS = [
-  './index.html',
-  './src/styles/global.css',
-  './src/App.jsx',
-  './src/lib/supabase.js',
-  './src/pages/Home.jsx',
-  './src/pages/Detail.jsx',
-  './src/pages/Settings.jsx',
-  './src/pages/Challenges.jsx',
-  './src/pages/About.jsx',
-  './src/pages/ComingSoon.jsx',
-  './src/pages/Auth.jsx',
-  './src/pages/Favorites.jsx',
-  './src/pages/Portfolio.jsx',
-  './src/components/ui/CheckoutModal.jsx',
-  './src/components/ui/AddAssetModal.jsx',
-  './src/components/layout/Navbar.jsx',
-  './src/components/ui/AssetCard.jsx',
-  './src/components/ui/SplashScreen.jsx'
-];
+const CACHE_NAME = 'zhinovax-v22';
 
+// Network-first strategy: always try network, fall back to cache
 self.addEventListener('install', (e) => {
   self.skipWaiting();
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
-  );
 });
 
 self.addEventListener('activate', (e) => {
+  // Delete ALL old caches on activation
   e.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(keyList.map((key) => {
+    caches.keys().then((keyList) =>
+      Promise.all(keyList.map((key) => {
         if (key !== CACHE_NAME) {
+          console.log('[SW] Deleting old cache:', key);
           return caches.delete(key);
         }
-      }));
-    })
+      }))
+    )
   );
   return self.clients.claim();
 });
 
 self.addEventListener('fetch', (e) => {
+  // Skip non-GET requests
+  if (e.request.method !== 'GET') return;
+
   e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+    fetch(e.request)
+      .then((networkResponse) => {
+        // Cache a copy of successful network responses
+        if (networkResponse && networkResponse.status === 200) {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(e.request, responseClone);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        // Fallback to cache when offline
+        return caches.match(e.request).then((cached) => {
+          return cached || caches.match('./index.html');
+        });
+      })
   );
 });

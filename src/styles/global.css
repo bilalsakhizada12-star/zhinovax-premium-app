@@ -1,15 +1,17 @@
 :root {
     --gold-primary: #d4af37;
-    --gold-gradient: linear-gradient(135deg, #F9D976, #D4AF37, #b8860b);
-    --gold-glow: 0 0 25px rgba(212, 175, 55, 0.4);
+    --gold-gradient: linear-gradient(135deg, #F9D976 0%, #D4AF37 50%, #b8860b 100%);
+    --gold-glow: 0 0 25px rgba(212, 175, 55, 0.35);
+    --gold-shine: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     --brand-teal: #008e9b;
-    --bg-dark: #020608;
-    --surface-glass: rgba(255, 255, 255, 0.02);
-    --card-glass: rgba(255, 255, 255, 0.03);
+    --bg-dark: #050a0d;
+    --surface-glass: rgba(255, 255, 255, 0.03);
+    --card-glass: rgba(15, 20, 25, 0.6);
     --text-main: #ffffff;
     --text-muted: rgba(255, 255, 255, 0.5);
-    --border-glass: rgba(255, 255, 255, 0.05); /* Ultra-thin light refracting border */
-    --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.9);
+    --border-glass: rgba(255, 255, 255, 0.08); 
+    --shadow-premium: 0 25px 60px rgba(0, 0, 0, 0.7);
+    --shimmer-gradient: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
     --font-luxury: 'Outfit', 'Vazirmatn', sans-serif;
 }
 
@@ -18,6 +20,22 @@
     33% { transform: translate(30px, -50px) scale(1.2); }
     66% { transform: translate(-20px, 20px) scale(0.8); }
     100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes meshScroll {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(60px, -80px) rotate(180deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-150%); }
+    100% { transform: translateX(150%); }
+}
+
+@keyframes pulse-gold-anim {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
 }
 
 * {
@@ -39,13 +57,13 @@ body, html {
 body::before, body::after {
     content: '';
     position: fixed;
-    width: 600px; height: 600px;
+    width: 800px; height: 800px;
     border-radius: 50%;
-    filter: blur(120px);
+    filter: blur(140px);
     z-index: -1;
-    opacity: 0.15;
+    opacity: 0.12;
     pointer-events: none;
-    animation: mesh-move 20s infinite alternate ease-in-out;
+    animation: meshScroll 30s infinite linear;
 }
 
 body::before {
@@ -71,11 +89,22 @@ body::after {
 
 .glass {
     background: var(--surface-glass);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    border-radius: 28px;
-    border: 0.5px solid var(--border-glass);
+    backdrop-filter: blur(50px) saturate(180%);
+    -webkit-backdrop-filter: blur(50px) saturate(180%);
+    border-radius: 30px;
+    border: 1px solid var(--border-glass);
     box-shadow: var(--shadow-premium);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('https://www.transparenttextures.com/patterns/pinstriped-suit.png');
+    opacity: 0.02;
+    pointer-events: none;
 }
 
 .screen {
@@ -111,6 +140,39 @@ body::after {
 @keyframes reveal-up {
     from { opacity: 0; transform: translateY(15px); filter: blur(5px); }
     to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* Pulse Gold */
+.pulse-gold {
+    animation: pulse-gold-anim 2.5s ease-in-out infinite;
+}
+
+/* Skeleton shimmer */
+.shimmer-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.shimmer-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--shimmer-gradient);
+    animation: shimmer 2s infinite;
+}
+
+.skeleton {
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+}
+
+/* App container */
+.app-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 /* Prestige Scroll Feel */

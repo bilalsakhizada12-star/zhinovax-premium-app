@@ -66,11 +66,6 @@ const About = ({ onBack }) => {
                 {/* Team / Info Cards */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '20px' }}>
                     <div className="glass" style={{ padding: '15px', textAlign: 'center' }}>
-                        <i className="fa-solid fa-user-tie" style={{ color: 'var(--gold-primary)', fontSize: '24px', marginBottom: '10px' }}></i>
-                        <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>مدیریت</div>
-                        <div style={{ fontSize: '14px', fontWeight: 'bold' }}>عبدالصبور غیاثی</div>
-                    </div>
-                    <div className="glass" style={{ padding: '15px', textAlign: 'center' }}>
                         <i className="fa-solid fa-location-dot" style={{ color: 'var(--gold-primary)', fontSize: '24px', marginBottom: '10px' }}></i>
                         <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>آدرس</div>
                         <div style={{ fontSize: '14px', fontWeight: 'bold' }}>کابل، شهر نو</div>

@@ -8,98 +8,157 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
         setViewType(type);
     };
 
+    const normalize = (text) => {
+        if (!text) return '';
+        return text.toLowerCase()
+            .replace(/ي/g, 'ی')
+            .replace(/ك/g, 'ک')
+            .trim();
+    };
+
     const filteredCars = (cars || []).filter(car => {
-        const titleMatch = car.title ? car.title.toLowerCase().includes(searchTerm.toLowerCase()) : false;
-        const regMatch = car.reg_no ? car.reg_no.toLowerCase().includes(searchTerm.toLowerCase()) : false;
-        return car.type === 'car' && (titleMatch || regMatch);
+        const term = normalize(searchTerm);
+        const titleMatch = normalize(car.title).includes(term);
+        const regMatch = normalize(car.reg_no).includes(term);
+        const fuelMatch = normalize(car.fuel).includes(term);
+        const transMatch = normalize(car.transmission).includes(term);
+        return car.type === 'car' && (titleMatch || regMatch || fuelMatch || transMatch);
     });
 
     const filteredProps = (properties || []).filter(prop => {
-        const titleMatch = prop.title ? prop.title.toLowerCase().includes(searchTerm.toLowerCase()) : false;
-        const locMatch = prop.location ? prop.location.toLowerCase().includes(searchTerm.toLowerCase()) : false;
-        return prop.type === 'property' && (titleMatch || locMatch);
+        const term = normalize(searchTerm);
+        const titleMatch = normalize(prop.title).includes(term);
+        const locMatch = normalize(prop.location).includes(term);
+        const addrMatch = normalize(prop.address).includes(term);
+        const areaMatch = normalize(prop.area).includes(term);
+        return prop.type === 'property' && (titleMatch || locMatch || addrMatch || areaMatch);
     });
 
     const activeAssets = viewType === 'cars' ? filteredCars : filteredProps;
+
+    const SkeletonCard = () => (
+        <div className="glass shimmer-wrapper skeleton" style={{ height: '280px', width: '100%', marginBottom: '15px', overflow: 'hidden' }}>
+            {/* Box for image */}
+            <div style={{ height: '180px', width: '100%', background: 'rgba(255,255,255,0.02)' }}></div>
+            <div style={{ padding: '15px' }}>
+                <div className="skeleton" style={{ height: '15px', width: '70%', background: 'rgba(255,255,255,0.05)', marginBottom: '10px' }}></div>
+                <div className="skeleton" style={{ height: '10px', width: '40%', background: 'rgba(255,255,255,0.03)' }}></div>
+            </div>
+        </div>
+    );
+
+    const FeaturedSlider = () => {
+        const featured = (viewType === 'cars' ? (cars || []) : (properties || [])).slice(0, 3);
+        if (featured.length === 0) return null;
+        
+        return (
+            <div className="no-scrollbar" style={{ display: 'flex', gap: '20px', overflowX: 'auto', padding: '0 24px 30px', scrollSnapType: 'x mandatory' }}>
+                {featured.map((item, idx) => (
+                    <div key={idx} onClick={() => onOpenDetail(viewType === 'cars' ? 'car' : 'property', item.id)} style={{ 
+                        minWidth: '280px', height: '160px', borderRadius: '30px', position: 'relative', overflow: 'hidden', 
+                        scrollSnapAlign: 'center', cursor: 'pointer', border: '1px solid var(--border-glass)',
+                        boxShadow: '0 15px 35px rgba(0,0,0,0.4)', background: 'rgba(255,255,255,0.02)'
+                    }}>
+                        <div style={{ 
+                            width: '100%', height: '100%', backgroundSize: 'cover', backgroundPosition: 'center',
+                            backgroundImage: `url(${item.image_url || 'https://images.unsplash.com/photo-1583267746897-2cf415887172?q=80&w=800&auto=format&fit=crop'})`, opacity: 0.6
+                        }}></div>
+                        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(5,10,13,0.9), transparent)' }}></div>
+                        <div style={{ position: 'absolute', bottom: '15px', right: '20px', textAlign: 'right' }}>
+                            <div style={{ color: 'var(--gold-primary)', fontSize: '10px', fontWeight: '900', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '4px' }}>پیشنهاد ویـژه</div>
+                            <div style={{ color: '#fff', fontSize: '16px', fontWeight: '900' }}>{item.title}</div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
+    };
 
     return (
         <div className="screen home-screen" style={{ paddingBottom: '120px' }}>
             {/* Prestige Header */}
             <div style={{ 
-                padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                position: 'sticky', top: 0, zIndex: 100, background: 'rgba(2, 6, 8, 0.8)',
-                backdropFilter: 'blur(30px)', borderBottom: '1px solid rgba(255,255,255,0.03)'
+                padding: '12px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                position: 'sticky', top: 0, zIndex: 100, background: 'rgba(5, 10, 13, 0.85)',
+                backdropFilter: 'blur(40px)', borderBottom: '1px solid var(--border-glass)'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                      <div onClick={onLogin} className="hover-lift" style={{ 
-                        width: '45px', height: '45px', borderRadius: '50%', overflow: 'hidden',
-                        border: '2px solid var(--gold-primary)', padding: '2px', cursor: 'pointer',
-                        boxShadow: '0 0 15px rgba(212, 175, 55, 0.4)'
-                    }}>
-                        <img 
-                            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=100&auto=format&fit=crop" 
-                            style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} 
-                            alt="User"
-                        />
-                    </div>
+                    width: '45px', height: '45px', borderRadius: '15px', 
+                    background: 'var(--gold-gradient)', display: 'flex', justifyContent: 'center', 
+                    alignItems: 'center', color: '#000', cursor: 'pointer',
+                    boxShadow: 'var(--gold-glow)'
+                }}>
+                    <i className="fa-solid fa-user-crown" style={{ fontSize: '20px' }}></i>
+                </div>
                 </div>
 
                 <div style={{ textAlign: 'center' }}>
                     <img 
                         src="https://i.postimg.cc/W3MnzMzh/jjj.png" 
-                        style={{ height: '38px', filter: 'drop-shadow(0 0 10px rgba(212, 175, 55, 0.3))' }} 
+                        style={{ height: '34px', filter: 'drop-shadow(0 0 12px rgba(212, 175, 55, 0.4))' }} 
                         alt="Zhinovax"
                     />
                 </div>
 
-                <div className="hover-lift" style={{ 
-                    background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '15px', 
-                    color: '#fff', border: '1px solid rgba(255,255,255,0.05)', cursor: 'pointer'
+                <div style={{ width: '40px' }}></div>
+            </div>
+
+            {/* Premium Header Logo Area */}
+            <div style={{ padding: '25px 24px 10px', textAlign: 'center' }}>
+                <div style={{ 
+                    display: 'inline-flex', alignItems: 'center', gap: '10px',
+                    padding: '8px 20px', borderRadius: '20px', background: 'rgba(212,175,55,0.05)',
+                    border: '1px solid rgba(212,175,55,0.1)'
                 }}>
-                    <i className="fa-solid fa-bell-concierge" style={{ fontSize: '18px', color: 'var(--gold-primary)' }}></i>
+                    <i className="fa-solid fa-gem" style={{ color: 'var(--gold-primary)', fontSize: '14px' }}></i>
+                    <span style={{ 
+                        color: 'var(--gold-primary)', fontSize: '13px', fontWeight: '900', 
+                        letterSpacing: '3px', textTransform: 'uppercase' 
+                    }}>Zhinovax Premium</span>
                 </div>
             </div>
 
             {/* Premium Search Hero */}
-            <div style={{ padding: '30px 24px 20px' }}>
-                <h2 style={{ fontSize: '32px', fontWeight: '900', margin: '0 0 10px', color: '#fff' }}>پـلی بـه سوی <span style={{ color: 'var(--gold-primary)' }}>اشـرافیت</span></h2>
-                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '14px', margin: '0 0 25px' }}>به پلتفرم لوکس خرید و فروش زینوواکس خوش آمدید.</p>
-                
+            <div style={{ padding: '15px 24px 20px' }}>
                 <div className="glass" style={{ 
-                    padding: '6px 6px 6px 20px', borderRadius: '30px', display: 'flex', 
+                    padding: '8px 8px 8px 15px', borderRadius: '24px', display: 'flex', 
                     alignItems: 'center', gap: '15px',
-                    background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
-                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+                    background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-glass)',
+                    boxShadow: '0 30px 60px rgba(0,0,0,0.5)'
                 }}>
                     <div style={{ 
-                        width: '48px', height: '48px', background: 'var(--gold-gradient)', 
-                        borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center',
-                        boxShadow: '0 10px 20px rgba(212, 175, 55, 0.3)', flexShrink: 0
+                        width: '50px', height: '50px', background: 'var(--gold-gradient)', 
+                        borderRadius: '18px', display: 'flex', justifyContent: 'center', alignItems: 'center',
+                        boxShadow: 'var(--gold-glow)', flexShrink: 0
                     }}>
-                        <i className="fa-solid fa-magnifying-glass" style={{ color: '#000', fontSize: '20px' }}></i>
+                        <i className="fa-solid fa-magnifying-glass" style={{ color: '#000', fontSize: '22px' }}></i>
                     </div>
 
                     <input 
                         type="text"
-                        placeholder={viewType === 'cars' ? 'مدل ماشین مورد نظر شما...' : 'لوکیشن ملک گرانبها...'}
+                        placeholder={viewType === 'cars' ? 'جستجوی مدل خاص...' : 'منطقه مورد نظر شما...'}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         style={{
                             flex: 1, background: 'transparent', border: 'none', color: '#fff',
-                            fontSize: '16px', fontWeight: '500', outline: 'none', padding: '12px 0',
+                            fontSize: '16px', fontWeight: '400', outline: 'none', padding: '12px 0',
                             textAlign: 'right', fontFamily: 'inherit'
                         }}
                     />
                 </div>
             </div>
 
-            {/* Partner Services Section - NEW MONETIZATION */}
-            <div style={{ padding: '15px 0 5px' }}>
-                <div style={{ padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                    <span style={{ fontSize: '10px', fontWeight: '900', color: 'rgba(255,255,255,0.4)', letterSpacing: '1px' }}>خدمات ویژه زینوواکس</span>
-                    <i className="fa-solid fa-gem" style={{ color: 'var(--gold-primary)', fontSize: '12px' }}></i>
+            {/* Featured Slider */}
+            {!searchTerm && <FeaturedSlider />}
+
+            {/* Partner Services Section */}
+            <div style={{ padding: '10px 0 10px' }}>
+                <div style={{ padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                    <span style={{ fontSize: '11px', fontWeight: '900', color: 'rgba(255,255,255,0.3)', letterSpacing: '1.5px', textTransform: 'uppercase' }}>کاتالوگ خدمات ویـژه</span>
+                    <i className="fa-solid fa-star" style={{ color: 'var(--gold-primary)', fontSize: '10px' }}></i>
                 </div>
-                <div className="no-scrollbar" style={{ display: 'flex', gap: '15px', overflowX: 'auto', padding: '5px 20px', scrollSnapType: 'x mandatory' }}>
+                <div className="no-scrollbar" style={{ display: 'flex', gap: '18px', overflowX: 'auto', padding: '5px 24px', scrollSnapType: 'x mandatory' }}>
                     {[
                         { icon: 'fa-solid fa-handshake-angle', label: 'تسهیلات بانکی', color: '#4caf50' },
                         { icon: 'fa-solid fa-magnifying-glass-chart', label: 'کارشناسی موتر', color: '#2196f3' },
@@ -107,13 +166,14 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
                         { icon: 'fa-solid fa-file-signature', label: 'امور حقوقی', color: '#e91e63' }
                     ].map((service, idx) => (
                         <div key={idx} className="glass hover-lift" style={{ 
-                            minWidth: '100px', padding: '15px 10px', borderRadius: '20px', textAlign: 'center',
-                            border: '1px solid rgba(255,255,255,0.05)', flexShrink: 0, scrollSnapAlign: 'start'
+                            minWidth: '105px', padding: '20px 10px', borderRadius: '24px', textAlign: 'center',
+                            border: '1px solid var(--border-glass)', flexShrink: 0, scrollSnapAlign: 'start',
+                            background: 'rgba(255,255,255,0.01)'
                         }}>
-                            <div style={{ width: '40px', height: '40px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', margin: '0 auto 10px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: service.color }}>
-                                <i className={service.icon} style={{ fontSize: '18px' }}></i>
+                            <div style={{ width: '44px', height: '44px', background: 'rgba(255,255,255,0.03)', borderRadius: '14px', margin: '0 auto 12px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: service.color, boxShadow: 'inset 0 0 10px rgba(255,255,255,0.02)' }}>
+                                <i className={service.icon} style={{ fontSize: '20px' }}></i>
                             </div>
-                            <div style={{ fontSize: '10px', fontWeight: '900', color: '#fff' }}>{service.label}</div>
+                            <div style={{ fontSize: '11px', fontWeight: '700', color: '#fff' }}>{service.label}</div>
                         </div>
                     ))}
                 </div>
@@ -153,11 +213,8 @@ const Home = ({ cars, properties, loading, connectionError, onOpenDetail, onLogi
 
             {/* Main Content Grid */}
             <div key={viewType} className="grid-layout">
-                {loading && activeAssets.length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '50px 25px', fontSize: '11px', color: 'rgba(255,255,255,0.2)', fontWeight: 'bold', letterSpacing: '1px' }}>
-                        <i className="fa-solid fa-circle-notch fa-spin" style={{ fontSize: '24px', marginBottom: '10px', display: 'block' }}></i>
-                         بارگذاری...
-                    </div>
+                {loading ? (
+                    [1,2,3,4].map(n => <SkeletonCard key={n} />)
                 ) : activeAssets.map((asset, index) => (
                     <div key={asset.id} className="gsap-reveal" style={{ animationDelay: `${index * 0.05}s` }}>
                         <AssetCard data={asset} type={viewType === 'cars' ? 'car' : 'property'} onClick={onOpenDetail} />

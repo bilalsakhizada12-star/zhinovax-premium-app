@@ -16,6 +16,7 @@ const SplashScreen = ({ onComplete }) => {
         // Entrance animation
         gsap.fromTo('.splash-logo', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.2 });
         gsap.fromTo('.splash-tagline', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.8 });
+        gsap.to('.splash-tagline', { opacity: 0.5, repeat: -1, yoyo: true, duration: 1.5, delay: 1.5 });
         gsap.fromTo('.progress-container', { opacity: 0 }, { opacity: 1, duration: 0.6, delay: 1.0 });
 
         // Progress bar: goes from 0 to 100 in ~1.5s
@@ -56,10 +57,12 @@ const SplashScreen = ({ onComplete }) => {
                 position: 'relative', width: '100%', height: '100%',
                 display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
             }}>
-                <div className="splash-logo" style={{ marginBottom: '20px', opacity: 0 }}>
+                <div className="splash-logo shimmer-wrapper" style={{ 
+                    marginBottom: '25px', opacity: 0, padding: '10px', borderRadius: '20px'
+                }}>
                     <img 
                         src="https://i.postimg.cc/W3MnzMzh/jjj.png" 
-                        style={{ height: '90px', filter: 'drop-shadow(0 0 30px rgba(212, 175, 55, 0.5))' }} 
+                        style={{ height: '90px', filter: 'drop-shadow(0 0 40px rgba(212, 175, 55, 0.4))' }} 
                         alt="Zhinovax"
                     />
                 </div>

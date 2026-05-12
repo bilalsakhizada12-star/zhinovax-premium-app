@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>در حال پاک‌سازی حافظه...</title>
+    <style>
+        body { background: #050a0d; color: #d4af37; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
+        .spinner { width: 50px; height: 50px; border: 5px solid rgba(212,175,55,0.1); border-top: 5px solid #d4af37; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="spinner"></div>
+    <h1>در حال نوسازی زینوواکس...</h1>
+    <p>لطفاً چند لحظه صبر کنید، حافظه در حال پاک‌سازی است.</p>
+
+    <script>
+        async function clearEverything() {
+            try {
+                // 1. Unregister all service workers
+                if ('serviceWorker' in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    for (let registration of registrations) {
+                        await registration.unregister();
+                    }
+                }
+                
+                // 2. Clear LocalStorage and SessionStorage
+                localStorage.clear();
+                sessionStorage.clear();
+                
+                // 3. Clear all Caches
+                if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    for (let name of cacheNames) {
+                        await caches.delete(name);
+                    }
+                }
+
+                console.log('Cache cleared successfully');
+                
+                // 4. Redirect to main app with a cache-buster
+                setTimeout(() => {
+                    window.location.href = 'index.html?v=' + Date.now();
+                }, 1500);
+            } catch (err) {
+                console.error('Error clearing cache:', err);
+                window.location.href = 'index.html';
+            }
+        }
+
+        clearEverything();
+    </script>
+</body>
+</html>

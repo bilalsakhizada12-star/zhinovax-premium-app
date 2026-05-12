@@ -1,24 +1,22 @@
 const Navbar = ({ activeTab, onTabChange, hasNewNotif }) => {
     const tabs = [
         { id: 'settings', icon: 'fa-solid fa-circle-user', label: 'VIP' },
-        { id: 'dashboard', icon: 'fa-solid fa-chart-pie', label: 'پورتفولیو' },
-        { id: 'add_asset', icon: 'fa-solid fa-square-plus', label: 'ثبت', special: true },
         { id: 'favorites', icon: 'fa-solid fa-heart', label: 'علاقه' },
         { id: 'home', icon: 'fa-solid fa-house-chimney', label: 'خانه' }
     ];
 
     return (
         <div style={{
-            position: 'fixed', bottom: '25px', left: '50%', transform: 'translateX(-50%)',
-            width: '90%', maxWidth: '400px', zIndex: 1000,
+            position: 'fixed', bottom: '30px', left: '50%', transform: 'translateX(-50%)',
+            width: '92%', maxWidth: '420px', zIndex: 1000,
             display: 'flex', justifyContent: 'center'
         }}>
             <div className="glass" style={{
-                width: '100%', height: '75px', borderRadius: '35px',
+                width: '100%', height: '80px', borderRadius: '40px',
                 display: 'flex', justifyContent: 'space-around', alignItems: 'center',
-                padding: '0 10px', background: 'rgba(5, 16, 20, 0.4)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                boxShadow: '0 15px 35px rgba(0,0,0,0.6)'
+                padding: '0 12px', background: 'rgba(5, 10, 13, 0.4)',
+                border: '1px solid var(--border-glass)',
+                boxShadow: 'var(--shadow-premium)'
             }}>
                 {tabs.map(tab => {
                     const isActive = activeTab === tab.id;
@@ -34,13 +32,13 @@ const Navbar = ({ activeTab, onTabChange, hasNewNotif }) => {
                             }}
                         >
                             <div style={{
-                                width: '45px', height: '45px', borderRadius: '50%',
+                                width: '50px', height: '50px', borderRadius: '18px',
                                 display: 'flex', justifyContent: 'center', alignItems: 'center',
-                                color: isActive ? '#000' : 'rgba(255,255,255,0.4)',
+                                color: isActive ? '#000' : 'rgba(255,255,255,0.3)',
                                 background: isActive ? 'var(--gold-gradient)' : 'transparent',
-                                fontSize: '20px', transition: 'all 0.4s cubic-bezier(0.19, 1, 0.22, 1)',
-                                boxShadow: isActive ? '0 8px 20px rgba(212, 175, 55, 0.4)' : 'none',
-                                transform: isActive ? 'scale(1.1) translateY(-5px)' : 'scale(1)'
+                                fontSize: '22px', transition: 'all 0.5s cubic-bezier(0.19, 1, 0.22, 1)',
+                                boxShadow: isActive ? 'var(--gold-glow)' : 'none',
+                                transform: isActive ? 'scale(1.15) translateY(-8px)' : 'scale(1)'
                             }}>
                                 <i className={tab.icon}></i>
                             </div>
